@@ -297,7 +297,9 @@ def save_allocations_to_csv(allocations: dict, filename: str = "allocations_data
 
 def load_allocations_from_csv(filename: str = "allocations_data.csv") -> dict:
     """CSVファイルから割り当てデータを読み込む（拡張版：部分金額割り当て対応）"""
+    print(f"🔍 load_allocations_from_csv: ファイル {filename} から読み込み開始")
     if not os.path.exists(filename):
+        print(f"🔍 load_allocations_from_csv: ファイル {filename} が存在しません")
         return {}
     
     try:
@@ -332,6 +334,7 @@ def load_allocations_from_csv(filename: str = "allocations_data.csv") -> dict:
                 # 旧形式：互換性のため
                 allocations[trans_id] = row['割り当て助成金']
         
+        print(f"🔍 load_allocations_from_csv: 読み込み完了 - {len(allocations)}件のデータを取得")
         return allocations
     except Exception as e:
         st.error(f"❌ 割り当てデータ読み込みエラー: {str(e)}")
@@ -2546,7 +2549,13 @@ def show_bulk_allocation_page():
                         if assigned_count > 0:
                             # ファイルに保存
                             save_allocations_to_csv(st.session_state.allocations)
-                            st.success(f"✅ {assigned_count}件の取引を「{target_name}」に割り当て、ファイルに保存しました！")
+                            
+                            # 保存後にファイルから再読み込みして同期を確保
+                            reloaded_allocations = load_allocations_from_csv()
+                            st.session_state.allocations = reloaded_allocations
+                            
+                            final_count = len(st.session_state.allocations)
+                            st.success(f"✅ {assigned_count}件の取引を「{target_name}」に割り当て、ファイルに保存しました！（現在の割り当て数: {final_count}件）")
                             st.rerun()
                         else:
                             st.warning("⚠️ 割り当てできる取引がありませんでした。")
@@ -2587,7 +2596,13 @@ def show_bulk_allocation_page():
                                 # ファイルに保存
                                 try:
                                     save_allocations_to_csv(st.session_state.allocations)
-                                    st.success(f"✅ {removed_count}件の取引割り当てを解除し、ファイルに保存しました！")
+                                    
+                                    # 保存後にファイルから再読み込みして同期を確保
+                                    reloaded_allocations = load_allocations_from_csv()
+                                    st.session_state.allocations = reloaded_allocations
+                                    
+                                    final_count = len(st.session_state.allocations)
+                                    st.success(f"✅ {removed_count}件の取引割り当てを解除し、ファイルに保存しました！（現在の割り当て数: {final_count}件）")
                                 except Exception as save_error:
                                     st.error(f"❌ 保存エラー: {str(save_error)}")
                                 st.rerun()
