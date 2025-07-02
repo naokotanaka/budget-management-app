@@ -257,15 +257,36 @@ def save_allocations_to_csv(allocations: dict, filename: str = "allocations_data
     df = pd.DataFrame(allocation_data)
     # 日本語環境での文字化け対策（Excel対応優先）
     try:
-        # 最初にBOM付きUTF-8を試す（Excelが日本語を正しく認識しやすい）
-        with open(filename, 'w', encoding='utf-8-sig', newline='') as f:
-            df.to_csv(f, index=False)
+        import tempfile
+        import shutil
+        
+        # 一時ファイルに書き込んでから移動する方式で権限問題を回避
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8-sig', newline='', delete=False, suffix='.csv') as temp_file:
+            df.to_csv(temp_file, index=False)
+            temp_filename = temp_file.name
+        
+        # 既存ファイルが存在する場合は削除
+        if os.path.exists(filename):
+            try:
+                os.remove(filename)
+            except PermissionError:
+                # ファイルが使用中の場合、バックアップ名で保存
+                import time
+                backup_filename = f"{filename}.backup_{int(time.time())}"
+                shutil.move(temp_filename, backup_filename)
+                print(f"🔍 save_allocations_to_csv: 権限問題のためバックアップファイルに保存 - {backup_filename}")
+                st.warning(f"⚠️ ファイルが使用中のため、バックアップファイル {backup_filename} に保存しました")
+                return
+        
+        # 一時ファイルを目標ファイル名に移動
+        shutil.move(temp_filename, filename)
         print(f"🔍 save_allocations_to_csv: UTF-8保存成功 - {len(df)}行を {filename} に保存")
         st.success(f"✅ 割り当てデータを {filename} に保存しました（UTF-8 BOM形式）")
+        
     except Exception as e:
-        print(f"🔍 save_allocations_to_csv: UTF-8保存失敗 - {str(e)}")
+        print(f"🔍 save_allocations_to_csv: 改善版保存失敗 - {str(e)}")
         try:
-            # フォールバック：Shift_JIS
+            # フォールバック：直接書き込み（Shift_JIS）
             with open(filename, 'w', encoding='shift_jis', newline='') as f:
                 df.to_csv(f, index=False, errors='ignore')
             print(f"🔍 save_allocations_to_csv: Shift_JIS保存成功 - {len(df)}行を {filename} に保存")
