@@ -1,0 +1,118 @@
+[
+    {
+        "allocation_id": 1,
+        "transaction_unique_id": "5040102-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "amount": 16500.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 2,
+        "transaction_unique_id": "5040103-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": null,
+        "amount": 336469.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 3,
+        "transaction_unique_id": "5040306-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": null,
+        "amount": 3247.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 4,
+        "transaction_unique_id": "5040304-1",
+        "grant_id": 1,
+        "category_id": 2,
+        "grant_item_id": null,
+        "amount": 598.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 5,
+        "transaction_unique_id": "5040305-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": null,
+        "amount": 4788.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 6,
+        "transaction_unique_id": "5040201-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": null,
+        "amount": 190.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 7,
+        "transaction_unique_id": "5040401-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": null,
+        "amount": 8348.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 8,
+        "transaction_unique_id": "5041101-1",
+        "grant_id": 1,
+        "category_id": 2,
+        "grant_item_id": null,
+        "amount": 1500.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 9,
+        "transaction_unique_id": "5040113-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": "G1-1",
+        "amount": 2184.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 10,
+        "transaction_unique_id": "5040402-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": "G1-1",
+        "amount": 20057.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 11,
+        "transaction_unique_id": "5040702-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": "G1-1",
+        "amount": 110.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 12,
+        "transaction_unique_id": "5040701-1",
+        "grant_id": 1,
+        "category_id": 1,
+        "grant_item_id": "G1-1",
+        "amount": 7534.0,
+        "transaction_month": "2025-04"
+    },
+    {
+        "allocation_id": 13,
+        "transaction_unique_id": "5040501-1",
+        "grant_id": 1,
+        "category_id": 2,
+        "grant_item_id": "G1-2",
+        "amount": 3610.0,
+        "transaction_month": "2025-04"
+    }
+]
