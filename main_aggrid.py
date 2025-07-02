@@ -229,9 +229,41 @@ def initialize_session_state():
 def save_allocations_to_csv(allocations: dict, filename: str = "allocations_data.csv") -> None:
     """割り当てデータをCSVファイルに保存する（拡張版：部分金額割り当て対応）"""
     print(f"🔍 save_allocations_to_csv: 受信データ件数 = {len(allocations)}")
+    
+    # 空のデータでも保存処理を実行（ファイルを空にする必要がある）
     if not allocations:
-        print("🔍 save_allocations_to_csv: データが空のため処理をスキップ")
-        return
+        print("🔍 save_allocations_to_csv: データが空 - 空のファイルを作成します")
+        try:
+            # 空のCSVファイルを作成（ヘッダーのみ）
+            empty_df = pd.DataFrame(columns=['取引ID', '割り当て助成金', '予算項目ID', '割り当て金額', '取引金額'])
+            
+            import tempfile
+            import shutil
+            
+            with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8-sig', newline='', delete=False, suffix='.csv') as temp_file:
+                empty_df.to_csv(temp_file, index=False)
+                temp_filename = temp_file.name
+            
+            # 既存ファイルを削除してから新しいファイルに置き換え
+            if os.path.exists(filename):
+                try:
+                    os.remove(filename)
+                except PermissionError:
+                    import time
+                    backup_filename = f"{filename}.backup_{int(time.time())}"
+                    shutil.move(temp_filename, backup_filename)
+                    print(f"🔍 save_allocations_to_csv: 権限問題のためバックアップファイルに保存 - {backup_filename}")
+                    st.warning(f"⚠️ ファイルが使用中のため、バックアップファイル {backup_filename} に保存しました")
+                    return
+            
+            shutil.move(temp_filename, filename)
+            print(f"🔍 save_allocations_to_csv: 空ファイル作成成功 - {filename}")
+            st.success(f"✅ 空の割り当てデータを {filename} に保存しました")
+            return
+        except Exception as e:
+            print(f"🔍 save_allocations_to_csv: 空ファイル作成失敗 - {str(e)}")
+            st.error(f"❌ 空ファイル作成エラー: {str(e)}")
+            return
     
     allocation_data = []
     for trans_id, allocation_info in allocations.items():
@@ -316,6 +348,11 @@ def load_allocations_from_csv(filename: str = "allocations_data.csv") -> dict:
         
         if df is None:
             st.error("❌ 割り当てファイルの文字エンコーディングを判定できませんでした")
+            return {}
+        
+        # 空のファイル（ヘッダーのみ）の場合
+        if df.empty:
+            print(f"🔍 load_allocations_from_csv: ファイルは空です（ヘッダーのみ）")
             return {}
         
         allocations = {}
