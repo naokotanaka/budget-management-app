@@ -2483,6 +2483,7 @@ def show_bulk_allocation_page():
                 st.info("💡 取引を選択すると、ここに一括割り当ての操作が表示されます。")
         
         with col2:
+            # 🎯 一括割り当て部分
             if selected_count > 0 and budget_item_selected:
                 # 選択された予算項目への一括割り当て
                 grant_name = selected_budget_item.get('助成金', '')
@@ -2524,16 +2525,16 @@ def show_bulk_allocation_page():
                             st.warning("⚠️ 割り当てできる取引がありませんでした。")
                     except Exception as e:
                         st.error(f"一括割り当て処理エラー: {str(e)}")
-                
-                # 🗑️ 一括解除ボタンを追加
+            
+            # 🗑️ 一括解除ボタン（予算項目選択に依存せず独立して表示）
+            if selected_count > 0:
                 st.markdown("---")
                 
                 # 選択された取引のうち割り当て済みの件数を確認
                 selected_allocated_count = 0
-                if selected_count > 0:
-                    for row in selected_rows:
-                        if isinstance(row, dict) and row.get('割り当て状況', '').startswith('✅'):
-                            selected_allocated_count += 1
+                for row in selected_rows:
+                    if isinstance(row, dict) and row.get('割り当て状況', '').startswith('✅'):
+                        selected_allocated_count += 1
                 
                 if selected_allocated_count > 0:
                     if st.button(f"🗑️ 選択した{selected_allocated_count}件の割り当てを一括解除", 
@@ -2561,16 +2562,13 @@ def show_bulk_allocation_page():
                         except Exception as e:
                             st.error(f"一括解除処理エラー: {str(e)}")
                 else:
-                    if selected_count > 0:
-                        st.info("💡 選択された取引に割り当て済みのものがないため、解除する対象がありません。")
-                
-            else:
-                if selected_count == 0:
-                    st.button("🎯 取引を選択してください", disabled=True, use_container_width=True)
-                elif not budget_item_selected:
-                    st.button("🎯 予算項目を選択してください", disabled=True, use_container_width=True)
-                else:
-                    st.button("🎯 条件を満たしていません", disabled=True, use_container_width=True)
+                    st.info("💡 選択された取引に割り当て済みのものがないため、解除する対象がありません。")
+            
+            # 無効状態のボタン表示
+            if selected_count == 0:
+                st.button("🎯 取引を選択してください", disabled=True, use_container_width=True)
+            elif not budget_item_selected:
+                st.button("🎯 予算項目を選択してください", disabled=True, use_container_width=True)
 
 def show_data_download_page():
     st.header("💾 データダウンロード")
@@ -2584,39 +2582,39 @@ def show_data_download_page():
     with col1:
         st.markdown("**💰 助成金データ**")
         
-        if st.session_state.grants:
+            if st.session_state.grants:
             # 通常形式ダウンロード
-            grants_data = []
-            for grant in st.session_state.grants:
-                budget_items_str = "; ".join([
+                grants_data = []
+                for grant in st.session_state.grants:
+                    budget_items_str = "; ".join([
                     f"{item.get('id', 'NO_ID')}:{item['name']}:¥{item['budget']:,}:{item.get('description', '')}" 
-                    for item in grant.get('budget_items', [])
-                ])
+                        for item in grant.get('budget_items', [])
+                    ])
+                    
+                    grants_data.append({
+                        'id': grant['id'],
+                        'name': grant['name'],
+                        'source': grant['source'],
+                        'total_budget': grant['total_budget'],
+                        'start_date': grant['start_date'],
+                        'end_date': grant['end_date'],
+                        'description': grant['description'],
+                        'budget_items': budget_items_str,
+                        'created_at': grant['created_at']
+                    })
                 
-                grants_data.append({
-                    'id': grant['id'],
-                    'name': grant['name'],
-                    'source': grant['source'],
-                    'total_budget': grant['total_budget'],
-                    'start_date': grant['start_date'],
-                    'end_date': grant['end_date'],
-                    'description': grant['description'],
-                    'budget_items': budget_items_str,
-                    'created_at': grant['created_at']
-                })
-            
-            df_grants = pd.DataFrame(grants_data)
-            # 日本語環境での文字化け対策（Excel対応優先）
-            try:
+                df_grants = pd.DataFrame(grants_data)
+                # 日本語環境での文字化け対策（Excel対応優先）
+                try:
                 # BOM付きUTF-8でCSVを生成
                 csv_string = df_grants.to_csv(index=False, encoding=None)
                 csv_grants = '\ufeff' + csv_string
-                mime_type = "text/csv; charset=utf-8"
-            except Exception as e:
-                # フォールバック：Shift_JIS
-                csv_grants = df_grants.to_csv(index=False, encoding='shift_jis', errors='ignore')
-                mime_type = "text/csv; charset=shift_jis"
-            
+                    mime_type = "text/csv; charset=utf-8"
+                except Exception as e:
+                    # フォールバック：Shift_JIS
+                    csv_grants = df_grants.to_csv(index=False, encoding='shift_jis', errors='ignore')
+                    mime_type = "text/csv; charset=shift_jis"
+                
             download_col1, download_col2 = st.columns(2)
             
             with download_col1:
@@ -2640,81 +2638,81 @@ def show_data_download_page():
                     key="download_grants_vertical",
                     help="Excel編集しやすい縦展開形式"
                 )
-        else:
-            st.info("ダウンロードできるデータがありません")
-            
+            else:
+                st.info("ダウンロードできるデータがありません")
+                
         st.info(f"現在登録数: {len(st.session_state.grants)}件")
     
     with col2:
         st.markdown("**🔗 割り当てデータ**")
         
-        if st.session_state.allocations:
-            # 割り当てデータをCSV形式で準備
-            allocation_data = []
-            for trans_id, allocation_info in st.session_state.allocations.items():
-                if isinstance(allocation_info, dict):
-                    allocation_data.append({
-                        "取引ID": trans_id,
-                        "割り当て助成金": allocation_info.get('grant_name', ''),
-                        "予算項目ID": allocation_info.get('budget_item_id', ''),
-                        "割り当て金額": allocation_info.get('amount', 0),
-                        "取引金額": allocation_info.get('transaction_amount', 0)
-                    })
-                else:
-                    allocation_data.append({
-                        "取引ID": trans_id,
-                        "割り当て助成金": allocation_info,
-                        "予算項目ID": '',
-                        "割り当て金額": 0,
-                        "取引金額": 0
-                    })
-            
-            df_allocations = pd.DataFrame(allocation_data)
-            # 日本語環境での文字化け対策（Excel対応優先）
-            try:
+            if st.session_state.allocations:
+                # 割り当てデータをCSV形式で準備
+                allocation_data = []
+                for trans_id, allocation_info in st.session_state.allocations.items():
+                    if isinstance(allocation_info, dict):
+                        allocation_data.append({
+                            "取引ID": trans_id,
+                            "割り当て助成金": allocation_info.get('grant_name', ''),
+                            "予算項目ID": allocation_info.get('budget_item_id', ''),
+                            "割り当て金額": allocation_info.get('amount', 0),
+                            "取引金額": allocation_info.get('transaction_amount', 0)
+                        })
+                    else:
+                        allocation_data.append({
+                            "取引ID": trans_id,
+                            "割り当て助成金": allocation_info,
+                            "予算項目ID": '',
+                            "割り当て金額": 0,
+                            "取引金額": 0
+                        })
+                
+                df_allocations = pd.DataFrame(allocation_data)
+                # 日本語環境での文字化け対策（Excel対応優先）
+                try:
                 # BOM付きUTF-8でCSVを生成
                 csv_string = df_allocations.to_csv(index=False, encoding=None)  # まず文字列として生成
                 csv_allocations = '\ufeff' + csv_string  # BOMを手動で追加
-                mime_type = "text/csv; charset=utf-8"
-            except Exception as e:
-                # フォールバック：Shift_JIS
-                csv_allocations = df_allocations.to_csv(index=False, encoding='shift_jis', errors='ignore')
-                mime_type = "text/csv; charset=shift_jis"
-            
-            st.download_button(
-                label="📥 CSVダウンロード",
-                data=csv_allocations,
-                file_name=f"allocations_data_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                mime=mime_type,
-                key="download_allocations"
-            )
-        else:
-            st.info("ダウンロードできるデータがありません")
-            
+                    mime_type = "text/csv; charset=utf-8"
+                except Exception as e:
+                    # フォールバック：Shift_JIS
+                    csv_allocations = df_allocations.to_csv(index=False, encoding='shift_jis', errors='ignore')
+                    mime_type = "text/csv; charset=shift_jis"
+                
+                st.download_button(
+                    label="📥 CSVダウンロード",
+                    data=csv_allocations,
+                    file_name=f"allocations_data_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime=mime_type,
+                    key="download_allocations"
+                )
+            else:
+                st.info("ダウンロードできるデータがありません")
+                
         st.info(f"現在割り当て数: {len(st.session_state.allocations)}件")
     
     with col3:
         st.markdown("**📊 取引データ**")
         
         if not st.session_state.transactions.empty:
-            # 日本語環境での文字化け対策（Excel対応優先）
-            try:
+                # 日本語環境での文字化け対策（Excel対応優先）
+                try:
                 # BOM付きUTF-8でCSVを生成
                 csv_string = st.session_state.transactions.to_csv(index=False, encoding=None)  # まず文字列として生成
                 csv_data = '\ufeff' + csv_string  # BOMを手動で追加
-                mime_type = "text/csv; charset=utf-8"
-            except Exception as e:
-                # フォールバック：Shift_JIS
-                csv_data = st.session_state.transactions.to_csv(index=False, encoding='shift_jis', errors='ignore')
-                mime_type = "text/csv; charset=shift_jis"
-            st.download_button(
-                label="📥 CSVダウンロード",
-                data=csv_data,
-                file_name=f"transactions_data_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                mime=mime_type,
-                key="download_transactions"
-            )
-        
+                    mime_type = "text/csv; charset=utf-8"
+                except Exception as e:
+                    # フォールバック：Shift_JIS
+                    csv_data = st.session_state.transactions.to_csv(index=False, encoding='shift_jis', errors='ignore')
+                    mime_type = "text/csv; charset=shift_jis"
+                st.download_button(
+                    label="📥 CSVダウンロード",
+                    data=csv_data,
+                    file_name=f"transactions_data_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime=mime_type,
+                    key="download_transactions"
+                )
+            
             st.info(f"現在データ数: {len(st.session_state.transactions)}件")
         else:
             st.warning("取引データがありません")
@@ -2754,9 +2752,9 @@ def show_data_download_page():
                         st.success("✅ Excel編集用データが正常にインポートされました")
                     else:
                         # 通常形式から読み込み
-                        st.session_state.grants = load_grants_from_csv()
+                st.session_state.grants = load_grants_from_csv()
                         st.success("✅ 通常形式データが正常にインポートされました")
-                    st.rerun()
+                st.rerun()
                 except Exception as e:
                     st.error(f"❌ インポートエラー: {str(e)}")
                     st.info("ファイル形式を確認してください")
