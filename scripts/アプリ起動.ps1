@@ -51,8 +51,8 @@ else {
 }
 
 # メインアプリファイルの存在確認
-if (-not (Test-Path "main_aggrid.py")) {
-    Write-Host "エラー: main_aggrid.py が見つかりません" -ForegroundColor Red
+if (-not (Test-Path "src/main_aggrid.py")) {
+    Write-Host "エラー: src/main_aggrid.py が見つかりません" -ForegroundColor Red
     pause
     exit 1
 }
@@ -111,7 +111,7 @@ Write-Host "Streamlitを起動中..." -ForegroundColor Green
 
 # Streamlit起動
 try {
-    streamlit run main_aggrid.py --server.port 8531 --server.address 0.0.0.0 --server.headless true
+    streamlit run src/main_aggrid.py --server.port 8531 --server.address 0.0.0.0 --server.headless true
 }
 catch {
     Write-Host ""
