@@ -600,9 +600,39 @@ def show_dashboard():
 def show_upload_page():
     st.header("📂 freee データアップロード")
     
+    # Freeeからのデータ取得手順を詳細に説明
+    with st.expander("📖 Freeeからのデータ取得手順（詳細）", expanded=False):
+        st.markdown("""
+        ### 🔗 Freeeデータエクスポート手順
+        
+        #### **Step 1: 仕訳帳エクスポートページにアクセス**
+        下記リンクをクリックして、Freeeの仕訳帳エクスポートページを開いてください：
+        
+        🔗 **[Freee 仕訳帳エクスポート](https://secure.freee.co.jp/reports/journals/export?page=1&per_page=50&order_by=txn_date&direction=asc&start_date=2025-04-01&end_date=2026-03-31)**
+        
+        #### **Step 2: エクスポート設定**
+        1. **テンプレートの選択**: 「予算用 分割無し」を選択
+        2. **文字コードの設定**: 「UTF-8(BOMつき)」を選択
+        3. **出力を開始**ボタンをクリック
+        
+        #### **Step 3: ダウンロード**
+        処理完了後、メールで通知されます。その後：
+        
+        🔗 **[Freee アウトプット一覧](https://secure.freee.co.jp/reports/output_list)**
+        
+        上記リンクから生成されたCSVファイルをダウンロードしてください。
+        
+        ---
+        
+        ### ⚠️ 重要な注意点
+        - エクスポート処理には時間がかかる場合があります
+        - 完了通知がメールで届くまでお待ちください
+        - 文字コードは必ず「UTF-8(BOMつき)」を選択してください
+        """)
+    
     st.markdown("""
     ### 📋 アップロード手順
-    1. freeeから取引データをCSV形式でエクスポート
+    1. 上記手順でfreeeから取引データをCSV形式でエクスポート
     2. 下記のファイルアップローダーでCSVファイルを選択
     3. データプレビューを確認後、インポート実行
     """)
