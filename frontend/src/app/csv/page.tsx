@@ -146,7 +146,32 @@ export default function CSVManagementPage() {
             {/* freee取引データ */}
             <div className="border border-gray-200 rounded-lg p-4">
               <h3 className="font-medium text-gray-900 mb-2">freee取引データ</h3>
-              <p className="text-sm text-gray-600 mb-4">freeeからダウンロードした取引データCSVファイル</p>
+              <p className="text-sm text-gray-600 mb-2">freeeからダウンロードした取引データCSVファイル</p>
+              
+              {/* freeeダウンロード手順 */}
+              <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mb-4">
+                <h4 className="text-sm font-semibold text-blue-900 mb-2">freeeからのダウンロード手順</h4>
+                <ol className="text-xs text-blue-800 space-y-1 list-decimal list-inside">
+                  <li>
+                    <a 
+                      href={`https://secure.freee.co.jp/reports/journals/export?page=1&per_page=50&order_by=txn_date&direction=asc&end_date=${dateRange.endDate}&start_date=${dateRange.startDate}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-blue-900"
+                    >
+                      freeeの仕訳帳エクスポートページ
+                    </a>
+                    へアクセス
+                  </li>
+                  <li>テンプレートの選択: <span className="font-semibold">「予算用」</span>を選択</li>
+                  <li>分割: <span className="font-semibold">「分割無し」</span>を選択</li>
+                  <li>文字コード: <span className="font-semibold">「UTF-8(BOMつき)」</span>を選択</li>
+                  <li>「ダウンロード」ボタンをクリック</li>
+                </ol>
+                <p className="text-xs text-blue-700 mt-2">
+                  ※ 期間: {dateRange.startDate} 〜 {dateRange.endDate}
+                </p>
+              </div>
               <div className="flex items-center justify-center w-full">
                 <label 
                   htmlFor="transaction-upload" 
