@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import BatchAllocationGrid from '@/components/BatchAllocationGrid';
+import TransactionGrid from '@/components/TransactionGrid';
+import BatchAllocationPanel from '@/components/BatchAllocationPanel';
 import { Transaction } from '@/lib/api';
 
 const BatchAllocatePage: React.FC = () => {
@@ -17,8 +18,16 @@ const BatchAllocatePage: React.FC = () => {
           <h1 className="text-sm font-bold text-gray-900">一括割当</h1>
         </div>
         
-        <div className="flex-1 min-w-0 pr-2">
-          <BatchAllocationGrid onSelectionChanged={handleSelectionChanged} />
+        <div className="flex flex-1 min-h-0">
+          <div className="flex-1 min-w-0 pr-2">
+            <TransactionGrid 
+              onSelectionChanged={handleSelectionChanged} 
+              enableBatchAllocation={true}
+            />
+          </div>
+          <div className="w-64 flex-shrink-0 pl-2">
+            <BatchAllocationPanel selectedRows={selectedRows} />
+          </div>
         </div>
     </div>
   );

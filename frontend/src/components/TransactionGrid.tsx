@@ -9,9 +9,10 @@ import { CONFIG } from '@/lib/config';
 
 interface TransactionGridProps {
   onSelectionChanged?: (selectedRows: Transaction[]) => void;
+  enableBatchAllocation?: boolean;
 }
 
-const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelectionChanged: onSelectionChangedProp }, ref) => {
+const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelectionChanged: onSelectionChangedProp, enableBatchAllocation = false }, ref) => {
   const [rowData, setRowData] = useState<Transaction[]>([]);
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
