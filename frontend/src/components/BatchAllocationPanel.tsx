@@ -83,35 +83,39 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
     setError(null);
 
     try {
-      // 各取引に対して割当を実行
-      const allocationPromises = selectedRows.map(async (transaction) => {
-        const allocationData = {
-          transaction_id: transaction.id,
-          budget_item_id: selectedBudgetItem.id,
-          amount: transaction.amount
-        };
-
+      // 既存の割当データを一度だけ取得
+      const existingAllocations = await api.getAllocations();
+      
+      const results = [];
+      
+      // 各取引を順次処理（並列処理を避けてエラーを減らす）
+      for (const transaction of selectedRows) {
         try {
-          // 既存の割当があるかチェック
-          const existingAllocations = await api.getAllocations();
+          const allocationData = {
+            transaction_id: transaction.id,
+            budget_item_id: selectedBudgetItem.id,
+            amount: transaction.amount
+          };
+
           const existingAllocation = existingAllocations.find(
             (allocation: any) => allocation.transaction_id === transaction.id
           );
 
+          let result;
           if (existingAllocation) {
             // 更新
-            return await api.updateAllocation(existingAllocation.id, allocationData);
+            result = await api.updateAllocation(existingAllocation.id, allocationData);
           } else {
             // 新規作成
-            return await api.createAllocation(allocationData);
+            result = await api.createAllocation(allocationData);
           }
+          
+          results.push({ status: 'fulfilled', value: result });
         } catch (error) {
           console.error(`Error processing allocation for transaction ${transaction.id}:`, error);
-          throw error;
+          results.push({ status: 'rejected', reason: error });
         }
-      });
-
-      const results = await Promise.allSettled(allocationPromises);
+      }
       
       // 成功・失敗の集計
       const successful = results.filter(result => result.status === 'fulfilled').length;
