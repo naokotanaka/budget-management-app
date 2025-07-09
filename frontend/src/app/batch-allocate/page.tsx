@@ -19,14 +19,14 @@ const BatchAllocatePage: React.FC = () => {
         </div>
         
         <div className="flex flex-1 min-h-0">
-          <div className="flex-1 min-w-0 pr-2">
+          <div className="w-80 flex-shrink-0 pr-2">
+            <BatchAllocationPanel selectedRows={selectedRows} />
+          </div>
+          <div className="flex-1 min-w-0 pl-2">
             <TransactionGrid 
               onSelectionChanged={handleSelectionChanged} 
               enableBatchAllocation={true}
             />
-          </div>
-          <div className="w-80 flex-shrink-0 pl-2">
-            <BatchAllocationPanel selectedRows={selectedRows} />
           </div>
         </div>
     </div>
