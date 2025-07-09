@@ -249,9 +249,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       maxWidth: 50,
       pinned: 'left',
       lockPosition: true,
-      suppressMenu: true,
       suppressMovable: true,
-      suppressResize: true,
       filter: false,
       sortable: false
     },

@@ -45,6 +45,7 @@ class Grant(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
+    grant_code = Column(String, nullable=True)  # 助成金コード
     total_amount = Column(Integer)
     start_date = Column(Date)
     end_date = Column(Date)
@@ -61,6 +62,7 @@ class BudgetItem(Base):
     name = Column(String, nullable=False)
     category = Column(String)
     budgeted_amount = Column(Integer)
+    remarks = Column(String, nullable=True)  # 備考
     
     # Relationships
     grant = relationship("Grant", back_populates="budget_items")

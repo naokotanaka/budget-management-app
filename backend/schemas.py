@@ -28,6 +28,7 @@ class Transaction(TransactionBase):
 
 class GrantBase(BaseModel):
     name: str
+    grant_code: Optional[str] = None
     total_amount: Optional[int] = None
     start_date: Optional[date] = None
     end_date: Optional[date] = None
@@ -46,6 +47,7 @@ class BudgetItemBase(BaseModel):
     name: str
     category: Optional[str] = None
     budgeted_amount: Optional[int] = None
+    remarks: Optional[str] = None
 
 class BudgetItemCreate(BudgetItemBase):
     grant_id: int

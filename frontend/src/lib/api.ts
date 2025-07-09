@@ -31,6 +31,7 @@ export interface BudgetItem {
   grant_name?: string;
   display_name?: string;
   grant_status?: 'active' | 'completed' | 'applied';
+  remarks?: string;
 }
 
 export interface Grant {
@@ -40,6 +41,7 @@ export interface Grant {
   start_date: string;
   end_date: string;
   status?: 'active' | 'completed' | 'applied';
+  grant_code?: string;
 }
 
 export interface Allocation {
@@ -133,7 +135,7 @@ export const api = {
     return data;
   },
 
-  async createBudgetItem(data: { name: string; category: string; budgeted_amount: number; grant_id: number }): Promise<BudgetItem> {
+  async createBudgetItem(data: { name: string; category: string; budgeted_amount: number; grant_id: number; remarks?: string }): Promise<BudgetItem> {
     const response = await fetch(`${API_BASE_URL}/api/budget-items`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -144,7 +146,7 @@ export const api = {
     return response.json();
   },
 
-  async updateBudgetItem(id: number, data: { name?: string; category?: string; budgeted_amount?: number; grant_id?: number }): Promise<BudgetItem> {
+  async updateBudgetItem(id: number, data: { name?: string; category?: string; budgeted_amount?: number; grant_id?: number; remarks?: string }): Promise<BudgetItem> {
     try {
       const response = await fetch(`${API_BASE_URL}/api/budget-items/${id}`, {
         method: 'PUT',
@@ -184,7 +186,7 @@ export const api = {
     return data;
   },
 
-  async createGrant(data: { name: string; total_amount: number; start_date: string; end_date: string; status?: string }): Promise<Grant> {
+  async createGrant(data: { name: string; total_amount: number; start_date: string; end_date: string; status?: string; grant_code?: string }): Promise<Grant> {
     const response = await fetch(`${API_BASE_URL}/api/grants`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -195,7 +197,7 @@ export const api = {
     return response.json();
   },
 
-  async updateGrant(id: number, data: { name?: string; total_amount?: number; start_date?: string; end_date?: string; status?: string }): Promise<Grant> {
+  async updateGrant(id: number, data: { name?: string; total_amount?: number; start_date?: string; end_date?: string; status?: string; grant_code?: string }): Promise<Grant> {
     const response = await fetch(`${API_BASE_URL}/api/grants/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

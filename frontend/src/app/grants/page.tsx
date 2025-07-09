@@ -28,7 +28,8 @@ const GrantsPage: React.FC = () => {
     total_amount: '',
     start_date: '',
     end_date: '',
-    status: 'active'
+    status: 'active',
+    grant_code: ''
   });
 
   const budgetGridRef = useRef<AgGridReact>(null);
@@ -38,14 +39,16 @@ const GrantsPage: React.FC = () => {
     total_amount: '',
     start_date: '',
     end_date: '',
-    status: 'active'
+    status: 'active',
+    grant_code: ''
   });
 
   const [newBudgetItem, setNewBudgetItem] = useState({
     name: '',
     category: '',
     budgeted_amount: '',
-    grant_id: ''
+    grant_id: '',
+    remarks: ''
   });
 
   useEffect(() => {
@@ -77,6 +80,17 @@ const GrantsPage: React.FC = () => {
       }
     },
     {
+      field: 'grant_code',
+      headerName: '助成金コード',
+      filter: 'agTextColumnFilter',
+      width: 120,
+      minWidth: 100,
+      cellRenderer: (params) => {
+        const grant = grants.find(g => g.id === params.data.grant_id);
+        return grant?.grant_code || '';
+      }
+    },
+    {
       field: 'name',
       headerName: '予算項目名',
       filter: 'agTextColumnFilter',
@@ -96,6 +110,15 @@ const GrantsPage: React.FC = () => {
       },
       width: 150,
       minWidth: 120,
+      cellStyle: { backgroundColor: '#ffffff' }
+    },
+    {
+      field: 'remarks',
+      headerName: '備考',
+      filter: 'agTextColumnFilter',
+      editable: true,
+      width: 200,
+      minWidth: 150,
       cellStyle: { backgroundColor: '#ffffff' }
     },
     {
@@ -186,10 +209,11 @@ const GrantsPage: React.FC = () => {
         total_amount: parseInt(newGrant.total_amount),
         start_date: newGrant.start_date,
         end_date: newGrant.end_date,
-        status: newGrant.status
+        status: newGrant.status,
+        grant_code: newGrant.grant_code
       });
       
-      setNewGrant({ name: '', total_amount: '', start_date: '', end_date: '', status: 'active' });
+      setNewGrant({ name: '', total_amount: '', start_date: '', end_date: '', status: 'active', grant_code: '' });
       setShowNewGrantForm(false);
       await loadData();
     } catch (error) {
@@ -206,10 +230,11 @@ const GrantsPage: React.FC = () => {
         name: newBudgetItem.name,
         category: newBudgetItem.category,
         budgeted_amount: parseInt(newBudgetItem.budgeted_amount),
-        grant_id: parseInt(newBudgetItem.grant_id)
+        grant_id: parseInt(newBudgetItem.grant_id),
+        remarks: newBudgetItem.remarks
       });
       
-      setNewBudgetItem({ name: '', category: '', budgeted_amount: '', grant_id: '' });
+      setNewBudgetItem({ name: '', category: '', budgeted_amount: '', grant_id: '', remarks: '' });
       setShowNewBudgetItemForm(false);
       await loadData();
     } catch (error) {
@@ -280,7 +305,8 @@ const GrantsPage: React.FC = () => {
       total_amount: grant.total_amount ? grant.total_amount.toString() : '',
       start_date: grant.start_date || '',
       end_date: grant.end_date || '',
-      status: grant.status || 'active'
+      status: grant.status || 'active',
+      grant_code: grant.grant_code || ''
     });
   };
 
@@ -293,13 +319,14 @@ const GrantsPage: React.FC = () => {
       total_amount: editGrant.total_amount ? parseInt(editGrant.total_amount) : 0,
       start_date: editGrant.start_date,
       end_date: editGrant.end_date,
-      status: editGrant.status as 'active' | 'completed' | 'applied'
+      status: editGrant.status as 'active' | 'completed' | 'applied',
+      grant_code: editGrant.grant_code
     };
     
     try {
       await api.updateGrant(editingGrantId, updateData);
       setEditingGrantId(null);
-      setEditGrant({ name: '', total_amount: '', start_date: '', end_date: '', status: 'active' });
+      setEditGrant({ name: '', total_amount: '', start_date: '', end_date: '', status: 'active', grant_code: '' });
       await loadData();
     } catch (error) {
       console.error('Failed to update grant:', error);
@@ -309,7 +336,7 @@ const GrantsPage: React.FC = () => {
 
   const cancelEdit = () => {
     setEditingGrantId(null);
-    setEditGrant({ name: '', total_amount: '', start_date: '', end_date: '', status: 'active' });
+    setEditGrant({ name: '', total_amount: '', start_date: '', end_date: '', status: 'active', grant_code: '' });
   };
 
   const onBudgetCellValueChanged = async (params: any) => {
@@ -318,7 +345,8 @@ const GrantsPage: React.FC = () => {
         name: params.data.name,
         category: params.data.category,
         budgeted_amount: params.data.budgeted_amount,
-        grant_id: params.data.grant_id
+        grant_id: params.data.grant_id,
+        remarks: params.data.remarks
       };
       
       // 新しい行（一時的なID）の場合は作成、既存の行は更新
@@ -374,7 +402,8 @@ const GrantsPage: React.FC = () => {
       name: '',
       category: '',
       budgeted_amount: 0,
-      grant_id: selectedGrantId || (grants.length > 0 ? grants[0].id : 1)
+      grant_id: selectedGrantId || (grants.length > 0 ? grants[0].id : 1),
+      remarks: ''
     };
     
     const updatedItems = [...budgetItems, newRow];
@@ -525,6 +554,17 @@ const GrantsPage: React.FC = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                  助成金コード
+                </label>
+                <input
+                  type="text"
+                  value={newGrant.grant_code}
+                  onChange={(e) => setNewGrant({...newGrant, grant_code: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   総額
                 </label>
                 <input
@@ -625,6 +665,15 @@ const GrantsPage: React.FC = () => {
                       onChange={(e) => setEditGrant({...editGrant, name: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">助成金コード</label>
+                    <input
+                      type="text"
+                      value={editGrant.grant_code}
+                      onChange={(e) => setEditGrant({...editGrant, grant_code: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div>
@@ -805,6 +854,15 @@ const GrantsPage: React.FC = () => {
                               onChange={(e) => setEditGrant({...editGrant, name: e.target.value})}
                               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                               required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">助成金コード</label>
+                            <input
+                              type="text"
+                              value={editGrant.grant_code}
+                              onChange={(e) => setEditGrant({...editGrant, grant_code: e.target.value})}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                           </div>
                           <div>

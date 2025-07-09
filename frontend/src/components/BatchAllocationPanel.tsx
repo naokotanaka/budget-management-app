@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef, themeAlpine } from 'ag-grid-community';
-import { api, Transaction, BudgetItem, Grant } from '@/lib/api';
+import { api, Transaction, BudgetItem, Grant, Allocation } from '@/lib/api';
 import '@/lib/ag-grid-setup';
 
 interface BatchAllocationPanelProps {
@@ -14,6 +14,7 @@ interface BatchAllocationPanelProps {
 const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete }) => {
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
+  const [allocations, setAllocations] = useState<Allocation[]>([]);
   const [selectedBudgetItem, setSelectedBudgetItem] = useState<BudgetItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,12 +27,14 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [budgetItemsResponse, grantsResponse] = await Promise.all([
+        const [budgetItemsResponse, grantsResponse, allocationsResponse] = await Promise.all([
           api.getBudgetItems(),
-          api.getGrants()
+          api.getGrants(),
+          api.getAllocations()
         ]);
         setBudgetItems(budgetItemsResponse);
         setGrants(grantsResponse);
+        setAllocations(allocationsResponse);
       } catch (err) {
         setError('データの取得に失敗しました');
         console.error('Error fetching data:', err);
@@ -41,19 +44,48 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
     fetchData();
   }, []);
 
+  // 残額を計算する関数
+  const getRemainingAmount = (budgetItem: BudgetItem) => {
+    const allocatedAmount = allocations
+      .filter(allocation => allocation.budget_item_id === budgetItem.id)
+      .reduce((total, allocation) => total + (allocation.amount || 0), 0);
+    return budgetItem.budgeted_amount - allocatedAmount;
+  };
+
   // 予算項目グリッドの列定義
   const budgetColumnDefs: ColDef[] = [
     {
       headerName: '助成金',
       field: 'grant_name',
       width: 120,
-      cellStyle: { fontSize: '12px' }
+      cellStyle: { fontSize: '12px' },
+      cellRenderer: (params) => {
+        const grant = grants.find(g => g.id === params.data.grant_id);
+        return grant?.name || '不明';
+      }
     },
     {
       headerName: '予算項目',
       field: 'name',
-      width: 140,
+      width: 120,
       cellStyle: { fontSize: '12px' }
+    },
+    {
+      headerName: '残額',
+      field: 'remaining_amount',
+      width: 100,
+      valueGetter: (params) => getRemainingAmount(params.data),
+      valueFormatter: (params) => `¥${params.value?.toLocaleString() || 0}`,
+      cellStyle: (params) => {
+        const remaining = params.value || 0;
+        return {
+          fontSize: '12px',
+          textAlign: 'right',
+          backgroundColor: remaining < 0 ? '#fef2f2' : '#f0fdf4',
+          color: remaining < 0 ? '#dc2626' : '#16a34a',
+          fontWeight: 'bold'
+        };
+      }
     },
     {
       headerName: '予算額',
@@ -61,6 +93,18 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       width: 100,
       valueFormatter: (params) => `¥${params.value?.toLocaleString() || 0}`,
       cellStyle: { fontSize: '12px', textAlign: 'right' }
+    },
+    {
+      headerName: 'ステータス',
+      field: 'grant_status',
+      width: 80,
+      cellStyle: { fontSize: '12px' },
+      cellRenderer: (params) => {
+        const grant = grants.find(g => g.id === params.data.grant_id);
+        const status = grant?.status || 'active';
+        const statusText = status === 'active' ? '実行中' : status === 'completed' ? '終了' : '報告済み';
+        return statusText;
+      }
     }
   ];
 
@@ -274,10 +318,13 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         {/* 予算項目グリッド */}
         <div className="flex-1 min-h-0">
           <h3 className="font-medium text-gray-700 mb-2">予算項目を選択</h3>
-          <div style={{ height: '300px', width: '100%' }}>
+          <div style={{ height: '400px', width: '100%' }}>
             <AgGridReact
               ref={budgetGridRef}
-              rowData={budgetItems}
+              rowData={budgetItems.filter(item => {
+                const grant = grants.find(g => g.id === item.grant_id);
+                return grant?.status !== 'applied';
+              })}
               columnDefs={budgetColumnDefs}
               theme={themeAlpine}
               rowSelection="single"
