@@ -293,22 +293,19 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         const value = allocation?.budget_item || params.data.budget_item || params.value;
         
         if (!value || value === '未割当') {
-          return '<div style="text-align: right; color: #9ca3af;"></div>';
+          return '';
         }
         
         // 文字列でない場合は文字列に変換
-        let displayText = '';
         if (typeof value !== 'string') {
           if (value && typeof value === 'object') {
-            displayText = value.display_name || `${value.grant_name || '不明'}-${value.name}` || '';
-          } else {
-            displayText = String(value);
+            const displayName = value.display_name || `${value.grant_name || '不明'}-${value.name}` || '';
+            return displayName;
           }
-        } else {
-          displayText = value;
+          return String(value);
         }
         
-        return `<div style="text-align: right; font-weight: bold;">${displayText}</div>`;
+        return value;
       },
       width: 180,
       minWidth: 150,
@@ -316,7 +313,9 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         const value = params.value;
         const isUnallocated = !value || value === '未割当';
         return {
-          color: isUnallocated ? '#9ca3af' : undefined
+          fontWeight: 'bold',
+          color: isUnallocated ? '#9ca3af' : undefined,
+          textAlign: 'right'
         };
       },
       pinned: 'left'
