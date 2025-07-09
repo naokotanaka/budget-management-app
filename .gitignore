@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Virtual environments
+venv/
+new_venv/
+
+# Database
+*.db
+
+# Logs
+*.log
+logs/
+
+# Build outputs
+.next/
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Process files
+*.pid
+
+# Uploads
+uploads/
+
+# Temporary files
+*.tmp
+*.temp
