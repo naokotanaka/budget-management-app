@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { AgGridReact } from 'ag-grid-react';
+import { ColDef, ModuleRegistry, AllCommunityModule, themeAlpine } from 'ag-grid-community';
 import { api, Transaction, BudgetItem, Grant } from '@/lib/api';
 
 interface BatchAllocationPanelProps {
@@ -13,9 +15,13 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   const [selectedBudgetItem, setSelectedBudgetItem] = useState<BudgetItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  const budgetGridRef = useRef<AgGridReact>(null);
 
   // 予算項目データを取得
   useEffect(() => {
+    ModuleRegistry.registerModules([AllCommunityModule]);
+    
     const fetchData = async () => {
       try {
         const [budgetItemsResponse, grantsResponse] = await Promise.all([
@@ -32,6 +38,39 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
 
     fetchData();
   }, []);
+
+  // 予算項目グリッドの列定義
+  const budgetColumnDefs: ColDef[] = [
+    {
+      headerName: '助成金',
+      field: 'grant_name',
+      width: 120,
+      cellStyle: { fontSize: '12px' }
+    },
+    {
+      headerName: '予算項目',
+      field: 'name',
+      width: 140,
+      cellStyle: { fontSize: '12px' }
+    },
+    {
+      headerName: '予算額',
+      field: 'budgeted_amount',
+      width: 100,
+      valueFormatter: (params) => `¥${params.value?.toLocaleString() || 0}`,
+      cellStyle: { fontSize: '12px', textAlign: 'right' }
+    }
+  ];
+
+  // 予算項目選択ハンドラー
+  const handleBudgetItemSelection = () => {
+    const selectedNodes = budgetGridRef.current?.api?.getSelectedNodes();
+    if (selectedNodes && selectedNodes.length > 0) {
+      setSelectedBudgetItem(selectedNodes[0].data);
+    } else {
+      setSelectedBudgetItem(null);
+    }
+  };
 
   // 一括割当実行
   const handleBatchAllocation = async () => {
@@ -88,7 +127,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   const totalAmount = selectedRows.reduce((sum, row) => sum + row.amount, 0);
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 h-full">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 h-full flex flex-col">
       <h2 className="text-lg font-semibold mb-4">一括割当</h2>
       
       {error && (
@@ -97,9 +136,9 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         </div>
       )}
       
-      <div className="space-y-4">
+      <div className="flex flex-col h-full space-y-4">
         {/* 選択された取引の情報 */}
-        <div className="bg-gray-50 p-3 rounded">
+        <div className="bg-gray-50 p-3 rounded flex-shrink-0">
           <h3 className="font-medium text-gray-700 mb-2">選択された取引</h3>
           <div className="text-sm text-gray-600">
             <div>件数: {selectedRows.length}件</div>
@@ -107,37 +146,35 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
           </div>
         </div>
 
-        {/* 予算項目選択 */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            割当先予算項目
-          </label>
-          <select
-            value={selectedBudgetItem?.id || ''}
-            onChange={(e) => {
-              const budgetItem = budgetItems.find(item => item.id === parseInt(e.target.value));
-              setSelectedBudgetItem(budgetItem || null);
-            }}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">予算項目を選択...</option>
-            {grants.map(grant => (
-              <optgroup key={grant.id} label={grant.name}>
-                {budgetItems
-                  .filter(item => item.grant_id === grant.id)
-                  .map(item => (
-                    <option key={item.id} value={item.id}>
-                      {item.display_name}
-                    </option>
-                  ))}
-              </optgroup>
-            ))}
-          </select>
+        {/* 予算項目グリッド */}
+        <div className="flex-1 min-h-0">
+          <h3 className="font-medium text-gray-700 mb-2">予算項目を選択</h3>
+          <div style={{ height: '300px', width: '100%' }}>
+            <AgGridReact
+              ref={budgetGridRef}
+              rowData={budgetItems}
+              columnDefs={budgetColumnDefs}
+              theme={themeAlpine}
+              rowSelection="single"
+              onSelectionChanged={handleBudgetItemSelection}
+              defaultColDef={{
+                sortable: true,
+                filter: true,
+                resizable: true,
+                minWidth: 100
+              }}
+              rowHeight={28}
+              headerHeight={32}
+              suppressMenuHide={true}
+              suppressMovableColumns={true}
+              enableCellTextSelection={true}
+            />
+          </div>
         </div>
 
         {/* 選択された予算項目の情報 */}
         {selectedBudgetItem && (
-          <div className="bg-blue-50 p-3 rounded">
+          <div className="bg-blue-50 p-3 rounded flex-shrink-0">
             <h4 className="font-medium text-blue-700 mb-1">選択された予算項目</h4>
             <div className="text-sm text-blue-600">
               <div>{selectedBudgetItem.display_name}</div>
@@ -150,7 +187,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         <button
           onClick={handleBatchAllocation}
           disabled={loading || !selectedBudgetItem || selectedRows.length === 0}
-          className={`w-full py-2 px-4 rounded-md font-medium ${
+          className={`w-full py-2 px-4 rounded-md font-medium flex-shrink-0 ${
             loading || !selectedBudgetItem || selectedRows.length === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : 'bg-blue-600 text-white hover:bg-blue-700'
