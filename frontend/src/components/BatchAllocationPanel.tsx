@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, ModuleRegistry, AllCommunityModule, themeAlpine } from 'ag-grid-community';
+import { ColDef, themeAlpine } from 'ag-grid-community';
 import { api, Transaction, BudgetItem, Grant } from '@/lib/api';
+import '@/lib/ag-grid-setup';
 
 interface BatchAllocationPanelProps {
   selectedRows: Transaction[];
@@ -18,10 +19,9 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   
   const budgetGridRef = useRef<AgGridReact>(null);
 
+
   // 予算項目データを取得
   useEffect(() => {
-    ModuleRegistry.registerModules([AllCommunityModule]);
-    
     const fetchData = async () => {
       try {
         const [budgetItemsResponse, grantsResponse] = await Promise.all([
