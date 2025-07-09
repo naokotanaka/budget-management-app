@@ -317,6 +317,30 @@ export const api = {
     }
   },
 
+  async deleteAllocation(allocationId: number): Promise<any> {
+    try {
+      console.log('Deleting allocation:', allocationId);
+      
+      const response = await fetch(`${API_BASE_URL}/api/allocations/${allocationId}`, {
+        method: 'DELETE',
+      });
+      
+      console.log('Delete response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Delete API Error Response:', errorText);
+        throw new Error(`Delete API Error: ${response.status} - ${errorText}`);
+      }
+      
+      console.log('Delete allocation success');
+      return true;
+    } catch (error) {
+      console.error('Delete allocation error:', error);
+      throw error;
+    }
+  },
+
   // Reports
   async getCrossTable(startDate: string, endDate: string): Promise<any> {
     const response = await fetch(`${API_BASE_URL}/api/reports/cross-table?start_date=${startDate}&end_date=${endDate}`);

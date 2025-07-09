@@ -73,6 +73,82 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
     }
   };
 
+  // 一括割当解除
+  const handleBatchUnallocation = async () => {
+    if (selectedRows.length === 0) {
+      setError('解除する取引を選択してください');
+      return;
+    }
+
+    const confirmResult = window.confirm(`${selectedRows.length}件の取引の割当を解除しますか？`);
+    if (!confirmResult) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // 既存の割当データを取得
+      const existingAllocations = await api.getAllocations();
+      
+      const results = [];
+      
+      // 各取引の割当を解除
+      for (const transaction of selectedRows) {
+        try {
+          const existingAllocation = existingAllocations.find(
+            (allocation: any) => allocation.transaction_id === transaction.id
+          );
+
+          if (existingAllocation) {
+            // 既存の割当を削除
+            await api.deleteAllocation(existingAllocation.id);
+            results.push({ status: 'fulfilled', value: existingAllocation });
+          } else {
+            // 割当が存在しない場合はスキップ
+            console.log(`No allocation found for transaction ${transaction.id}`);
+            results.push({ status: 'fulfilled', value: null });
+          }
+        } catch (error) {
+          console.error(`Error removing allocation for transaction ${transaction.id}:`, error);
+          results.push({ status: 'rejected', reason: error });
+        }
+      }
+      
+      // 成功・失敗の集計
+      const successful = results.filter(result => result.status === 'fulfilled').length;
+      const failed = results.filter(result => result.status === 'rejected').length;
+      
+      if (failed === 0) {
+        // 全て成功
+        setError(null);
+        alert(`${successful}件の取引の割当を解除しました`);
+        
+        // 表示を更新
+        if (onAllocationComplete) {
+          onAllocationComplete();
+        }
+      } else if (successful > 0) {
+        // 部分的に成功
+        setError(`${successful}件解除成功、${failed}件解除失敗しました`);
+        alert(`部分的に完了: ${successful}件解除成功、${failed}件解除失敗`);
+        
+        // 部分的成功でも表示を更新
+        if (onAllocationComplete) {
+          onAllocationComplete();
+        }
+      } else {
+        // 全て失敗
+        throw new Error('全ての割当解除が失敗しました');
+      }
+      
+    } catch (err) {
+      setError('一括割当解除に失敗しました');
+      console.error('Error in batch unallocation:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // 一括割当実行
   const handleBatchAllocation = async () => {
     if (!selectedBudgetItem || selectedRows.length === 0) {
@@ -215,17 +291,31 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         )}
 
         {/* 実行ボタン */}
-        <button
-          onClick={handleBatchAllocation}
-          disabled={loading || !selectedBudgetItem || selectedRows.length === 0}
-          className={`w-full py-2 px-4 rounded-md font-medium flex-shrink-0 ${
-            loading || !selectedBudgetItem || selectedRows.length === 0
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-blue-600 text-white hover:bg-blue-700'
-          }`}
-        >
-          {loading ? '実行中...' : `${selectedRows.length}件を一括割当`}
-        </button>
+        <div className="flex-shrink-0 space-y-2">
+          <button
+            onClick={handleBatchAllocation}
+            disabled={loading || !selectedBudgetItem || selectedRows.length === 0}
+            className={`w-full py-2 px-4 rounded-md font-medium ${
+              loading || !selectedBudgetItem || selectedRows.length === 0
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-blue-600 text-white hover:bg-blue-700'
+            }`}
+          >
+            {loading ? '実行中...' : `${selectedRows.length}件を一括割当`}
+          </button>
+          
+          <button
+            onClick={handleBatchUnallocation}
+            disabled={loading || selectedRows.length === 0}
+            className={`w-full py-2 px-4 rounded-md font-medium ${
+              loading || selectedRows.length === 0
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-red-600 text-white hover:bg-red-700'
+            }`}
+          >
+            {loading ? '実行中...' : `${selectedRows.length}件の割当を解除`}
+          </button>
+        </div>
       </div>
     </div>
   );
