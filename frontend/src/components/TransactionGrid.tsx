@@ -26,7 +26,8 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
   
   // 親コンポーネントからのrefを設定
   React.useImperativeHandle(ref, () => ({
-    api: gridRef.current?.api
+    api: gridRef.current?.api,
+    reloadData: loadData
   }));
 
   // Register AG Grid modules and load data on mount

@@ -8,9 +8,10 @@ import '@/lib/ag-grid-setup';
 
 interface BatchAllocationPanelProps {
   selectedRows: Transaction[];
+  onAllocationComplete?: () => void;
 }
 
-const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows }) => {
+const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete }) => {
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
   const [selectedBudgetItem, setSelectedBudgetItem] = useState<BudgetItem | null>(null);
@@ -126,10 +127,20 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         setError(null);
         alert(`${successful}件の取引を「${selectedBudgetItem.display_name}」に割り当てました`);
         setSelectedBudgetItem(null);
+        
+        // 表示を更新
+        if (onAllocationComplete) {
+          onAllocationComplete();
+        }
       } else if (successful > 0) {
         // 部分的に成功
         setError(`${successful}件成功、${failed}件失敗しました`);
         alert(`部分的に完了: ${successful}件成功、${failed}件失敗`);
+        
+        // 部分的成功でも表示を更新
+        if (onAllocationComplete) {
+          onAllocationComplete();
+        }
       } else {
         // 全て失敗
         throw new Error('全ての割当が失敗しました');
