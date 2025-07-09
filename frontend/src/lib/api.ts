@@ -290,6 +290,33 @@ export const api = {
     return response.json();
   },
 
+  async updateAllocation(allocationId: number, data: Partial<Allocation>): Promise<any> {
+    try {
+      console.log('Updating allocation:', allocationId, data);
+      
+      const response = await fetch(`${API_BASE_URL}/api/allocations/${allocationId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      
+      console.log('Update response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Update API Error Response:', errorText);
+        throw new Error(`Update API Error: ${response.status} - ${errorText}`);
+      }
+      
+      const result = await response.json();
+      console.log('Update allocation success:', result);
+      return result;
+    } catch (error) {
+      console.error('Update allocation error:', error);
+      throw error;
+    }
+  },
+
   // Reports
   async getCrossTable(startDate: string, endDate: string): Promise<any> {
     const response = await fetch(`${API_BASE_URL}/api/reports/cross-table?start_date=${startDate}&end_date=${endDate}`);

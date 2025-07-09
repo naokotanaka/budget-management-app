@@ -103,7 +103,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
 
           let result;
           if (existingAllocation) {
-            // 更新
+            // 既存の割当がある場合は更新
             result = await api.updateAllocation(existingAllocation.id, allocationData);
           } else {
             // 新規作成
