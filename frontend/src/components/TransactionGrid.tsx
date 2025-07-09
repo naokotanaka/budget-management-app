@@ -239,6 +239,22 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
 
   const columnDefs: ColDef[] = useMemo(() => [
     {
+      headerName: '',
+      field: 'select',
+      checkboxSelection: true,
+      headerCheckboxSelection: true,
+      width: 50,
+      minWidth: 50,
+      maxWidth: 50,
+      pinned: 'left',
+      lockPosition: true,
+      suppressMenu: true,
+      suppressMovable: true,
+      suppressResize: true,
+      filter: false,
+      sortable: false
+    },
+    {
       field: 'budget_item',
       headerName: '予算項目選択',
       cellEditor: 'agSelectCellEditor',
@@ -792,7 +808,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           }}
           rowHeight={28}
           suppressHorizontalScroll={false}
-          rowSelection={{ mode: 'multiRow', checkboxes: false, headerCheckbox: false, enableClickSelection: true }}
+          rowSelection="multiple"
           getRowStyle={(params) => {
             return params.node.rowIndex % 2 === 0 
               ? { backgroundColor: '#f3f4f6' } 
