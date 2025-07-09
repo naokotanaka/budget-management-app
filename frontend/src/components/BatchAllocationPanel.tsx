@@ -17,6 +17,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   const [selectedBudgetItem, setSelectedBudgetItem] = useState<BudgetItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   
   const budgetGridRef = useRef<AgGridReact>(null);
 
@@ -85,6 +86,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
 
     setLoading(true);
     setError(null);
+    setSuccessMessage(null);
 
     try {
       // 既存の割当データを取得
@@ -121,7 +123,10 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       if (failed === 0) {
         // 全て成功
         setError(null);
-        alert(`${successful}件の取引の割当を解除しました`);
+        setSuccessMessage(`${successful}件の取引の割当を解除しました`);
+        
+        // 成功メッセージを3秒後に自動消去
+        setTimeout(() => setSuccessMessage(null), 3000);
         
         // 表示を更新
         if (onAllocationComplete) {
@@ -130,6 +135,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       } else if (successful > 0) {
         // 部分的に成功
         setError(`${successful}件解除成功、${failed}件解除失敗しました`);
+        // 部分的成功の場合のみalert表示
         alert(`部分的に完了: ${successful}件解除成功、${failed}件解除失敗`);
         
         // 部分的成功でも表示を更新
@@ -158,6 +164,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
 
     setLoading(true);
     setError(null);
+    setSuccessMessage(null);
 
     try {
       // 既存の割当データを一度だけ取得
@@ -201,7 +208,11 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       if (failed === 0) {
         // 全て成功
         setError(null);
-        alert(`${successful}件の取引を「${selectedBudgetItem.display_name}」に割り当てました`);
+        setSuccessMessage(`${successful}件の取引を「${selectedBudgetItem.display_name}」に割り当てました`);
+        
+        // 成功メッセージを3秒後に自動消去
+        setTimeout(() => setSuccessMessage(null), 3000);
+        
         setSelectedBudgetItem(null);
         
         // 表示を更新
@@ -211,6 +222,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       } else if (successful > 0) {
         // 部分的に成功
         setError(`${successful}件成功、${failed}件失敗しました`);
+        // 部分的成功の場合のみalert表示
         alert(`部分的に完了: ${successful}件成功、${failed}件失敗`);
         
         // 部分的成功でも表示を更新
@@ -240,6 +252,12 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4">
           {error}
+        </div>
+      )}
+      
+      {successMessage && (
+        <div className="bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded mb-4">
+          {successMessage}
         </div>
       )}
       
