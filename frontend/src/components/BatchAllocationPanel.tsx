@@ -91,29 +91,45 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
           amount: transaction.amount
         };
 
-        // 既存の割当があるかチェック
-        const existingAllocations = await api.getAllocations();
-        const existingAllocation = existingAllocations.find(
-          (allocation: any) => allocation.transaction_id === transaction.id
-        );
+        try {
+          // 既存の割当があるかチェック
+          const existingAllocations = await api.getAllocations();
+          const existingAllocation = existingAllocations.find(
+            (allocation: any) => allocation.transaction_id === transaction.id
+          );
 
-        if (existingAllocation) {
-          // 更新
-          return api.updateAllocation(existingAllocation.id, allocationData);
-        } else {
-          // 新規作成
-          return api.createAllocation(allocationData);
+          if (existingAllocation) {
+            // 更新
+            return await api.updateAllocation(existingAllocation.id, allocationData);
+          } else {
+            // 新規作成
+            return await api.createAllocation(allocationData);
+          }
+        } catch (error) {
+          console.error(`Error processing allocation for transaction ${transaction.id}:`, error);
+          throw error;
         }
       });
 
-      await Promise.all(allocationPromises);
+      const results = await Promise.allSettled(allocationPromises);
       
-      // 成功メッセージ
-      setError(null);
-      alert(`${selectedRows.length}件の取引を「${selectedBudgetItem.display_name}」に割り当てました`);
+      // 成功・失敗の集計
+      const successful = results.filter(result => result.status === 'fulfilled').length;
+      const failed = results.filter(result => result.status === 'rejected').length;
       
-      // 選択をクリア
-      setSelectedBudgetItem(null);
+      if (failed === 0) {
+        // 全て成功
+        setError(null);
+        alert(`${successful}件の取引を「${selectedBudgetItem.display_name}」に割り当てました`);
+        setSelectedBudgetItem(null);
+      } else if (successful > 0) {
+        // 部分的に成功
+        setError(`${successful}件成功、${failed}件失敗しました`);
+        alert(`部分的に完了: ${successful}件成功、${failed}件失敗`);
+      } else {
+        // 全て失敗
+        throw new Error('全ての割当が失敗しました');
+      }
       
     } catch (err) {
       setError('一括割当に失敗しました');
