@@ -314,7 +314,8 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         const isUnallocated = !value || value === '未割当';
         return {
           fontWeight: 'bold',
-          color: isUnallocated ? '#9ca3af' : undefined
+          color: isUnallocated ? '#9ca3af' : undefined,
+          textAlign: 'right'
         };
       },
       pinned: 'left'
