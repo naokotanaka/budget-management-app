@@ -251,14 +251,32 @@ export const api = {
   },
 
   async createAllocation(data: Allocation): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/api/allocations`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) throw new Error('Failed to create allocation');
-    return response.json();
+    try {
+      console.log('Creating allocation:', data);
+      console.log('API URL:', `${API_BASE_URL}/api/allocations`);
+      
+      const response = await fetch(`${API_BASE_URL}/api/allocations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API Error Response:', errorText);
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
+      }
+      
+      const result = await response.json();
+      console.log('Create allocation success:', result);
+      return result;
+    } catch (error) {
+      console.error('Create allocation error:', error);
+      throw error;
+    }
   },
 
   async createBatchAllocations(data: Allocation[]): Promise<any> {
