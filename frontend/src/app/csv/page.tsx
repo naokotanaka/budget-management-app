@@ -163,8 +163,7 @@ export default function CSVManagementPage() {
                     </a>
                     へアクセス
                   </li>
-                  <li>テンプレートの選択: <span className="font-semibold">「予算用」</span>を選択</li>
-                  <li>分割: <span className="font-semibold">「分割無し」</span>を選択</li>
+                  <li>テンプレートの選択: <span className="font-semibold">「予算用 分割無し」</span>を選択</li>
                   <li>文字コード: <span className="font-semibold">「UTF-8(BOMつき)」</span>を選択</li>
                   <li>「ダウンロード」ボタンをクリック</li>
                 </ol>
