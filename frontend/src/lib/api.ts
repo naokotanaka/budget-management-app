@@ -357,14 +357,30 @@ export const api = {
     return response.blob();
   },
 
-  async exportAllData(): Promise<Blob> {
-    const response = await fetch(`${API_BASE_URL}/api/export/all-data`);
+  async exportAllData(startDate?: string, endDate?: string): Promise<Blob> {
+    const params = new URLSearchParams();
+    if (startDate) params.append('start_date', startDate);
+    if (endDate) params.append('end_date', endDate);
+    
+    const url = params.toString() 
+      ? `${API_BASE_URL}/api/export/all-data?${params}` 
+      : `${API_BASE_URL}/api/export/all-data`;
+    
+    const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to export all data');
     return response.blob();
   },
 
-  async exportAllocations(): Promise<Blob> {
-    const response = await fetch(`${API_BASE_URL}/api/export/allocations`);
+  async exportAllocations(startDate?: string, endDate?: string): Promise<Blob> {
+    const params = new URLSearchParams();
+    if (startDate) params.append('start_date', startDate);
+    if (endDate) params.append('end_date', endDate);
+    
+    const url = params.toString() 
+      ? `${API_BASE_URL}/api/export/allocations?${params}` 
+      : `${API_BASE_URL}/api/export/allocations`;
+    
+    const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to export allocations');
     return response.blob();
   },

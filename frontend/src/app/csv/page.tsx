@@ -1,11 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from '@/lib/api';
+import { CONFIG } from '@/lib/config';
 
 export default function CSVManagementPage() {
   const [uploading, setUploading] = useState(false);
   const [downloading, setDownloading] = useState('');
+  const [dateRange, setDateRange] = useState({
+    startDate: CONFIG.DEFAULT_DATE_RANGE.START,
+    endDate: CONFIG.DEFAULT_DATE_RANGE.END
+  });
+
+  useEffect(() => {
+    // 設定画面から保存された期間設定を取得
+    const savedDateFilter = sessionStorage.getItem('transactionDateFilter');
+    if (savedDateFilter) {
+      try {
+        const filterSettings = JSON.parse(savedDateFilter);
+        if (filterSettings.startDate && filterSettings.endDate) {
+          setDateRange({
+            startDate: filterSettings.startDate,
+            endDate: filterSettings.endDate
+          });
+        }
+      } catch (error) {
+        console.error('Failed to parse date filter settings:', error);
+      }
+    }
+  }, []);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>, type: string) => {
     const file = event.target.files?.[0];
@@ -73,14 +96,15 @@ export default function CSVManagementPage() {
           description = '助成金・予算項目データ';
           break;
         case 'allocations':
-          blob = await api.exportAllocations();
+          blob = await api.exportAllocations(dateRange.startDate, dateRange.endDate);
           filename = `allocations_${new Date().toISOString().split('T')[0]}.csv`;
           description = '割当データ';
           break;
         case 'all-data':
-          // TODO: 全データエクスポート機能を実装
-          alert('全データエクスポート機能は準備中です');
-          return;
+          blob = await api.exportAllData(dateRange.startDate, dateRange.endDate);
+          filename = `all_data_${new Date().toISOString().split('T')[0]}.csv`;
+          description = '全データ';
+          break;
         default:
           throw new Error('サポートされていないエクスポート形式です。');
       }
@@ -225,6 +249,23 @@ export default function CSVManagementPage() {
         {/* エクスポートセクション */}
         <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-medium text-gray-900 mb-4">データエクスポート</h2>
+          
+          {/* 期間表示 */}
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+            <p className="text-sm text-gray-600">
+              <span className="font-semibold">エクスポート期間:</span> 
+              {dateRange.startDate} 〜 {dateRange.endDate}
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              ※ 割当データ・全データはこの期間のデータのみダウンロードされます
+            </p>
+            <p className="text-xs text-gray-500">
+              ※ 助成金・予算項目は報告終了以外のデータがダウンロードされます
+            </p>
+            <p className="text-xs text-gray-500 mt-2">
+              期間を変更するには、設定画面から行ってください
+            </p>
+          </div>
           
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

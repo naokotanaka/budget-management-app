@@ -634,9 +634,9 @@ def get_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db
 @app.get("/api/export/grants-budget-allocations")
 def export_grants_budget_allocations(db: Session = Depends(get_db)):
     """助成金・予算項目データをCSVでエクスポート（割当データは含まない）"""
-    # データを取得
-    grants = db.query(Grant).all()
-    budget_items = db.query(BudgetItem).all()
+    # データを取得（報告終了を除外）
+    grants = db.query(Grant).filter(Grant.status != "報告終了").all()
+    budget_items = db.query(BudgetItem).join(Grant).filter(Grant.status != "報告終了").all()
     
     # CSVデータを作成
     output = io.StringIO()
@@ -686,10 +686,14 @@ def export_grants_budget_allocations(db: Session = Depends(get_db)):
     )
 
 @app.get("/api/export/allocations")
-def export_allocations(db: Session = Depends(get_db)):
+def export_allocations(
+    db: Session = Depends(get_db),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None)
+):
     """割当データのみをCSVでエクスポート"""
     # 割当データを取引・予算項目・助成金情報と共に取得
-    allocations = db.query(
+    query = db.query(
         Allocation.id,
         Allocation.transaction_id,
         Allocation.budget_item_id,
@@ -705,7 +709,15 @@ def export_allocations(db: Session = Depends(get_db)):
         BudgetItem, Allocation.budget_item_id == BudgetItem.id
     ).join(
         Grant, BudgetItem.grant_id == Grant.id
-    ).order_by(Transaction.date.desc()).all()
+    )
+    
+    # 期間フィルタリング
+    if start_date:
+        query = query.filter(Transaction.date >= start_date)
+    if end_date:
+        query = query.filter(Transaction.date <= end_date)
+    
+    allocations = query.order_by(Transaction.date.desc()).all()
     
     # CSVデータを作成
     output = io.StringIO()
@@ -746,7 +758,11 @@ def export_allocations(db: Session = Depends(get_db)):
     )
 
 @app.get("/api/export/all-data")
-def export_all_data(db: Session = Depends(get_db)):
+def export_all_data(
+    db: Session = Depends(get_db),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None)
+):
     """取引・助成金・予算項目・割当の統合データをCSVでエクスポート"""
     # 全データを結合して取得
     query = db.query(
@@ -781,7 +797,15 @@ def export_all_data(db: Session = Depends(get_db)):
         BudgetItem, Allocation.budget_item_id == BudgetItem.id
     ).outerjoin(
         Grant, BudgetItem.grant_id == Grant.id
-    ).all()
+    )
+    
+    # 期間フィルタリング
+    if start_date:
+        query = query.filter(Transaction.date >= start_date)
+    if end_date:
+        query = query.filter(Transaction.date <= end_date)
+    
+    result = query.all()
     
     # CSVデータを作成
     output = io.StringIO()
@@ -800,7 +824,7 @@ def export_all_data(db: Session = Depends(get_db)):
     ])
     
     # データ行
-    for row in query:
+    for row in result:
         writer.writerow([
             row.transaction_id,
             row.journal_number,
