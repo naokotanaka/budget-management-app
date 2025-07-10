@@ -54,3 +54,6 @@
   - 必須4列（ID、取引ID、予算項目ID、金額）のみでアップロード可能か確認
   - 実装場所: `/root/nagaiku-budget/backend/main.py:413`
   - 部分データでも正常動作することを確認済み（理論上）
+
+## 関連ドキュメント
+- 改善提案リスト: `/home/tanaka/nagaiku-budget/IMPROVEMENT_PROPOSALS.md`
