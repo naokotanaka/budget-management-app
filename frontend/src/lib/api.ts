@@ -1,5 +1,7 @@
-// Use external IP for all connections
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8000';
+// Environment-based API URL configuration
+const API_BASE_URL = process.env.NODE_ENV === 'development'
+  ? process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8001'  // Development: port 8001
+  : process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8000'; // Production: port 8000
 
 export interface Transaction {
   id: string;

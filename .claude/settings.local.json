@@ -79,7 +79,8 @@
       "Bash(git branch:*)",
       "Bash(git checkout:*)",
       "Bash(git revert:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(git gc:*)"
     ],
     "deny": []
   }
