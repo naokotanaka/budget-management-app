@@ -26,7 +26,7 @@ mkdir -p ../data
 
 # バックエンドをバックグラウンドで起動
 echo "🔧 FastAPIサーバーを起動中..."
-nohup uvicorn main:app --reload --host 0.0.0.0 --port 8000 > ../logs/backend.log 2>&1 &
+nohup uvicorn main:app --reload --host 0.0.0.0 --port 8001 > ../logs/backend.log 2>&1 &
 BACKEND_PID=$!
 echo "✅ バックエンド起動完了 (PID: $BACKEND_PID)"
 
@@ -54,9 +54,9 @@ echo ""
 echo "🎉 NPO予算管理システムが起動しました！"
 echo ""
 echo "📱 アクセス方法:"
-echo "  フロントエンド: http://localhost:3000"
-echo "  バックエンドAPI: http://localhost:8000"
-echo "  API仕様書: http://localhost:8000/docs"
+echo "  フロントエンド: http://localhost:3001"
+echo "  バックエンドAPI: http://localhost:8001"
+echo "  API仕様書: http://localhost:8001/docs"
 echo ""
 echo "📝 ログファイル:"
 echo "  バックエンド: logs/backend.log"

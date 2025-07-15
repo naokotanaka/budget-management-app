@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, FileResponse
 from sqlalchemy.orm import Session
@@ -65,10 +65,10 @@ app = FastAPI(title="NPO Budget Management System")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001", 
-        "http://160.251.170.97:3000",
-        "http://160.251.170.97:3001",
+        "http://localhost:3001",  # 開発環境フロントエンド
+        "http://160.251.170.97:3001",  # 開発環境外部アクセス
+        "http://localhost:3000",  # 本番環境フロントエンド
+        "http://160.251.170.97:3000",  # 本番環境外部アクセス
         "http://160.251.170.97:3005",
         "*"
     ],
@@ -1007,8 +1007,10 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
             try:
                 allocation_id, transaction_id, budget_item_id, amount = row[:4]
                 
-                # 既存の割当を確認
-                existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
+                # 既存の割当を確認（IDが空欄でない場合のみ）
+                existing_allocation = None
+                if allocation_id and str(allocation_id).strip():
+                    existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
                 
                 # 取引と予算項目の存在確認
                 transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
@@ -1022,10 +1024,21 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
                     import_stats['errors'].append(f"予算項目ID {budget_item_id} が見つかりません")
                     continue
                 
+                # 空文字列や無効な値をチェック
+                if not amount or str(amount).strip() == '':
+                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が空です")
+                    continue
+                
+                try:
+                    amount_value = float(str(amount).strip())
+                except (ValueError, TypeError):
+                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が無効です ({amount})")
+                    continue
+                
                 allocation_data = {
                     'transaction_id': transaction_id,
                     'budget_item_id': int(budget_item_id),
-                    'amount': float(amount)
+                    'amount': amount_value
                 }
                 
                 if existing_allocation:
@@ -1035,7 +1048,10 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
                     import_stats['allocations_updated'] += 1
                 else:
                     # 新規作成
-                    new_allocation = Allocation(id=int(allocation_id), **allocation_data)
+                    if allocation_id and str(allocation_id).strip():
+                        new_allocation = Allocation(id=int(allocation_id), **allocation_data)
+                    else:
+                        new_allocation = Allocation(**allocation_data)
                     db.add(new_allocation)
                     import_stats['allocations_created'] += 1
                     
@@ -1356,10 +1372,21 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                 # 既存の割当を確認
                 existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
                 
+                # 空文字列や無効な値をチェック
+                if not amount or str(amount).strip() == '':
+                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が空です")
+                    continue
+                
+                try:
+                    amount_value = float(str(amount).strip())
+                except (ValueError, TypeError):
+                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が無効です ({amount})")
+                    continue
+                
                 allocation_data = {
                     'transaction_id': transaction_id,
                     'budget_item_id': int(budget_item_id),
-                    'amount': float(amount) if amount else 0
+                    'amount': amount_value
                 }
                 
                 if existing_allocation:
@@ -1369,7 +1396,10 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                     import_stats['allocations_updated'] += 1
                 else:
                     # 新規作成
-                    new_allocation = Allocation(id=int(allocation_id), **allocation_data)
+                    if allocation_id and str(allocation_id).strip():
+                        new_allocation = Allocation(id=int(allocation_id), **allocation_data)
+                    else:
+                        new_allocation = Allocation(**allocation_data)
                     db.add(new_allocation)
                     import_stats['allocations_created'] += 1
                     
@@ -1572,4 +1602,4 @@ def disconnect_freee(db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

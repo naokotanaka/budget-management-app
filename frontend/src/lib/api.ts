@@ -47,6 +47,7 @@ export interface Grant {
 }
 
 export interface Allocation {
+  id?: number;
   transaction_id: string;
   budget_item_id: number;
   amount: number;
@@ -171,6 +172,28 @@ export const api = {
       return response.json();
     } catch (error) {
       console.error('Network error during budget item update:', error);
+      throw error;
+    }
+  },
+
+  async deleteBudgetItem(id: number): Promise<void> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/budget-items/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Delete budget item error:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorText,
+          url: `${API_BASE_URL}/api/budget-items/${id}`
+        });
+        throw new Error(`Failed to delete budget item: ${response.status} ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Network error during budget item deletion:', error);
       throw error;
     }
   },

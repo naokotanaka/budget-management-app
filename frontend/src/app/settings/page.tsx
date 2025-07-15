@@ -12,8 +12,8 @@ const SettingsPage: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   
   // 期間フィルター設定
-  const [defaultStartDate, setDefaultStartDate] = useState(CONFIG.DEFAULT_DATE_RANGE.START);
-  const [defaultEndDate, setDefaultEndDate] = useState(CONFIG.DEFAULT_DATE_RANGE.END);
+  const [defaultStartDate, setDefaultStartDate] = useState<string>("2025-04-01");
+  const [defaultEndDate, setDefaultEndDate] = useState<string>("2026-03-31");
   const [filterSuccess, setFilterSuccess] = useState<string | null>(null);
 
   const handleResetAllData = async () => {

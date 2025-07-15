@@ -9,17 +9,19 @@ import '@/lib/ag-grid-setup';
 interface BatchAllocationPanelProps {
   selectedRows: Transaction[];
   onAllocationComplete?: () => void;
+  onBudgetItemSelected?: (grant: { start_date: string; end_date: string } | null) => void;
 }
 
-const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete }) => {
+const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete, onBudgetItemSelected }) => {
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
   const [allocations, setAllocations] = useState<Allocation[]>([]);
   const [selectedBudgetItem, setSelectedBudgetItem] = useState<BudgetItem | null>(null);
+  const [selectedBudgetItemId, setSelectedBudgetItemId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  
+
   const budgetGridRef = useRef<AgGridReact>(null);
 
 
@@ -44,6 +46,25 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
     fetchData();
   }, []);
 
+  // 予算項目データが更新された際に選択状態を復元
+  useEffect(() => {
+    if (selectedBudgetItemId && budgetItems.length > 0 && budgetGridRef.current?.api) {
+      // 少し遅延させてグリッドの準備を待つ
+      setTimeout(() => {
+        if (budgetGridRef.current?.api) {
+          budgetGridRef.current.api.forEachNode((node) => {
+            if (node.data.id === selectedBudgetItemId) {
+              node.setSelected(true);
+              // 選択された行を画面の中央に表示
+              budgetGridRef.current?.api?.ensureIndexVisible(node.rowIndex || 0, 'middle');
+              return;
+            }
+          });
+        }
+      }, 100);
+    }
+  }, [budgetItems, selectedBudgetItemId]);
+
   // 残額を計算する関数
   const getRemainingAmount = (budgetItem: BudgetItem) => {
     const allocatedAmount = allocations
@@ -59,7 +80,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       field: 'grant_name',
       width: 120,
       cellStyle: { fontSize: '12px' },
-      cellRenderer: (params) => {
+      cellRenderer: (params: any) => {
         const grant = grants.find(g => g.id === params.data.grant_id);
         return grant?.name || '不明';
       }
@@ -74,9 +95,9 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       headerName: '残額',
       field: 'remaining_amount',
       width: 100,
-      valueGetter: (params) => getRemainingAmount(params.data),
-      valueFormatter: (params) => `¥${params.value?.toLocaleString() || 0}`,
-      cellStyle: (params) => {
+      valueGetter: (params: any) => getRemainingAmount(params.data),
+      valueFormatter: (params: any) => `¥${params.value?.toLocaleString() || 0}`,
+      cellStyle: (params: any) => {
         const remaining = params.value || 0;
         return {
           fontSize: '12px',
@@ -91,7 +112,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       headerName: '予算額',
       field: 'budgeted_amount',
       width: 100,
-      valueFormatter: (params) => `¥${params.value?.toLocaleString() || 0}`,
+      valueFormatter: (params: any) => `¥${params.value?.toLocaleString() || 0}`,
       cellStyle: { fontSize: '12px', textAlign: 'right' }
     },
     {
@@ -99,7 +120,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       field: 'grant_status',
       width: 80,
       cellStyle: { fontSize: '12px' },
-      cellRenderer: (params) => {
+      cellRenderer: (params: any) => {
         const grant = grants.find(g => g.id === params.data.grant_id);
         const status = grant?.status || 'active';
         const statusText = status === 'active' ? '実行中' : status === 'completed' ? '終了' : '報告済み';
@@ -112,10 +133,27 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   const handleBudgetItemSelection = () => {
     const selectedNodes = budgetGridRef.current?.api?.getSelectedNodes();
     if (selectedNodes && selectedNodes.length > 0) {
-      setSelectedBudgetItem(selectedNodes[0].data);
-    } else {
-      setSelectedBudgetItem(null);
+      const budgetItem = selectedNodes[0].data;
+      setSelectedBudgetItem(budgetItem);
+      setSelectedBudgetItemId(budgetItem.id);
+
+      // 選択された行を表示領域に保持
+      const selectedNode = selectedNodes[0];
+      if (budgetGridRef.current?.api) {
+        budgetGridRef.current.api.ensureIndexVisible(selectedNode.rowIndex || 0, 'middle');
+      }
+
+      // 選択された予算項目に紐づく助成金の期間を取得
+      const grant = grants.find(g => g.id === budgetItem.grant_id);
+      if (grant && onBudgetItemSelected) {
+        const dateFilter = {
+          start_date: grant.start_date,
+          end_date: grant.end_date
+        };
+        onBudgetItemSelected(dateFilter);
+      }
     }
+    // 選択解除時はフィルターをクリアしない（予算項目の選択状態を保持）
   };
 
   // 一括割当解除
@@ -135,9 +173,9 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
     try {
       // 既存の割当データを取得
       const existingAllocations = await api.getAllocations();
-      
+
       const results = [];
-      
+
       // 各取引の割当を解除
       for (const transaction of selectedRows) {
         try {
@@ -159,19 +197,19 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
           results.push({ status: 'rejected', reason: error });
         }
       }
-      
+
       // 成功・失敗の集計
       const successful = results.filter(result => result.status === 'fulfilled').length;
       const failed = results.filter(result => result.status === 'rejected').length;
-      
+
       if (failed === 0) {
         // 全て成功
         setError(null);
         setSuccessMessage(`${successful}件の取引の割当を解除しました`);
-        
+
         // 成功メッセージを3秒後に自動消去
         setTimeout(() => setSuccessMessage(null), 3000);
-        
+
         // 表示を更新
         if (onAllocationComplete) {
           onAllocationComplete();
@@ -181,7 +219,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         setError(`${successful}件解除成功、${failed}件解除失敗しました`);
         // 部分的成功の場合のみalert表示
         alert(`部分的に完了: ${successful}件解除成功、${failed}件解除失敗`);
-        
+
         // 部分的成功でも表示を更新
         if (onAllocationComplete) {
           onAllocationComplete();
@@ -190,7 +228,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         // 全て失敗
         throw new Error('全ての割当解除が失敗しました');
       }
-      
+
     } catch (err) {
       setError('一括割当解除に失敗しました');
       console.error('Error in batch unallocation:', err);
@@ -213,9 +251,9 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
     try {
       // 既存の割当データを一度だけ取得
       const existingAllocations = await api.getAllocations();
-      
+
       const results = [];
-      
+
       // 各取引を順次処理（並列処理を避けてエラーを減らす）
       for (const transaction of selectedRows) {
         try {
@@ -237,28 +275,28 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
             // 新規作成
             result = await api.createAllocation(allocationData);
           }
-          
+
           results.push({ status: 'fulfilled', value: result });
         } catch (error) {
           console.error(`Error processing allocation for transaction ${transaction.id}:`, error);
           results.push({ status: 'rejected', reason: error });
         }
       }
-      
+
       // 成功・失敗の集計
       const successful = results.filter(result => result.status === 'fulfilled').length;
       const failed = results.filter(result => result.status === 'rejected').length;
-      
+
       if (failed === 0) {
         // 全て成功
         setError(null);
         setSuccessMessage(`${successful}件の取引を「${selectedBudgetItem.display_name}」に割り当てました`);
-        
+
         // 成功メッセージを3秒後に自動消去
         setTimeout(() => setSuccessMessage(null), 3000);
-        
+
         setSelectedBudgetItem(null);
-        
+
         // 表示を更新
         if (onAllocationComplete) {
           onAllocationComplete();
@@ -268,7 +306,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         setError(`${successful}件成功、${failed}件失敗しました`);
         // 部分的成功の場合のみalert表示
         alert(`部分的に完了: ${successful}件成功、${failed}件失敗`);
-        
+
         // 部分的成功でも表示を更新
         if (onAllocationComplete) {
           onAllocationComplete();
@@ -277,7 +315,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         // 全て失敗
         throw new Error('全ての割当が失敗しました');
       }
-      
+
     } catch (err) {
       setError('一括割当に失敗しました');
       console.error('Error in batch allocation:', err);
@@ -292,19 +330,19 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 h-full flex flex-col">
       <h2 className="text-lg font-semibold mb-4">一括割当</h2>
-      
+
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4">
           {error}
         </div>
       )}
-      
+
       {successMessage && (
         <div className="bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded mb-4">
           {successMessage}
         </div>
       )}
-      
+
       <div className="flex flex-col h-full space-y-4">
         {/* 選択された取引の情報 */}
         <div className="bg-gray-50 p-3 rounded flex-shrink-0">
@@ -317,7 +355,26 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
 
         {/* 予算項目グリッド */}
         <div className="flex-1 min-h-0">
-          <h3 className="font-medium text-gray-700 mb-2">予算項目を選択</h3>
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="font-medium text-gray-700">予算項目を選択</h3>
+            {selectedBudgetItem && (
+              <button
+                onClick={() => {
+                  setSelectedBudgetItem(null);
+                  setSelectedBudgetItemId(null);
+                  if (budgetGridRef.current?.api) {
+                    budgetGridRef.current.api.deselectAll();
+                  }
+                  if (onBudgetItemSelected) {
+                    onBudgetItemSelected(null);
+                  }
+                }}
+                className="text-sm px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+              >
+                選択解除
+              </button>
+            )}
+          </div>
           <div style={{ height: '400px', width: '100%' }}>
             <AgGridReact
               ref={budgetGridRef}
@@ -340,6 +397,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
               suppressMenuHide={true}
               suppressMovableColumns={true}
               enableCellTextSelection={true}
+
             />
           </div>
         </div>
@@ -360,23 +418,21 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
           <button
             onClick={handleBatchAllocation}
             disabled={loading || !selectedBudgetItem || selectedRows.length === 0}
-            className={`w-full py-2 px-4 rounded-md font-medium ${
-              loading || !selectedBudgetItem || selectedRows.length === 0
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
+            className={`w-full py-2 px-4 rounded-md font-medium ${loading || !selectedBudgetItem || selectedRows.length === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
           >
             {loading ? '実行中...' : `${selectedRows.length}件を一括割当`}
           </button>
-          
+
           <button
             onClick={handleBatchUnallocation}
             disabled={loading || selectedRows.length === 0}
-            className={`w-full py-2 px-4 rounded-md font-medium ${
-              loading || selectedRows.length === 0
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-red-600 text-white hover:bg-red-700'
-            }`}
+            className={`w-full py-2 px-4 rounded-md font-medium ${loading || selectedRows.length === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-red-600 text-white hover:bg-red-700'
+              }`}
           >
             {loading ? '実行中...' : `${selectedRows.length}件の割当を解除`}
           </button>
