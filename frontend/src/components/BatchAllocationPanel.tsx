@@ -134,13 +134,27 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
     const selectedNodes = budgetGridRef.current?.api?.getSelectedNodes();
     if (selectedNodes && selectedNodes.length > 0) {
       const budgetItem = selectedNodes[0].data;
+      const selectedNode = selectedNodes[0];
+      
       setSelectedBudgetItem(budgetItem);
       setSelectedBudgetItemId(budgetItem.id);
 
-      // 選択された行を表示領域に保持
-      const selectedNode = selectedNodes[0];
-      if (budgetGridRef.current?.api) {
-        budgetGridRef.current.api.ensureIndexVisible(selectedNode.rowIndex || 0, 'middle');
+      // 選択された行を表示領域に保持（より確実に）
+      if (budgetGridRef.current?.api && selectedNode.rowIndex !== undefined) {
+        // 複数回試行して確実にスクロール位置を保持
+        const ensureVisible = () => {
+          if (budgetGridRef.current?.api && selectedNode.rowIndex !== undefined) {
+            budgetGridRef.current.api.ensureIndexVisible(selectedNode.rowIndex, 'middle');
+          }
+        };
+        
+        // 即座に実行
+        ensureVisible();
+        
+        // 少し遅延して再実行（他の処理で上書きされることを防ぐ）
+        setTimeout(ensureVisible, 50);
+        setTimeout(ensureVisible, 150);
+        setTimeout(ensureVisible, 300);
       }
 
       // 選択された予算項目に紐づく助成金の期間を取得

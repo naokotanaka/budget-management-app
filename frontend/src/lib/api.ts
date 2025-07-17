@@ -49,6 +49,28 @@ export interface Allocation {
   transaction_id: string;
   budget_item_id: number;
   amount: number;
+  created_at?: string;
+}
+
+export interface AllocationDetail {
+  id: number;
+  transaction_id: string;
+  budget_item_id: number;
+  amount: number;
+  created_at: string;
+  transaction?: {
+    id: string;
+    date: string;
+    description: string;
+    amount: number;
+    supplier: string;
+  };
+  budget_item?: {
+    id: number;
+    name: string;
+    category: string;
+    grant_name: string;
+  };
 }
 
 export interface Category {
@@ -58,6 +80,47 @@ export interface Category {
   created_at: string;
   updated_at: string;
   is_active: boolean;
+}
+
+export interface FreeeSync {
+  id: number;
+  sync_type: string;
+  start_date: string;
+  end_date: string;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  total_records: number;
+  processed_records: number;
+  created_records: number;
+  updated_records: number;
+  error_message?: string;
+  created_at: string;
+  completed_at?: string;
+}
+
+export interface GitHubCommit {
+  sha: string;
+  commit: {
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    message: string;
+  };
+  html_url: string;
+  author?: {
+    login: string;
+    avatar_url: string;
+  };
+}
+
+export interface GitHubRelease {
+  tag_name: string;
+  name: string;
+  body: string;
+  published_at: string;
+  html_url: string;
+  prerelease: boolean;
 }
 
 export const api = {
@@ -309,6 +372,12 @@ export const api = {
     return response.json();
   },
 
+  async getAllocationsWithDetails(): Promise<AllocationDetail[]> {
+    const response = await fetch(`${API_BASE_URL}/api/allocations/details`);
+    if (!response.ok) throw new Error('Failed to fetch allocation details');
+    return response.json();
+  },
+
   async createAllocation(data: Allocation): Promise<any> {
     try {
       console.log('Creating allocation:', data);
@@ -536,6 +605,60 @@ export const api = {
       throw new Error(`Failed to preview data: ${response.status} ${response.statusText} - ${errorText}`);
     }
     return response.json();
+  },
+
+  // freee同期履歴を取得
+  async getFreeSyncs(): Promise<FreeeSync[]> {
+    const response = await fetch(`${API_BASE_URL}/api/freee/syncs`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch freee syncs: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  },
+
+  // GitHubのコミット履歴を取得
+  async getGitHubCommits(limit: number = 20): Promise<GitHubCommit[]> {
+    const response = await fetch(`https://api.github.com/repos/tanaka-naoki/nagaiku-budget/commits?per_page=${limit}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch GitHub commits: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  },
+
+  // GitHubのリリース情報を取得
+  async getGitHubReleases(limit: number = 10): Promise<GitHubRelease[]> {
+    const response = await fetch(`https://api.github.com/repos/tanaka-naoki/nagaiku-budget/releases?per_page=${limit}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch GitHub releases: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  },
+
+  // 現在のコミットハッシュを取得（本番環境のバージョン識別用）
+  async getCurrentCommit(): Promise<{
+    commit: string;
+    commitShort: string;
+    commitDate: string;
+    commitMessage: string;
+    branch: string;
+    timestamp: string;
+  }> {
+    try {
+      const response = await fetch('/api/version');
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.error('Failed to fetch current commit:', error);
+    }
+    return {
+      commit: 'unknown',
+      commitShort: 'unknown',
+      commitDate: 'unknown',
+      commitMessage: 'unknown',
+      branch: 'unknown',
+      timestamp: new Date().toISOString(),
+    };
   },
 
   // Admin functions

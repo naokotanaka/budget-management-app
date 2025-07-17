@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* AG Grid basic styles */
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
+
+/* AG Grid custom styles - remove row margins */
+.ag-theme-alpine .ag-row {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.ag-theme-alpine .ag-cell {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  line-height: 1.2 !important;
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;

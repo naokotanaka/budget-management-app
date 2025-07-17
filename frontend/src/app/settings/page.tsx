@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { api } from '@/lib/api';
+import React, { useState, useEffect } from 'react';
+import { api, FreeeSync, GitHubCommit, GitHubRelease } from '@/lib/api';
 import { CONFIG } from '@/lib/config';
 
 const SettingsPage: React.FC = () => {
@@ -15,6 +15,59 @@ const SettingsPage: React.FC = () => {
   const [defaultStartDate, setDefaultStartDate] = useState<string>("2025-04-01");
   const [defaultEndDate, setDefaultEndDate] = useState<string>("2026-03-31");
   const [filterSuccess, setFilterSuccess] = useState<string | null>(null);
+
+  // freee同期履歴
+  const [freeSyncs, setFreeSyncs] = useState<FreeeSync[]>([]);
+  const [syncLoading, setSyncLoading] = useState(false);
+
+  // GitHub履歴とバージョン情報
+  const [githubCommits, setGithubCommits] = useState<GitHubCommit[]>([]);
+  const [githubReleases, setGithubReleases] = useState<GitHubRelease[]>([]);
+  const [currentVersion, setCurrentVersion] = useState<any>(null);
+  const [githubLoading, setGithubLoading] = useState(false);
+
+  useEffect(() => {
+    fetchFreeSyncs();
+    fetchGitHubData();
+    fetchCurrentVersion();
+  }, []);
+
+  const fetchFreeSyncs = async () => {
+    try {
+      setSyncLoading(true);
+      const syncs = await api.getFreeSyncs();
+      setFreeSyncs(syncs);
+    } catch (err) {
+      console.error('Failed to fetch freee syncs:', err);
+    } finally {
+      setSyncLoading(false);
+    }
+  };
+
+  const fetchGitHubData = async () => {
+    try {
+      setGithubLoading(true);
+      const [commits, releases] = await Promise.all([
+        api.getGitHubCommits(10),
+        api.getGitHubReleases(5)
+      ]);
+      setGithubCommits(commits);
+      setGithubReleases(releases);
+    } catch (err) {
+      console.error('Failed to fetch GitHub data:', err);
+    } finally {
+      setGithubLoading(false);
+    }
+  };
+
+  const fetchCurrentVersion = async () => {
+    try {
+      const version = await api.getCurrentCommit();
+      setCurrentVersion(version);
+    } catch (err) {
+      console.error('Failed to fetch current version:', err);
+    }
+  };
 
   const handleResetAllData = async () => {
     if (confirmText !== '全削除') {
@@ -232,20 +285,279 @@ const SettingsPage: React.FC = () => {
         </div>
       </div>
 
+      {/* バックアップ履歴セクション */}
+      <div className="bg-white rounded-lg shadow mb-6">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-gray-900">バックアップ履歴</h2>
+            <button
+              onClick={fetchFreeSyncs}
+              disabled={syncLoading}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium disabled:opacity-50"
+            >
+              {syncLoading ? '読み込み中...' : '更新'}
+            </button>
+          </div>
+        </div>
+        <div className="p-6">
+          <p className="text-sm text-gray-600 mb-4">
+            freee会計との同期履歴を表示します。最新20件まで表示されます。
+          </p>
+          
+          {syncLoading ? (
+            <div className="text-center py-8">
+              <div className="text-gray-500">読み込み中...</div>
+            </div>
+          ) : freeSyncs.length === 0 ? (
+            <div className="text-center py-8">
+              <div className="text-gray-500">同期履歴がありません</div>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      同期日時
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      期間
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      ステータス
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      処理件数
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      完了日時
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {freeSyncs.map((sync) => (
+                    <tr key={sync.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {new Date(sync.created_at).toLocaleString('ja-JP')}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {sync.start_date} ～ {sync.end_date}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          sync.status === 'completed' ? 'bg-green-100 text-green-800' :
+                          sync.status === 'failed' ? 'bg-red-100 text-red-800' :
+                          sync.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {sync.status === 'completed' ? '完了' :
+                           sync.status === 'failed' ? '失敗' :
+                           sync.status === 'processing' ? '処理中' : '待機中'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {sync.status === 'completed' ? (
+                          <div>
+                            <div>総件数: {sync.total_records}</div>
+                            <div className="text-xs text-gray-500">
+                              新規: {sync.created_records}, 更新: {sync.updated_records}
+                            </div>
+                          </div>
+                        ) : (
+                          `${sync.processed_records} / ${sync.total_records}`
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {sync.completed_at ? new Date(sync.completed_at).toLocaleString('ja-JP') : '-'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          
+          {freeSyncs.some(sync => sync.error_message) && (
+            <div className="mt-4">
+              <h4 className="text-sm font-medium text-red-900 mb-2">エラー詳細</h4>
+              <div className="space-y-2">
+                {freeSyncs.filter(sync => sync.error_message).map((sync) => (
+                  <div key={sync.id} className="bg-red-50 border border-red-200 rounded p-3">
+                    <div className="text-sm font-medium text-red-800">
+                      {new Date(sync.created_at).toLocaleString('ja-JP')} の同期でエラー:
+                    </div>
+                    <div className="text-sm text-red-700 mt-1">{sync.error_message}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* その他の設定セクション */}
       <div className="bg-white rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">システム情報</h2>
         </div>
         <div className="p-6">
+          {/* 現在のバージョン情報 */}
+          <div className="mb-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">現在のバージョン</h3>
+            {currentVersion ? (
+              <div className="bg-gray-50 rounded-lg p-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-medium text-gray-900">コミットハッシュ</h4>
+                    <p className="text-sm text-gray-600 font-mono">{currentVersion.commitShort}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">ブランチ</h4>
+                    <p className="text-sm text-gray-600">{currentVersion.branch}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">コミット日時</h4>
+                    <p className="text-sm text-gray-600">{new Date(currentVersion.commitDate).toLocaleString('ja-JP')}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">最終更新</h4>
+                    <p className="text-sm text-gray-600">{new Date(currentVersion.timestamp).toLocaleString('ja-JP')}</p>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <h4 className="font-medium text-gray-900">コミットメッセージ</h4>
+                  <p className="text-sm text-gray-600">{currentVersion.commitMessage}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="text-gray-500">バージョン情報を取得中...</div>
+            )}
+          </div>
+
+          {/* GitHub履歴 */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-gray-900">最新のコミット履歴</h3>
+              <button
+                onClick={fetchGitHubData}
+                disabled={githubLoading}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium disabled:opacity-50"
+              >
+                {githubLoading ? '読み込み中...' : '更新'}
+              </button>
+            </div>
+            
+            {githubLoading ? (
+              <div className="text-center py-8">
+                <div className="text-gray-500">読み込み中...</div>
+              </div>
+            ) : githubCommits.length === 0 ? (
+              <div className="text-center py-8">
+                <div className="text-gray-500">コミット履歴を取得できませんでした</div>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {githubCommits.slice(0, 5).map((commit) => (
+                  <div key={commit.sha} className="border rounded-lg p-4 hover:bg-gray-50">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="font-mono text-sm bg-gray-100 px-2 py-1 rounded">
+                            {commit.sha.substring(0, 7)}
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            {new Date(commit.commit.author.date).toLocaleString('ja-JP')}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-900 mb-1">{commit.commit.message}</p>
+                        <p className="text-xs text-gray-500">
+                          by {commit.commit.author.name}
+                        </p>
+                      </div>
+                      <a
+                        href={commit.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 text-sm"
+                      >
+                        GitHub で見る
+                      </a>
+                    </div>
+                  </div>
+                ))}
+                <div className="text-center">
+                  <a
+                    href="https://github.com/tanaka-naoki/nagaiku-budget/commits"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 text-sm"
+                  >
+                    すべてのコミットを GitHub で見る
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* リリース情報 */}
+          {githubReleases.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">最新のリリース</h3>
+              <div className="space-y-3">
+                {githubReleases.slice(0, 3).map((release) => (
+                  <div key={release.tag_name} className="border rounded-lg p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="font-semibold text-gray-900">{release.name || release.tag_name}</span>
+                          {release.prerelease && (
+                            <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+                              プレリリース
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-600 mb-2">
+                          {new Date(release.published_at).toLocaleString('ja-JP')}
+                        </p>
+                        {release.body && (
+                          <p className="text-sm text-gray-700 whitespace-pre-line">
+                            {release.body.substring(0, 200)}
+                            {release.body.length > 200 && '...'}
+                          </p>
+                        )}
+                      </div>
+                      <a
+                        href={release.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 text-sm"
+                      >
+                        GitHub で見る
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div>
               <h4 className="font-medium text-gray-900">デフォルト表示期間</h4>
               <p className="text-sm text-gray-600">2025年4月1日 ～ 2026年3月31日</p>
             </div>
             <div>
-              <h4 className="font-medium text-gray-900">バージョン</h4>
-              <p className="text-sm text-gray-600">1.0.0</p>
+              <h4 className="font-medium text-gray-900">リポジトリ</h4>
+              <p className="text-sm text-gray-600">
+                <a
+                  href="https://github.com/tanaka-naoki/nagaiku-budget"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  GitHub で見る
+                </a>
+              </p>
             </div>
           </div>
           

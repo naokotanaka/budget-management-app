@@ -59,47 +59,70 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       const applyDateFilter = () => {
         if (!gridRef.current?.api) return;
       
-      // 選択状態を保存
-      const selectedNodes = gridRef.current.api.getSelectedNodes();
-      const selectedIds = selectedNodes.map(node => node.data.id);
+        // 現在のスクロール位置を保存
+        const scrollTop = gridRef.current.api.getVerticalPixelRange()?.top || 0;
+        
+        // 選択状態を保存
+        const selectedNodes = gridRef.current.api.getSelectedNodes();
+        const selectedIds = selectedNodes.map(node => node.data.id);
       
         // 現在のフィルターモデルを取得
         const currentFilter: any = gridRef.current.api.getFilterModel() || {};
       
-      if (dateFilter) {
-        // 助成期間でフィルター
-        console.log('Applying date filter:', dateFilter.start_date, 'to', dateFilter.end_date);
+        if (dateFilter) {
+          // 助成期間でフィルター
+          console.log('Applying date filter:', dateFilter.start_date, 'to', dateFilter.end_date);
           
           // AG Gridの日付フィルター形式に変換
-          const dateFromFormatted = new Date(dateFilter.start_date).toISOString().split('T')[0];
-          const dateToFormatted = new Date(dateFilter.end_date).toISOString().split('T')[0];
+          // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
+          const startDate = new Date(dateFilter.start_date);
+          startDate.setDate(startDate.getDate() - 1);
+          const endDate = new Date(dateFilter.end_date);
+          endDate.setDate(endDate.getDate() + 1);
           
-          console.log('Formatted dates:', dateFromFormatted, 'to', dateToFormatted);
+          const dateFromFormatted = startDate.toISOString().split('T')[0];
+          const dateToFormatted = endDate.toISOString().split('T')[0];
           
-        currentFilter['date'] = {
-          filterType: 'date',
-          type: 'inRange',
+          console.log('Formatted dates (adjusted for inRange):', dateFromFormatted, 'to', dateToFormatted);
+          
+          currentFilter['date'] = {
+            filterType: 'date',
+            type: 'inRange',
             dateFrom: dateFromFormatted,
             dateTo: dateToFormatted
-        };
-      } else {
-        // 日付フィルターをクリア
-        console.log('Clearing date filter');
-        delete currentFilter['date'];
-      }
+          };
+        } else {
+          // 日付フィルターをクリア
+          console.log('Clearing date filter');
+          delete currentFilter['date'];
+        }
       
         console.log('Setting filter model:', currentFilter);
-      gridRef.current.api.setFilterModel(currentFilter);
+        gridRef.current.api.setFilterModel(currentFilter);
       
-      // 選択状態を復元（少し遅延させる）
-      setTimeout(() => {
-        if (gridRef.current?.api && selectedIds.length > 0) {
-          gridRef.current.api.forEachNode((node) => {
-            if (selectedIds.includes(node.data.id)) {
-              node.setSelected(true);
+        // 選択状態とスクロール位置を復元（少し遅延させる）
+        setTimeout(() => {
+          if (gridRef.current?.api) {
+            // 選択状態を復元
+            if (selectedIds.length > 0) {
+              gridRef.current.api.forEachNode((node) => {
+                if (selectedIds.includes(node.data.id)) {
+                  node.setSelected(true);
+                }
+              });
             }
-          });
-        }
+            
+            // スクロール位置を復元
+            if (scrollTop > 0) {
+              try {
+                // 最初の表示行を見つけて、その行が見えるようにスクロール
+                const firstVisibleRowIndex = Math.floor(scrollTop / 28); // rowHeight = 28
+                gridRef.current.api.ensureIndexVisible(firstVisibleRowIndex, 'top');
+              } catch (error) {
+                console.log('Failed to restore scroll position:', error);
+              }
+            }
+          }
         }, 100);
       };
 
@@ -133,8 +156,14 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
 
     // dateFilterがある場合は即座に適用
     if (dateFilter) {
-      const dateFromFormatted = new Date(dateFilter.start_date).toISOString().split('T')[0];
-      const dateToFormatted = new Date(dateFilter.end_date).toISOString().split('T')[0];
+      // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
+      const startDate = new Date(dateFilter.start_date);
+      startDate.setDate(startDate.getDate() - 1);
+      const endDate = new Date(dateFilter.end_date);
+      endDate.setDate(endDate.getDate() + 1);
+      
+      const dateFromFormatted = startDate.toISOString().split('T')[0];
+      const dateToFormatted = endDate.toISOString().split('T')[0];
       
       filterModel['date'] = {
         filterType: 'date',
@@ -142,7 +171,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         dateFrom: dateFromFormatted,
         dateTo: dateToFormatted
       };
-      console.log('Applying dateFilter in onGridReady:', dateFilter, 'formatted:', dateFromFormatted, 'to', dateToFormatted);
+      console.log('Applying dateFilter in onGridReady (adjusted for inRange):', dateFilter, 'formatted:', dateFromFormatted, 'to', dateToFormatted);
     }
 
     params.api.setFilterModel(filterModel);
@@ -162,11 +191,17 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     // dateFilterプロパティが設定されている場合はそれを最優先
     if (dateFilter) {
       console.log('Applying dateFilter from props:', dateFilter);
+      // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
+      const startDate = new Date(dateFilter.start_date);
+      startDate.setDate(startDate.getDate() - 1);
+      const endDate = new Date(dateFilter.end_date);
+      endDate.setDate(endDate.getDate() + 1);
+      
       currentFilter['date'] = {
         filterType: 'date',
         type: 'inRange',
-        dateFrom: dateFilter.start_date,
-        dateTo: dateFilter.end_date
+        dateFrom: startDate.toISOString().split('T')[0],
+        dateTo: endDate.toISOString().split('T')[0]
       };
     } else {
       // dateFilterが未設定の場合のみsessionStorageから期間フィルター設定を読み込み
@@ -176,11 +211,17 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           const filterSettings = JSON.parse(savedDateFilter);
           if (filterSettings.startDate && filterSettings.endDate) {
             console.log('Applying saved date filter:', filterSettings);
+            // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
+            const startDate = new Date(filterSettings.startDate);
+            startDate.setDate(startDate.getDate() - 1);
+            const endDate = new Date(filterSettings.endDate);
+            endDate.setDate(endDate.getDate() + 1);
+            
             currentFilter['date'] = {
               filterType: 'date',
               type: 'inRange',
-              dateFrom: filterSettings.startDate,
-              dateTo: filterSettings.endDate
+              dateFrom: startDate.toISOString().split('T')[0],
+              dateTo: endDate.toISOString().split('T')[0]
             };
           }
         } catch (error) {
@@ -301,11 +342,17 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         if (dateFilter && gridRef.current?.api) {
           console.log('Re-applying dateFilter after data load:', dateFilter);
           const currentFilter: any = gridRef.current.api.getFilterModel();
+          // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
+          const startDate = new Date(dateFilter.start_date);
+          startDate.setDate(startDate.getDate() - 1);
+          const endDate = new Date(dateFilter.end_date);
+          endDate.setDate(endDate.getDate() + 1);
+          
           currentFilter['date'] = {
             filterType: 'date',
             type: 'inRange',
-            dateFrom: dateFilter.start_date,
-            dateTo: dateFilter.end_date
+            dateFrom: startDate.toISOString().split('T')[0],
+            dateTo: endDate.toISOString().split('T')[0]
           };
           gridRef.current.api.setFilterModel(currentFilter);
         }

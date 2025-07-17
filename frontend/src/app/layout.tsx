@@ -37,6 +37,9 @@ export default function RootLayout({
                   <a href="/batch-allocate" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     一括割当
                   </a>
+                  <a href="/allocations" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                    割当データ
+                  </a>
                   <a href="/grants" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     助成金管理
                   </a>
