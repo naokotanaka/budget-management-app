@@ -1,42 +1,47 @@
-# Dependencies
-node_modules/
-**/node_modules/
-
-# Virtual environments
-venv/
-new_venv/
-
-# Database
-*.db
-
-# Logs
-*.log
-logs/
-
-# Build outputs
-.next/
-dist/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Environment files
-.env
-.env.local
-.env.production
+# Virtual Environment
+backend/dev_venv/
+venv/
+env/
+ENV/
 
-# IDE
-.vscode/
-.idea/
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Process files
-*.pid
-
-# Uploads
-uploads/
+# Next.js
+.next/
+out/
 
 # Temporary files
 *.tmp
-*.temp
+*.backup
+.DS_Store
+
+# CSV files (if not needed in repo)
+*.csv

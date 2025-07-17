@@ -971,9 +971,18 @@ async def preview_grants_budget_allocations(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail=f"プレビューエラー: {str(e)}")
 
 @app.post("/api/import/allocations")
-async def import_allocations(file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def import_allocations(file: UploadFile = File(...)):
     """割当データをCSVからインポート"""
+    print("=== STARTING ALLOCATION IMPORT ===")
+    # 新しいセッションを作成してバッチ処理を無効化
+    from database import engine
+    from sqlalchemy.orm import sessionmaker
+    
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    db = SessionLocal()
+    
     try:
+        print("=== READING FILE ===")
         # ファイル内容を読み取り
         contents = await file.read()
         
@@ -1002,26 +1011,54 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
         
         # 割当データのインポート
         for row in reader:
-            if len(row) < 4:
+            if len(row) < 3:
                 continue
             try:
-                allocation_id, transaction_id, budget_item_id, amount = row[:4]
+                # CSVの構造: ID(空), 取引ID, 予算項目ID, 金額
+                if len(row) >= 4:
+                    allocation_id, transaction_id, budget_item_id, amount = row[:4]
+                else:
+                    # ID列がない場合
+                    allocation_id = ""
+                    transaction_id, budget_item_id, amount = row[:3]
                 
-                # 既存の割当を確認（IDが空欄でない場合のみ）
-                existing_allocation = None
+                # 既存の割当を確認（IDが空欄でない場合のみ）- 生SQLで実行
+                existing_allocation_id = None
                 if allocation_id and str(allocation_id).strip():
-                    existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
+                    try:
+                        result = db.execute(text("SELECT id FROM allocations WHERE id = :id"), {"id": int(allocation_id)}).fetchone()
+                        if result:
+                            existing_allocation_id = result[0]
+                    except ValueError:
+                        import_stats['errors'].append(f"割当ID {allocation_id}: 無効なIDです")
+                        continue
                 
-                # 取引と予算項目の存在確認
-                transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
-                budget_item = db.query(BudgetItem).filter(BudgetItem.id == int(budget_item_id)).first()
+                # 空文字列チェック
+                if not budget_item_id or str(budget_item_id).strip() == '':
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 予算項目IDが空です")
+                    continue
                 
-                if not transaction:
+                if not transaction_id or str(transaction_id).strip() == '':
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 取引IDが空です")
+                    continue
+                
+                # 数値変換チェック
+                try:
+                    budget_item_id_int = int(budget_item_id)
+                except ValueError:
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 予算項目ID '{budget_item_id}' が無効です")
+                    continue
+                
+                # 取引と予算項目の存在確認 - 生SQLで実行
+                transaction_check = db.execute(text("SELECT id FROM transactions WHERE id = :id"), {"id": transaction_id}).fetchone()
+                budget_item_check = db.execute(text("SELECT id FROM budget_items WHERE id = :id"), {"id": budget_item_id_int}).fetchone()
+                
+                if not transaction_check:
                     import_stats['errors'].append(f"取引ID {transaction_id} が見つかりません")
                     continue
                 
-                if not budget_item:
-                    import_stats['errors'].append(f"予算項目ID {budget_item_id} が見つかりません")
+                if not budget_item_check:
+                    import_stats['errors'].append(f"予算項目ID {budget_item_id_int} が見つかりません")
                     continue
                 
                 # 空文字列や無効な値をチェック
@@ -1030,36 +1067,109 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
                     continue
                 
                 try:
-                    amount_value = float(str(amount).strip())
-                except (ValueError, TypeError):
-                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が無効です ({amount})")
+                    # 金額フィールドのクリーニング
+                    amount_str = str(amount).strip()
+                    # カンマ、円マーク、円文字を削除
+                    amount_str = amount_str.replace(',', '').replace('¥', '').replace('円', '')
+                    # 前後の空白を再度削除
+                    amount_str = amount_str.strip()
+                    amount_value = int(float(amount_str))
+                    print(f"処理中: {amount} -> {amount_str} -> {amount_value}")
+                except (ValueError, TypeError) as e:
+                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が無効です ({amount}) - {str(e)}")
+                    print(f"金額変換エラー: {amount} - {str(e)}")
                     continue
                 
+                # transaction_idは文字列として保持
+                transaction_id_value = str(transaction_id).strip() if transaction_id else None
+                
                 allocation_data = {
-                    'transaction_id': transaction_id,
-                    'budget_item_id': int(budget_item_id),
+                    'transaction_id': transaction_id_value,
+                    'budget_item_id': budget_item_id_int,
                     'amount': amount_value
                 }
                 
-                if existing_allocation:
-                    # 更新
-                    for key, value in allocation_data.items():
-                        setattr(existing_allocation, key, value)
-                    import_stats['allocations_updated'] += 1
+                if existing_allocation_id:
+                    # 更新（textを使用した完全な生SQL）
+                    try:
+                        db.execute(
+                            text("UPDATE allocations SET transaction_id = :transaction_id, budget_item_id = :budget_item_id, amount = :amount WHERE id = :id"),
+                            {
+                                "transaction_id": allocation_data['transaction_id'],
+                                "budget_item_id": allocation_data['budget_item_id'],
+                                "amount": allocation_data['amount'],
+                                "id": existing_allocation_id
+                            }
+                        )
+                        db.commit()
+                        import_stats['allocations_updated'] += 1
+                    except Exception as update_error:
+                        import_stats['errors'].append(f"割当ID {allocation_id}: 更新エラー - {str(update_error)}")
+                        db.rollback()
+                        continue
                 else:
-                    # 新規作成
-                    if allocation_id and str(allocation_id).strip():
-                        new_allocation = Allocation(id=int(allocation_id), **allocation_data)
-                    else:
-                        new_allocation = Allocation(**allocation_data)
-                    db.add(new_allocation)
-                    import_stats['allocations_created'] += 1
+                    # 新規作成（textを使用した完全な生SQL）
+                    try:
+                        if allocation_id and str(allocation_id).strip():
+                            # IDが指定されている場合
+                            allocation_id_int = int(allocation_id)
+                            db.execute(
+                                text("INSERT INTO allocations (id, transaction_id, budget_item_id, amount, created_at) VALUES (:id, :transaction_id, :budget_item_id, :amount, :created_at)"),
+                                {
+                                    "id": allocation_id_int,
+                                    "transaction_id": allocation_data['transaction_id'],
+                                    "budget_item_id": allocation_data['budget_item_id'],
+                                    "amount": allocation_data['amount'],
+                                    "created_at": datetime.now()
+                                }
+                            )
+                        else:
+                            # IDが空欄の場合は、既存チェックしてから自動採番
+                            while True:
+                                # 最大IDを取得して+1
+                                max_id_result = db.execute(text("SELECT COALESCE(MAX(id), 0) + 1 FROM allocations")).fetchone()
+                                next_id = max_id_result[0] if max_id_result else 1
+                                
+                                # そのIDが既に存在しないかチェック
+                                existing_check = db.execute(text("SELECT id FROM allocations WHERE id = :id"), {"id": next_id}).fetchone()
+                                if not existing_check:
+                                    break
+                                # 存在する場合はもう一度ループ
+                            
+                            db.execute(
+                                text("INSERT INTO allocations (id, transaction_id, budget_item_id, amount, created_at) VALUES (:id, :transaction_id, :budget_item_id, :amount, :created_at)"),
+                                {
+                                    "id": next_id,
+                                    "transaction_id": allocation_data['transaction_id'],
+                                    "budget_item_id": allocation_data['budget_item_id'],
+                                    "amount": allocation_data['amount'],
+                                    "created_at": datetime.now()
+                                }
+                            )
+                            
+                            # シーケンスを更新
+                            try:
+                                db.execute(text("SELECT setval('allocations_id_seq', :next_id)"), {"next_id": next_id})
+                            except:
+                                # シーケンスが存在しない場合は無視
+                                pass
+                        db.commit()
+                        import_stats['allocations_created'] += 1
+                    except Exception as create_error:
+                        import_stats['errors'].append(f"割当ID {allocation_id}: 作成エラー - {str(create_error)}")
+                        db.rollback()
+                        continue
                     
             except Exception as e:
                 import_stats['errors'].append(f"割当データエラー: {str(e)}")
+                db.rollback()
         
-        # データベースにコミット
-        db.commit()
+        # 最終コミット（各行で既にコミット済みのため不要だが、念のため）
+        try:
+            db.commit()
+        except Exception as commit_error:
+            # 既に各行でコミットしているため、エラーは無視
+            pass
         
         return {
             "message": "割当データのインポートが完了しました",
@@ -1069,6 +1179,8 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=400, detail=f"割当データインポートエラー: {str(e)}")
+    finally:
+        db.close()
 
 @app.post("/api/import/grants-budget")
 async def import_grants_budget(file: UploadFile = File(...), db: Session = Depends(get_db)):
@@ -1135,8 +1247,19 @@ async def import_grants_budget(file: UploadFile = File(...), db: Session = Depen
                     grant_id, name, total_amount, start_date, end_date, status = row[:6]
                     grant_code = ''
                 
+                # grant_idの空文字列チェックと数値変換
+                if not grant_id or str(grant_id).strip() == '':
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 助成金IDが空です")
+                    continue
+                
+                try:
+                    grant_id_int = int(grant_id)
+                except ValueError:
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 助成金ID '{grant_id}' が無効です")
+                    continue
+                
                 # 既存の助成金を確認
-                existing_grant = db.query(Grant).filter(Grant.id == int(grant_id)).first()
+                existing_grant = db.query(Grant).filter(Grant.id == grant_id_int).first()
                 
                 grant_data = {
                     'name': name,
@@ -1154,7 +1277,7 @@ async def import_grants_budget(file: UploadFile = File(...), db: Session = Depen
                     import_stats['grants_updated'] += 1
                 else:
                     # 新規作成
-                    new_grant = Grant(id=int(grant_id), **grant_data)
+                    new_grant = Grant(id=grant_id_int, **grant_data)
                     db.add(new_grant)
                     import_stats['grants_created'] += 1
                     
@@ -1294,8 +1417,19 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                     grant_id, name, total_amount, start_date, end_date, status = row[:6]
                     grant_code = ''
                 
+                # grant_idの空文字列チェックと数値変換
+                if not grant_id or str(grant_id).strip() == '':
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 助成金IDが空です")
+                    continue
+                
+                try:
+                    grant_id_int = int(grant_id)
+                except ValueError:
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 助成金ID '{grant_id}' が無効です")
+                    continue
+                
                 # 既存の助成金を確認
-                existing_grant = db.query(Grant).filter(Grant.id == int(grant_id)).first()
+                existing_grant = db.query(Grant).filter(Grant.id == grant_id_int).first()
                 
                 grant_data = {
                     'name': name,
@@ -1313,7 +1447,7 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                     import_stats['grants_updated'] += 1
                 else:
                     # 新規作成
-                    new_grant = Grant(id=int(grant_id), **grant_data)
+                    new_grant = Grant(id=grant_id_int, **grant_data)
                     db.add(new_grant)
                     import_stats['grants_created'] += 1
                     
@@ -1337,11 +1471,32 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                 budgeted_amount = row[4] if len(row) > 4 else ''
                 remarks = row[5] if len(row) > 5 else ''
                 
+                # item_idとgrant_idの空文字列チェックと数値変換
+                if not item_id or str(item_id).strip() == '':
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 予算項目IDが空です")
+                    continue
+                
+                if not grant_id or str(grant_id).strip() == '':
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 助成金IDが空です")
+                    continue
+                
+                try:
+                    item_id_int = int(item_id)
+                except ValueError:
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 予算項目ID '{item_id}' が無効です")
+                    continue
+                
+                try:
+                    grant_id_int = int(grant_id)
+                except ValueError:
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 助成金ID '{grant_id}' が無効です")
+                    continue
+                
                 # 既存の予算項目を確認
-                existing_item = db.query(BudgetItem).filter(BudgetItem.id == int(item_id)).first()
+                existing_item = db.query(BudgetItem).filter(BudgetItem.id == item_id_int).first()
                 
                 item_data = {
-                    'grant_id': int(grant_id),
+                    'grant_id': grant_id_int,
                     'name': name,
                     'category': category,
                     'budgeted_amount': parse_amount(budgeted_amount),
@@ -1355,7 +1510,7 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                     import_stats['budget_items_updated'] += 1
                 else:
                     # 新規作成
-                    new_item = BudgetItem(id=int(item_id), **item_data)
+                    new_item = BudgetItem(id=item_id_int, **item_data)
                     db.add(new_item)
                     import_stats['budget_items_created'] += 1
                     
@@ -1369,8 +1524,30 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
             try:
                 allocation_id, transaction_id, budget_item_id, amount = row
                 
+                # 空文字列チェック
+                if not budget_item_id or str(budget_item_id).strip() == '':
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 予算項目IDが空です")
+                    continue
+                
+                # 数値変換チェック
+                try:
+                    budget_item_id_int = int(budget_item_id)
+                except ValueError:
+                    import_stats['errors'].append(f"行 {len(import_stats['errors']) + 1}: 予算項目ID '{budget_item_id}' が無効です")
+                    continue
+                
                 # 既存の割当を確認
-                existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
+                existing_allocation = None
+                allocation_id_int = None
+                if allocation_id and str(allocation_id).strip():
+                    try:
+                        allocation_id_int = int(allocation_id)
+                        existing_allocation = db.query(Allocation).filter(Allocation.id == allocation_id_int).first()
+                    except ValueError:
+                        import_stats['errors'].append(f"割当ID {allocation_id}: 無効なIDです")
+                        continue
+                else:
+                    existing_allocation = None
                 
                 # 空文字列や無効な値をチェック
                 if not amount or str(amount).strip() == '':
@@ -1378,36 +1555,109 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                     continue
                 
                 try:
-                    amount_value = float(str(amount).strip())
-                except (ValueError, TypeError):
-                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が無効です ({amount})")
+                    # 金額フィールドのクリーニング
+                    amount_str = str(amount).strip()
+                    # カンマ、円マーク、円文字を削除
+                    amount_str = amount_str.replace(',', '').replace('¥', '').replace('円', '')
+                    # 前後の空白を再度削除
+                    amount_str = amount_str.strip()
+                    amount_value = int(float(amount_str))
+                    print(f"処理中: {amount} -> {amount_str} -> {amount_value}")
+                except (ValueError, TypeError) as e:
+                    import_stats['errors'].append(f"割当ID {allocation_id}: 金額が無効です ({amount}) - {str(e)}")
+                    print(f"金額変換エラー: {amount} - {str(e)}")
                     continue
                 
+                # transaction_idは文字列として保持
+                transaction_id_value = str(transaction_id).strip() if transaction_id else None
+                
                 allocation_data = {
-                    'transaction_id': transaction_id,
-                    'budget_item_id': int(budget_item_id),
+                    'transaction_id': transaction_id_value,
+                    'budget_item_id': budget_item_id_int,
                     'amount': amount_value
                 }
                 
                 if existing_allocation:
-                    # 更新
-                    for key, value in allocation_data.items():
-                        setattr(existing_allocation, key, value)
-                    import_stats['allocations_updated'] += 1
+                    # 更新（textを使用した完全な生SQL）
+                    try:
+                        db.execute(
+                            text("UPDATE allocations SET transaction_id = :transaction_id, budget_item_id = :budget_item_id, amount = :amount WHERE id = :id"),
+                            {
+                                "transaction_id": allocation_data['transaction_id'],
+                                "budget_item_id": allocation_data['budget_item_id'],
+                                "amount": allocation_data['amount'],
+                                "id": existing_allocation.id
+                            }
+                        )
+                        db.commit()
+                        import_stats['allocations_updated'] += 1
+                    except Exception as update_error:
+                        import_stats['errors'].append(f"割当ID {allocation_id}: 更新エラー - {str(update_error)}")
+                        db.rollback()
+                        continue
                 else:
-                    # 新規作成
-                    if allocation_id and str(allocation_id).strip():
-                        new_allocation = Allocation(id=int(allocation_id), **allocation_data)
-                    else:
-                        new_allocation = Allocation(**allocation_data)
-                    db.add(new_allocation)
-                    import_stats['allocations_created'] += 1
+                    # 新規作成（textを使用した完全な生SQL）
+                    try:
+                        if allocation_id and str(allocation_id).strip():
+                            # IDが指定されている場合
+                            allocation_id_int = int(allocation_id)
+                            db.execute(
+                                text("INSERT INTO allocations (id, transaction_id, budget_item_id, amount, created_at) VALUES (:id, :transaction_id, :budget_item_id, :amount, :created_at)"),
+                                {
+                                    "id": allocation_id_int,
+                                    "transaction_id": allocation_data['transaction_id'],
+                                    "budget_item_id": allocation_data['budget_item_id'],
+                                    "amount": allocation_data['amount'],
+                                    "created_at": datetime.now()
+                                }
+                            )
+                        else:
+                            # IDが空欄の場合は、既存チェックしてから自動採番
+                            while True:
+                                # 最大IDを取得して+1
+                                max_id_result = db.execute(text("SELECT COALESCE(MAX(id), 0) + 1 FROM allocations")).fetchone()
+                                next_id = max_id_result[0] if max_id_result else 1
+                                
+                                # そのIDが既に存在しないかチェック
+                                existing_check = db.execute(text("SELECT id FROM allocations WHERE id = :id"), {"id": next_id}).fetchone()
+                                if not existing_check:
+                                    break
+                                # 存在する場合はもう一度ループ
+                            
+                            db.execute(
+                                text("INSERT INTO allocations (id, transaction_id, budget_item_id, amount, created_at) VALUES (:id, :transaction_id, :budget_item_id, :amount, :created_at)"),
+                                {
+                                    "id": next_id,
+                                    "transaction_id": allocation_data['transaction_id'],
+                                    "budget_item_id": allocation_data['budget_item_id'],
+                                    "amount": allocation_data['amount'],
+                                    "created_at": datetime.now()
+                                }
+                            )
+                            
+                            # シーケンスを更新
+                            try:
+                                db.execute(text("SELECT setval('allocations_id_seq', :next_id)"), {"next_id": next_id})
+                            except:
+                                # シーケンスが存在しない場合は無視
+                                pass
+                        db.commit()
+                        import_stats['allocations_created'] += 1
+                    except Exception as create_error:
+                        import_stats['errors'].append(f"割当ID {allocation_id}: 作成エラー - {str(create_error)}")
+                        db.rollback()
+                        continue
                     
             except Exception as e:
                 import_stats['errors'].append(f"割当データエラー: {str(e)}")
+                db.rollback()
         
-        # データベースにコミット
-        db.commit()
+        # 最終コミット（各行で既にコミット済みのため不要だが、念のため）
+        try:
+            db.commit()
+        except Exception as commit_error:
+            # 既に各行でコミットしているため、エラーは無視
+            pass
         
         return {
             'message': 'インポートが完了しました',

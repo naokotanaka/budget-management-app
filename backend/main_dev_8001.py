@@ -40,6 +40,46 @@ def parse_amount(amount_string):
         return int(amount_string.strip().replace(',', ''))
     except ValueError:
         return 0
+
+def safe_get_value(row, column_name):
+    """pandas行データから安全に値を取得"""
+    try:
+        value = row[column_name]
+        if pd.isna(value):
+            return None
+        # Series の場合は最初の値を取得
+        if hasattr(value, 'iloc'):
+            return value.iloc[0] if len(value) > 0 else None
+        return value
+    except (KeyError, IndexError, TypeError):
+        return None
+
+def safe_check_notna(row, column_name):
+    """pandas行データで値が存在するかチェック"""
+    try:
+        value = row[column_name]
+        if pd.isna(value):
+            return False
+        # Series の場合は最初の値をチェック
+        if hasattr(value, 'iloc'):
+            return not pd.isna(value.iloc[0]) if len(value) > 0 else False
+        return not pd.isna(value)
+    except (KeyError, IndexError, TypeError):
+        return False
+
+def safe_parse_datetime(row, column_name):
+    """pandas行データから日付を安全に解析"""
+    try:
+        value = safe_get_value(row, column_name)
+        if value is None:
+            return None
+        # pandas の to_datetime を使用して日付を解析
+        dt = pd.to_datetime(value, errors='coerce')
+        if pd.isna(dt):
+            return None
+        return dt.date()
+    except (ValueError, TypeError):
+        return None
 import csv
 import os
 from dotenv import load_dotenv
@@ -84,8 +124,23 @@ def startup_event():
 
 # Transactions endpoints
 @app.get("/api/transactions", response_model=List[TransactionWithAllocation])
-def get_transactions(skip: int = 0, limit: int = 1000, db: Session = Depends(get_db)):
-    transactions = db.query(Transaction).offset(skip).limit(limit).all()
+def get_transactions(
+    skip: int = 0, 
+    limit: int = 1000, 
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    db: Session = Depends(get_db)
+):
+    # Build query with optional date filtering
+    query = db.query(Transaction)
+    
+    # Apply date filtering if provided
+    if start_date:
+        query = query.filter(Transaction.date >= start_date)
+    if end_date:
+        query = query.filter(Transaction.date <= end_date)
+    
+    transactions = query.offset(skip).limit(limit).all()
     
     # Add allocation info
     result = []
@@ -217,21 +272,26 @@ async def import_transactions(file: UploadFile = File(...), db: Session = Depend
         for _, row in filtered_df.iterrows():
             try:
                 # Determine account and amount
-                if str(row['借方勘定科目']).startswith(('【事】', '【管】')):
-                    account = row['借方勘定科目']
+                debit_account = safe_get_value(row, '借方勘定科目')
+                credit_account = safe_get_value(row, '貸方勘定科目')
+                
+                if debit_account and str(debit_account).startswith(('【事】', '【管】')):
+                    account = debit_account
                     # Try to get amount from available amount columns
                     amount = 0
-                    if '借方金額' in df.columns and pd.notna(row['借方金額']):
+                    if '借方金額' in df.columns and safe_check_notna(row, '借方金額'):
                         try:
-                            amount = int(float(row['借方金額'])) if str(row['借方金額']).strip() else 0
+                            debit_amount = safe_get_value(row, '借方金額')
+                            amount = int(float(debit_amount)) if debit_amount and str(debit_amount).strip() else 0
                         except (ValueError, TypeError):
                             amount = 0
                 else:
-                    account = row['貸方勘定科目']
+                    account = credit_account
                     amount = 0
-                    if '貸方金額' in df.columns and pd.notna(row['貸方金額']):
+                    if '貸方金額' in df.columns and safe_check_notna(row, '貸方金額'):
                         try:
-                            amount = int(float(row['貸方金額'])) if str(row['貸方金額']).strip() else 0
+                            credit_amount = safe_get_value(row, '貸方金額')
+                            amount = int(float(credit_amount)) if credit_amount and str(credit_amount).strip() else 0
                         except (ValueError, TypeError):
                             amount = 0
                 
@@ -240,44 +300,67 @@ async def import_transactions(file: UploadFile = File(...), db: Session = Depend
                     continue
                 
                 # Check if transaction already exists by journal_number and journal_line_number
+                journal_number = safe_get_value(row, '仕訳番号')
+                journal_line_number = safe_get_value(row, '仕訳行番号')
+                
+                # Skip if essential values are missing
+                if not journal_number or not journal_line_number:
+                    continue
+                
                 existing = db.query(Transaction).filter(
-                    Transaction.journal_number == int(row['仕訳番号']),
-                    Transaction.journal_line_number == int(row['仕訳行番号'])
+                    Transaction.journal_number == int(journal_number),
+                    Transaction.journal_line_number == int(journal_line_number)
                 ).first()
                 
                 if existing:
-                    # Update existing transaction
-                    existing.date = pd.to_datetime(row['取引日']).date()
-                    existing.description = row['取引内容'] if pd.notna(row['取引内容']) else ''
-                    existing.amount = amount
-                    existing.account = account
-                    existing.supplier = row['借方取引先名'] if pd.notna(row['借方取引先名']) else row['貸方取引先名'] if pd.notna(row['貸方取引先名']) else ''
-                    existing.item = row['借方品目'] if pd.notna(row['借方品目']) else ''
-                    existing.memo = row['借方メモ'] if pd.notna(row['借方メモ']) else ''
-                    existing.remark = row['借方備考'] if pd.notna(row['借方備考']) else ''
-                    existing.department = row['借方部門'] if pd.notna(row['借方部門']) else ''
-                    existing.management_number = row['管理番号'] if pd.notna(row['管理番号']) else ''
-                    existing.raw_data = row.to_json()
+                    # Update existing transaction using SQLAlchemy update method
+                    debit_supplier = safe_get_value(row, '借方取引先名')
+                    credit_supplier = safe_get_value(row, '貸方取引先名')
+                    supplier = str(debit_supplier) if debit_supplier else (str(credit_supplier) if credit_supplier else '')
+                    
+                    update_data = {
+                        'date': safe_parse_datetime(row, '取引日'),
+                        'description': safe_get_value(row, '取引内容') or '',
+                        'amount': amount,
+                        'account': str(account) if account else '',
+                        'supplier': supplier,
+                        'item': str(safe_get_value(row, '借方品目') or ''),
+                        'memo': str(safe_get_value(row, '借方メモ') or ''),
+                        'remark': str(safe_get_value(row, '借方備考') or ''),
+                        'department': str(safe_get_value(row, '借方部門') or ''),
+                        'management_number': str(safe_get_value(row, '管理番号') or ''),
+                        'raw_data': row.to_json()
+                    }
+                    
+                    db.query(Transaction).filter(
+                        Transaction.journal_number == int(journal_number),
+                        Transaction.journal_line_number == int(journal_line_number)
+                    ).update(update_data, synchronize_session=False)
                     
                     updated_count += 1
                 else:
                     # Create new transaction
-                    transaction_id = f"{row['仕訳番号']}_{row['仕訳行番号']}"
+                    transaction_id = f"{journal_number}_{journal_line_number}"
+                    
+                    # Supplier: Try debit supplier first, then credit supplier
+                    debit_supplier = safe_get_value(row, '借方取引先名')
+                    credit_supplier = safe_get_value(row, '貸方取引先名')
+                    supplier = str(debit_supplier) if debit_supplier else (str(credit_supplier) if credit_supplier else '')
                     
                     transaction = Transaction(
                         id=transaction_id,
-                        journal_number=int(row['仕訳番号']),
-                        journal_line_number=int(row['仕訳行番号']),
-                        date=pd.to_datetime(row['取引日']).date(),
-                        description=row['取引内容'] if pd.notna(row['取引内容']) else '',
+                        journal_number=int(journal_number),
+                        journal_line_number=int(journal_line_number),
+                        date=safe_parse_datetime(row, '取引日'),
+                        description=safe_get_value(row, '取引内容') or '',
                         amount=amount,
-                        account=account,
-                        supplier=row['借方取引先名'] if pd.notna(row['借方取引先名']) else row['貸方取引先名'] if pd.notna(row['貸方取引先名']) else '',
-                        item=row['借方品目'] if pd.notna(row['借方品目']) else '',
-                        memo=row['借方メモ'] if pd.notna(row['借方メモ']) else '',
-                        remark=row['借方備考'] if pd.notna(row['借方備考']) else '',
-                        department=row['借方部門'] if pd.notna(row['借方部門']) else '',
-                        management_number=row['管理番号'] if pd.notna(row['管理番号']) else '',
+                        account=str(account) if account else '',
+                        supplier=supplier,
+                        item=str(safe_get_value(row, '借方品目') or ''),
+                        memo=str(safe_get_value(row, '借方メモ') or ''),
+                        remark=str(safe_get_value(row, '借方備考') or ''),
+                        department=str(safe_get_value(row, '借方部門') or ''),
+                        management_number=str(safe_get_value(row, '管理番号') or ''),
                         raw_data=row.to_json()
                     )
                     
@@ -360,31 +443,44 @@ async def preview_transactions(file: UploadFile = File(...)):
         preview_data = []
         for _, row in filtered_df.head(10).iterrows():
             try:
-                if str(row['借方勘定科目']).startswith(('【事】', '【管】')):
-                    account = row['借方勘定科目']
+                debit_account = safe_get_value(row, '借方勘定科目')
+                credit_account = safe_get_value(row, '貸方勘定科目')
+                
+                if debit_account and str(debit_account).startswith(('【事】', '【管】')):
+                    account = debit_account
                     # Try to get amount from available amount columns
                     amount = 0
-                    if '借方金額' in df.columns and pd.notna(row['借方金額']):
+                    if '借方金額' in df.columns and safe_check_notna(row, '借方金額'):
                         try:
-                            amount = int(float(row['借方金額'])) if str(row['借方金額']).strip() else 0
+                            debit_amount = safe_get_value(row, '借方金額')
+                            amount = int(float(debit_amount)) if debit_amount and str(debit_amount).strip() else 0
                         except (ValueError, TypeError):
                             amount = 0
                 else:
-                    account = row['貸方勘定科目']
+                    account = credit_account
                     amount = 0
-                    if '貸方金額' in df.columns and pd.notna(row['貸方金額']):
+                    if '貸方金額' in df.columns and safe_check_notna(row, '貸方金額'):
                         try:
-                            amount = int(float(row['貸方金額'])) if str(row['貸方金額']).strip() else 0
+                            credit_amount = safe_get_value(row, '貸方金額')
+                            amount = int(float(credit_amount)) if credit_amount and str(credit_amount).strip() else 0
                         except (ValueError, TypeError):
                             amount = 0
                 
+                journal_number = safe_get_value(row, '仕訳番号')
+                journal_line_number = safe_get_value(row, '仕訳行番号')
+                
+                # Supplier: Try debit supplier first, then credit supplier
+                debit_supplier = safe_get_value(row, '借方取引先名')
+                credit_supplier = safe_get_value(row, '貸方取引先名')
+                supplier = str(debit_supplier) if debit_supplier else (str(credit_supplier) if credit_supplier else '')
+                
                 preview_data.append({
-                    'id': f"{row['仕訳番号']}_{row['仕訳行番号']}",
-                    'date': str(row['取引日']),
-                    'description': row['取引内容'] if pd.notna(row['取引内容']) else '',
+                    'id': f"{journal_number}_{journal_line_number}",
+                    'date': str(safe_get_value(row, '取引日') or ''),
+                    'description': safe_get_value(row, '取引内容') or '',
                     'amount': amount,
-                    'account': account,
-                    'supplier': row['借方取引先名'] if pd.notna(row['借方取引先名']) else row['貸方取引先名'] if pd.notna(row['貸方取引先名']) else ''
+                    'account': str(account) if account else '',
+                    'supplier': supplier
                 })
             except Exception as e:
                 print(f"Error processing row: {e}")
@@ -482,7 +578,8 @@ def delete_category(category_id: int, db: Session = Depends(get_db)):
     if not db_category:
         raise HTTPException(status_code=404, detail="Category not found")
     
-    db_category.is_active = False
+    # Update using SQLAlchemy update method
+    db.query(Category).filter(Category.id == category_id).update({"is_active": False})
     db.commit()
     return {"message": "Category deleted successfully"}
 
@@ -655,8 +752,8 @@ def export_grants_budget_allocations(db: Session = Depends(get_db)):
             grant.name,
             grant.grant_code or '',
             grant.total_amount or '',
-            grant.start_date.strftime('%Y-%m-%d') if grant.start_date else '',
-            grant.end_date.strftime('%Y-%m-%d') if grant.end_date else '',
+            grant.start_date.strftime('%Y-%m-%d') if grant.start_date is not None else '',
+            grant.end_date.strftime('%Y-%m-%d') if grant.end_date is not None else '',
             grant.status
         ])
     
@@ -962,8 +1059,8 @@ async def preview_grants_budget_allocations(file: UploadFile = File(...)):
                 })
         
         return PreviewResponse(
-            file_name=file.filename,
             total_rows=len(grants_data) + len(budget_items_data) + len(allocations_data),
+            filtered_rows=len(grants_data) + len(budget_items_data) + len(allocations_data),
             preview=preview_data
         )
         
@@ -1322,6 +1419,9 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                 remarks = row[5] if len(row) > 5 else ''
                 
                 # 既存の予算項目を確認
+                if not item_id.strip():
+                    import_stats['errors'].append(f"予算項目IDが空です: {row}")
+                    continue
                 existing_item = db.query(BudgetItem).filter(BudgetItem.id == int(item_id)).first()
                 
                 item_data = {
@@ -1354,6 +1454,9 @@ async def import_grants_budget_allocations(file: UploadFile = File(...), db: Ses
                 allocation_id, transaction_id, budget_item_id, amount = row
                 
                 # 既存の割当を確認
+                if not allocation_id.strip() or not budget_item_id.strip():
+                    import_stats['errors'].append(f"割当IDまたは予算項目IDが空です: {row}")
+                    continue
                 existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
                 
                 allocation_data = {
@@ -1503,11 +1606,14 @@ def get_freee_status(db: Session = Depends(get_db)):
             }
         
         # トークンの有効期限をチェック
-        if datetime.utcnow() >= token.expires_at:
-            return {
-                "connected": False,
-                "message": "認証の有効期限が切れています。再認証が必要です。"
-            }
+        if token.expires_at is not None:
+            # Python の datetime オブジェクトとして比較
+            expires_at_datetime = token.expires_at
+            if datetime.utcnow() >= expires_at_datetime:
+                return {
+                    "connected": False,
+                    "message": "認証の有効期限が切れています。再認証が必要です。"
+                }
         
         return {
             "connected": True,

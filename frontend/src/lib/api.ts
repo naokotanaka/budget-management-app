@@ -1,7 +1,5 @@
 // Environment-based API URL configuration
-const API_BASE_URL = process.env.NODE_ENV === 'development'
-  ? process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8001'  // Development: port 8001
-  : process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8000'; // Production: port 8000
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8001'; // Always use port 8001
 
 export interface Transaction {
   id: string;
@@ -66,9 +64,23 @@ export const api = {
   // Transactions
   async getTransactions(): Promise<Transaction[]> {
     console.log('API Base URL:', API_BASE_URL);
-    const response = await fetch(`${API_BASE_URL}/api/transactions`);
-    if (!response.ok) throw new Error('Failed to fetch transactions');
-    return response.json();
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/transactions`);
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`Failed to fetch transactions: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    } catch (error) {
+      console.error('Fetch error:', error);
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        throw new Error('Network error: Unable to connect to the server. Please check if the backend is running.');
+      }
+      throw error;
+    }
   },
 
   async importTransactions(file: File): Promise<any> {
@@ -128,14 +140,24 @@ export const api = {
   // Budget Items
   async getBudgetItems(): Promise<BudgetItem[]> {
     console.log('Fetching budget items from:', `${API_BASE_URL}/api/budget-items`);
-    const response = await fetch(`${API_BASE_URL}/api/budget-items`);
-    if (!response.ok) {
-      console.error('Budget items fetch failed:', response.status, response.statusText);
-      throw new Error('Failed to fetch budget items');
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/budget-items`);
+      console.log('Budget items response status:', response.status);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Budget items fetch failed:', response.status, response.statusText, errorText);
+        throw new Error(`Failed to fetch budget items: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log('Budget items response:', data);
+      return data;
+    } catch (error) {
+      console.error('Budget items fetch error:', error);
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        throw new Error('Network error: Unable to connect to the server for budget items.');
+      }
+      throw error;
     }
-    const data = await response.json();
-    console.log('Budget items response:', data);
-    return data;
   },
 
   async createBudgetItem(data: { name: string; category: string; budgeted_amount: number; grant_id: number; remarks?: string }): Promise<BudgetItem> {
@@ -201,14 +223,24 @@ export const api = {
   // Grants
   async getGrants(): Promise<Grant[]> {
     console.log('Fetching grants from:', `${API_BASE_URL}/api/grants`);
-    const response = await fetch(`${API_BASE_URL}/api/grants`);
-    if (!response.ok) {
-      console.error('Grants fetch failed:', response.status, response.statusText);
-      throw new Error('Failed to fetch grants');
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/grants`);
+      console.log('Grants response status:', response.status);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Grants fetch failed:', response.status, response.statusText, errorText);
+        throw new Error(`Failed to fetch grants: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log('Grants response:', data);
+      return data;
+    } catch (error) {
+      console.error('Grants fetch error:', error);
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        throw new Error('Network error: Unable to connect to the server for grants.');
+      }
+      throw error;
     }
-    const data = await response.json();
-    console.log('Grants response:', data);
-    return data;
   },
 
   async createGrant(data: { name: string; total_amount: number; start_date: string; end_date: string; status?: string; grant_code?: string }): Promise<Grant> {

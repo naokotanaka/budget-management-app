@@ -58,17 +58,17 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       
       const applyDateFilter = () => {
         if (!gridRef.current?.api) return;
-        
-        // 選択状態を保存
-        const selectedNodes = gridRef.current.api.getSelectedNodes();
-        const selectedIds = selectedNodes.map(node => node.data.id);
-        
+      
+      // 選択状態を保存
+      const selectedNodes = gridRef.current.api.getSelectedNodes();
+      const selectedIds = selectedNodes.map(node => node.data.id);
+      
         // 現在のフィルターモデルを取得
         const currentFilter: any = gridRef.current.api.getFilterModel() || {};
-        
-        if (dateFilter) {
-          // 助成期間でフィルター
-          console.log('Applying date filter:', dateFilter.start_date, 'to', dateFilter.end_date);
+      
+      if (dateFilter) {
+        // 助成期間でフィルター
+        console.log('Applying date filter:', dateFilter.start_date, 'to', dateFilter.end_date);
           
           // AG Gridの日付フィルター形式に変換
           const dateFromFormatted = new Date(dateFilter.start_date).toISOString().split('T')[0];
@@ -76,30 +76,30 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           
           console.log('Formatted dates:', dateFromFormatted, 'to', dateToFormatted);
           
-          currentFilter['date'] = {
-            filterType: 'date',
-            type: 'inRange',
+        currentFilter['date'] = {
+          filterType: 'date',
+          type: 'inRange',
             dateFrom: dateFromFormatted,
             dateTo: dateToFormatted
-          };
-        } else {
-          // 日付フィルターをクリア
-          console.log('Clearing date filter');
-          delete currentFilter['date'];
-        }
-        
+        };
+      } else {
+        // 日付フィルターをクリア
+        console.log('Clearing date filter');
+        delete currentFilter['date'];
+      }
+      
         console.log('Setting filter model:', currentFilter);
-        gridRef.current.api.setFilterModel(currentFilter);
-        
-        // 選択状態を復元（少し遅延させる）
-        setTimeout(() => {
-          if (gridRef.current?.api && selectedIds.length > 0) {
-            gridRef.current.api.forEachNode((node) => {
-              if (selectedIds.includes(node.data.id)) {
-                node.setSelected(true);
-              }
-            });
-          }
+      gridRef.current.api.setFilterModel(currentFilter);
+      
+      // 選択状態を復元（少し遅延させる）
+      setTimeout(() => {
+        if (gridRef.current?.api && selectedIds.length > 0) {
+          gridRef.current.api.forEachNode((node) => {
+            if (selectedIds.includes(node.data.id)) {
+              node.setSelected(true);
+            }
+          });
+        }
         }, 100);
       };
 

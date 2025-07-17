@@ -423,9 +423,9 @@ const GrantsPage: React.FC = () => {
         }
 
         // 新規作成された行はローカル状態から削除
-        const selectedIds = selectedRows.map(row => row.id);
-        const updatedItems = budgetItems.filter(item => !selectedIds.includes(item.id));
-        setBudgetItems(updatedItems);
+      const selectedIds = selectedRows.map(row => row.id);
+      const updatedItems = budgetItems.filter(item => !selectedIds.includes(item.id));
+      setBudgetItems(updatedItems);
 
         // 成功メッセージを表示
         const toast = document.createElement('div');
