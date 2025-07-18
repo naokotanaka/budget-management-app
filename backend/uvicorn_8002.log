@@ -1,0 +1,13 @@
+INFO:     Will watch for changes in these directories: ['/home/tanaka/nagaiku-budget/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8002 (Press CTRL+C to quit)
+INFO:     Started reloader process [48093] using StatReload
+INFO:     Started server process [48105]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Warning: FREEE_CLIENT_ID and FREEE_CLIENT_SECRET environment variables are not set
+INFO:     160.251.170.97:43322 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [48105]
+INFO:     Stopping reloader process [48093]

@@ -618,20 +618,38 @@ export const api = {
 
   // GitHubのコミット履歴を取得
   async getGitHubCommits(limit: number = 20): Promise<GitHubCommit[]> {
-    const response = await fetch(`https://api.github.com/repos/tanaka-naoki/nagaiku-budget/commits?per_page=${limit}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch GitHub commits: ${response.status} ${response.statusText}`);
+    try {
+      const response = await fetch(`https://api.github.com/repos/tanaka-naoki/nagaiku-budget/commits?per_page=${limit}`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          // リポジトリが存在しない場合は空配列を返す
+          return [];
+        }
+        throw new Error(`Failed to fetch GitHub commits: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    } catch (error) {
+      console.error('GitHub commits fetch error:', error);
+      return []; // エラーの場合は空配列を返す
     }
-    return response.json();
   },
 
   // GitHubのリリース情報を取得
   async getGitHubReleases(limit: number = 10): Promise<GitHubRelease[]> {
-    const response = await fetch(`https://api.github.com/repos/tanaka-naoki/nagaiku-budget/releases?per_page=${limit}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch GitHub releases: ${response.status} ${response.statusText}`);
+    try {
+      const response = await fetch(`https://api.github.com/repos/tanaka-naoki/nagaiku-budget/releases?per_page=${limit}`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          // リポジトリにリリースが存在しない場合は空配列を返す
+          return [];
+        }
+        throw new Error(`Failed to fetch GitHub releases: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    } catch (error) {
+      console.error('GitHub releases fetch error:', error);
+      return []; // エラーの場合は空配列を返す
     }
-    return response.json();
   },
 
   // 現在のコミットハッシュを取得（本番環境のバージョン識別用）

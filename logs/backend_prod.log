@@ -1,0 +1,52 @@
+/home/tanaka/nagaiku-budget/backend/main_dev.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+/home/tanaka/nagaiku-budget/backend/main_dev.py:90: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [98981]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     160.251.170.97:36638 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     149.86.227.49:56002 - "GET / HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42105 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33913 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42105 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38009 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50297 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42105 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46201 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17529 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13433 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21625 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17529 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13433 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21625 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9337 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17530 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38011 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42107 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33915 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25723 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     193.34.212.110:60054 - "GET / HTTP/1.1" 200 OK
+INFO:     149.86.227.49:35082 - "GET / HTTP/1.1" 200 OK
+INFO:     74.82.47.4:3174 - "GET / HTTP/1.1" 200 OK
+INFO:     74.82.47.32:50375 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     74.82.47.60:61349 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     74.82.47.12:26843 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     199.204.97.58:52662 - "GET http%3A//httpbin.org/get HTTP/1.1" 404 Not Found
+INFO:     193.34.212.110:53008 - "GET / HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [98981]
