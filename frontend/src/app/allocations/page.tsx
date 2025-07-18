@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, GridApi, GridReadyEvent, ModuleRegistry, AllCommunityModule, themeQuartz } from 'ag-grid-community';
+import { ColDef, GridApi, GridReadyEvent, ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import { Allocation, api } from '@/lib/api';
 import { Trash2, AlertCircle } from 'lucide-react';
 import dayjs from 'dayjs';
@@ -348,14 +348,15 @@ const AllocationsPage: React.FC = () => {
       <div className="flex-1 min-h-0" style={{ height: 'calc(100vh - 120px)' }}>
         <div className="h-full w-full" style={{ minHeight: '500px' }}>
           <div className="ag-theme-alpine" style={{ height: 'calc(100vh - 160px)', width: '100%' }}>
-            <AgGridReact
-              rowData={allocations}
-              columnDefs={columns}
-              onGridReady={onGridReady}
-              defaultColDef={{
-                resizable: true,
-                sortable: true,
-                filter: true,
+          <AgGridReact
+            rowData={allocations}
+            columnDefs={columns}
+            theme="legacy"
+            onGridReady={onGridReady}
+            defaultColDef={{
+              resizable: true,
+              sortable: true,
+              filter: true,
                 minWidth: 80,
               }}
               rowHeight={32}
@@ -369,7 +370,7 @@ const AllocationsPage: React.FC = () => {
                   padding: '0'
                 };
               }}
-            />
+          />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Query
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Query, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, FileResponse
 from sqlalchemy.orm import Session
@@ -9,6 +9,9 @@ import chardet
 import io
 import json
 from datetime import datetime, date
+import csv
+import os
+from dotenv import load_dotenv
 
 def parse_date(date_string):
     """複数の日付フォーマットに対応した日付パース"""
@@ -40,9 +43,6 @@ def parse_amount(amount_string):
         return int(amount_string.strip().replace(',', ''))
     except ValueError:
         return 0
-import csv
-import os
-from dotenv import load_dotenv
 
 # 環境変数を読み込み
 load_dotenv()
@@ -1849,6 +1849,303 @@ def disconnect_freee(db: Session = Depends(get_db)):
         return {"message": "freee連携を切断しました"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"切断エラー: {str(e)}")
+
+@app.post("/api/import/allocations/replace")
+async def import_allocations_replace(
+    file: UploadFile = File(...), 
+    preview_only: bool = Form(False),
+    backup_before_import: bool = Form(True)
+):
+    """割当データをCSVから完全置換でインポート（差分更新方式）"""
+    print("=== STARTING ALLOCATION REPLACE IMPORT ===")
+    from database import engine
+    from sqlalchemy.orm import sessionmaker
+    
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    db = SessionLocal()
+    
+    try:
+        print("=== READING FILE ===")
+        # ファイル内容を読み取り
+        contents = await file.read()
+        
+        # 文字エンコーディングを検出
+        detected = chardet.detect(contents)
+        encoding = detected['encoding'] or 'utf-8'
+        
+        # CSVデータを解析
+        text_data = contents.decode(encoding)
+        
+        # BOMを削除
+        if text_data.startswith('\ufeff'):
+            text_data = text_data[1:]
+        
+        lines = text_data.strip().split('\n')
+        reader = csv.reader(lines)
+        
+        # ヘッダー行をスキップ
+        next(reader, None)
+        
+        # CSVから読み込む割当データ
+        csv_allocations = []
+        errors = []
+        
+        for row_num, row in enumerate(reader, 1):
+            if len(row) < 3:
+                continue
+            try:
+                if len(row) >= 4:
+                    allocation_id, transaction_id, budget_item_id, amount = row[:4]
+                else:
+                    allocation_id = ""
+                    transaction_id, budget_item_id, amount = row[:3]
+                
+                # データ検証
+                if not transaction_id or str(transaction_id).strip() == '':
+                    errors.append(f"行 {row_num}: 取引IDが空です")
+                    continue
+                
+                if not budget_item_id or str(budget_item_id).strip() == '':
+                    errors.append(f"行 {row_num}: 予算項目IDが空です")
+                    continue
+                
+                if not amount or str(amount).strip() == '':
+                    errors.append(f"行 {row_num}: 金額が空です")
+                    continue
+                
+                # 数値変換チェック
+                try:
+                    budget_item_id_int = int(budget_item_id)
+                except ValueError:
+                    errors.append(f"行 {row_num}: 予算項目ID '{budget_item_id}' が無効です")
+                    continue
+                
+                try:
+                    amount_str = str(amount).strip().replace(',', '').replace('¥', '').replace('円', '')
+                    amount_value = int(float(amount_str))
+                except (ValueError, TypeError):
+                    errors.append(f"行 {row_num}: 金額 '{amount}' が無効です")
+                    continue
+                
+                # 取引と予算項目の存在確認
+                transaction_check = db.execute(text("SELECT id FROM transactions WHERE id = :id"), {"id": transaction_id}).fetchone()
+                budget_item_check = db.execute(text("SELECT id FROM budget_items WHERE id = :id"), {"id": budget_item_id_int}).fetchone()
+                
+                if not transaction_check:
+                    errors.append(f"行 {row_num}: 取引ID {transaction_id} が見つかりません")
+                    continue
+                
+                if not budget_item_check:
+                    errors.append(f"行 {row_num}: 予算項目ID {budget_item_id_int} が見つかりません")
+                    continue
+                
+                # 有効な割当データとして追加
+                allocation_data = {
+                    'id': int(allocation_id) if allocation_id and str(allocation_id).strip() else None,
+                    'transaction_id': str(transaction_id).strip(),
+                    'budget_item_id': budget_item_id_int,
+                    'amount': amount_value
+                }
+                csv_allocations.append(allocation_data)
+                
+            except Exception as e:
+                errors.append(f"行 {row_num}: 処理エラー - {str(e)}")
+        
+        # 現在のDBの割当データを取得
+        current_allocations = []
+        result = db.execute(text("SELECT id, transaction_id, budget_item_id, amount FROM allocations")).fetchall()
+        for row in result:
+            current_allocations.append({
+                'id': row[0],
+                'transaction_id': row[1],
+                'budget_item_id': row[2],
+                'amount': row[3]
+            })
+        
+        # 差分計算
+        # CSVにある割当データのIDセット
+        csv_ids = {alloc['id'] for alloc in csv_allocations if alloc['id'] is not None}
+        current_ids = {alloc['id'] for alloc in current_allocations}
+        
+        # 削除対象: 現在のDBにあるがCSVにない
+        to_delete = [alloc for alloc in current_allocations if alloc['id'] not in csv_ids]
+        
+        # 更新対象: CSVにIDがあり、かつ内容が異なる
+        to_update = []
+        for csv_alloc in csv_allocations:
+            if csv_alloc['id'] is not None:
+                current_alloc = next((alloc for alloc in current_allocations if alloc['id'] == csv_alloc['id']), None)
+                if current_alloc and (
+                    current_alloc['transaction_id'] != csv_alloc['transaction_id'] or
+                    current_alloc['budget_item_id'] != csv_alloc['budget_item_id'] or
+                    current_alloc['amount'] != csv_alloc['amount']
+                ):
+                    to_update.append(csv_alloc)
+        
+        # 新規作成対象: CSVにIDがないもの
+        to_create = [alloc for alloc in csv_allocations if alloc['id'] is None]
+        
+        diff_summary = {
+            'to_delete': len(to_delete),
+            'to_update': len(to_update),
+            'to_create': len(to_create),
+            'errors': errors,
+            'delete_details': to_delete if preview_only else [],
+            'update_details': to_update if preview_only else [],
+            'create_details': to_create if preview_only else []
+        }
+        
+        # プレビューのみの場合は差分情報を返す
+        if preview_only:
+            return {
+                'preview': True,
+                'stats': diff_summary,
+                'message': f'削除: {len(to_delete)}件, 更新: {len(to_update)}件, 作成: {len(to_create)}件'
+            }
+        
+        # バックアップ作成
+        backup_id = None
+        if backup_before_import:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_id = f"allocation_backup_{timestamp}"
+            
+            # バックアップテーブルを作成
+            db.execute(text(f"""
+                CREATE TABLE IF NOT EXISTS allocation_backups_{timestamp} AS 
+                SELECT *, '{timestamp}' as backup_timestamp, 'replace_import' as backup_reason
+                FROM allocations
+            """))
+            print(f"バックアップ作成完了: allocation_backups_{timestamp}")
+        
+        # 実際の更新処理を開始
+        try:
+            # 1. 削除処理
+            if to_delete:
+                delete_ids = [alloc['id'] for alloc in to_delete]
+                for chunk_start in range(0, len(delete_ids), 100):  # 100件ずつ処理
+                    chunk = delete_ids[chunk_start:chunk_start + 100]
+                    placeholders = ','.join([':id' + str(i) for i in range(len(chunk))])
+                    params = {f'id{i}': chunk[i] for i in range(len(chunk))}
+                    db.execute(text(f"DELETE FROM allocations WHERE id IN ({placeholders})"), params)
+            
+            # 2. 更新処理
+            for alloc in to_update:
+                db.execute(text("""
+                    UPDATE allocations 
+                    SET transaction_id = :transaction_id, budget_item_id = :budget_item_id, amount = :amount 
+                    WHERE id = :id
+                """), alloc)
+            
+            # 3. 新規作成処理
+            for alloc in to_create:
+                db.execute(text("""
+                    INSERT INTO allocations (transaction_id, budget_item_id, amount) 
+                    VALUES (:transaction_id, :budget_item_id, :amount)
+                """), {
+                    'transaction_id': alloc['transaction_id'],
+                    'budget_item_id': alloc['budget_item_id'],
+                    'amount': alloc['amount']
+                })
+            
+            # コミット
+            db.commit()
+            
+            return {
+                'preview': False,
+                'stats': diff_summary,
+                'backup_id': backup_id,
+                'message': f'完全置換完了: 削除 {len(to_delete)}件, 更新 {len(to_update)}件, 作成 {len(to_create)}件'
+            }
+            
+        except Exception as e:
+            db.rollback()
+            raise HTTPException(status_code=500, detail=f"インポート処理エラー: {str(e)}")
+            
+    except Exception as e:
+        print(f"エラー: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"処理エラー: {str(e)}")
+    finally:
+        db.close()
+
+@app.get("/api/allocations/backup/list")
+def list_allocation_backups(db: Session = Depends(get_db)):
+    """割当データのバックアップ一覧を取得"""
+    try:
+        # バックアップテーブル一覧を取得
+        result = db.execute(text("""
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_name LIKE 'allocation_backups_%'
+            ORDER BY table_name DESC
+        """)).fetchall()
+        
+        backups = []
+        for row in result:
+            table_name = row[0]
+            timestamp = table_name.replace('allocation_backups_', '')
+            
+            # バックアップの件数を取得
+            count_result = db.execute(text(f"SELECT COUNT(*) FROM {table_name}")).fetchone()
+            count = count_result[0] if count_result else 0
+            
+            backups.append({
+                'table_name': table_name,
+                'timestamp': timestamp,
+                'record_count': count,
+                'created_at': datetime.strptime(timestamp, "%Y%m%d_%H%M%S").isoformat()
+            })
+        
+        return {'backups': backups}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"バックアップ一覧取得エラー: {str(e)}")
+
+@app.post("/api/allocations/backup/restore/{backup_id}")
+def restore_allocation_backup(backup_id: str, db: Session = Depends(get_db)):
+    """割当データのバックアップから復元"""
+    try:
+        backup_table = f"allocation_backups_{backup_id}"
+        
+        # バックアップテーブルの存在確認
+        result = db.execute(text("""
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_name = :table_name
+        """), {"table_name": backup_table}).fetchone()
+        
+        if not result:
+            raise HTTPException(status_code=404, detail="指定されたバックアップが見つかりません")
+        
+        # 現在のデータをバックアップ
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        temp_backup = f"allocation_backups_restore_{timestamp}"
+        
+        db.execute(text(f"""
+            CREATE TABLE {temp_backup} AS 
+            SELECT *, '{timestamp}' as backup_timestamp, 'before_restore' as backup_reason
+            FROM allocations
+        """))
+        
+        # 現在のデータを削除
+        db.execute(text("DELETE FROM allocations"))
+        
+        # バックアップから復元（バックアップ固有の列を除く）
+        db.execute(text(f"""
+            INSERT INTO allocations (id, transaction_id, budget_item_id, amount, created_at)
+            SELECT id, transaction_id, budget_item_id, amount, created_at
+            FROM {backup_table}
+        """))
+        
+        db.commit()
+        
+        return {
+            'message': f'バックアップ {backup_id} から復元完了',
+            'restore_backup_id': f"restore_{timestamp}"
+        }
+        
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"復元エラー: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

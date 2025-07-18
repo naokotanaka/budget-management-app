@@ -543,6 +543,46 @@ export const api = {
     return response.json();
   },
 
+  // 完全置換モードでの割当インポート（差分更新方式）
+  async importAllocationsReplace(file: File, previewOnly: boolean = false, backupBeforeImport: boolean = true): Promise<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('preview_only', previewOnly.toString());
+    formData.append('backup_before_import', backupBeforeImport.toString());
+
+    const response = await fetch(`${API_BASE_URL}/api/import/allocations/replace`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to import allocations (replace mode): ${response.status} ${response.statusText} - ${errorText}`);
+    }
+    return response.json();
+  },
+
+  // バックアップ関連の関数
+  async getAllocationBackups(): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/allocations/backup/list`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch allocation backups: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  },
+
+  async restoreAllocationBackup(backupId: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/allocations/backup/restore/${backupId}`, {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to restore allocation backup: ${response.status} ${response.statusText} - ${errorText}`);
+    }
+    return response.json();
+  },
+
   async importGrantsBudget(file: File): Promise<any> {
     const formData = new FormData();
     formData.append('file', file);

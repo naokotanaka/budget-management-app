@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, themeAlpine } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
 import { api, Transaction, BudgetItem, Grant, Allocation } from '@/lib/api';
 import '@/lib/ag-grid-setup';
 
@@ -397,7 +397,8 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
                 return grant?.status !== 'applied';
               })}
               columnDefs={budgetColumnDefs}
-              theme={themeAlpine}
+              className="ag-theme-alpine"
+              theme="legacy"
               rowSelection="single"
               onSelectionChanged={handleBudgetItemSelection}
               defaultColDef={{

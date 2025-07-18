@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, ModuleRegistry, AllCommunityModule, themeAlpine } from 'ag-grid-community';
+import { ColDef, ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import { api, Grant, BudgetItem, Allocation, Category } from '@/lib/api';
 
 const GrantsPage: React.FC = () => {
@@ -1185,7 +1185,8 @@ const GrantsPage: React.FC = () => {
               return (!selectedGrantId || item.grant_id === selectedGrantId) && (showReportedBudgetItems || !isReported);
             })}
             columnDefs={budgetColumnDefs}
-            theme={themeAlpine}
+            className="ag-theme-alpine"
+            theme="legacy"
             defaultColDef={{
               sortable: true,
               filter: true,

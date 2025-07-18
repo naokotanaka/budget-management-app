@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, GridApi, ModuleRegistry, AllCommunityModule, themeAlpine } from 'ag-grid-community';
+import { ColDef, GridApi, ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import dayjs from 'dayjs';
 import { api, Transaction, BudgetItem, Grant } from '@/lib/api';
 import { CONFIG } from '@/lib/config';
@@ -62,16 +62,16 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         // 現在のスクロール位置を保存
         const scrollTop = gridRef.current.api.getVerticalPixelRange()?.top || 0;
         
-        // 選択状態を保存
-        const selectedNodes = gridRef.current.api.getSelectedNodes();
-        const selectedIds = selectedNodes.map(node => node.data.id);
+      // 選択状態を保存
+      const selectedNodes = gridRef.current.api.getSelectedNodes();
+      const selectedIds = selectedNodes.map(node => node.data.id);
       
         // 現在のフィルターモデルを取得
         const currentFilter: any = gridRef.current.api.getFilterModel() || {};
       
-        if (dateFilter) {
-          // 助成期間でフィルター
-          console.log('Applying date filter:', dateFilter.start_date, 'to', dateFilter.end_date);
+      if (dateFilter) {
+        // 助成期間でフィルター
+        console.log('Applying date filter:', dateFilter.start_date, 'to', dateFilter.end_date);
           
           // AG Gridの日付フィルター形式に変換
           // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
@@ -85,31 +85,31 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           
           console.log('Formatted dates (adjusted for inRange):', dateFromFormatted, 'to', dateToFormatted);
           
-          currentFilter['date'] = {
-            filterType: 'date',
-            type: 'inRange',
+        currentFilter['date'] = {
+          filterType: 'date',
+          type: 'inRange',
             dateFrom: dateFromFormatted,
             dateTo: dateToFormatted
-          };
-        } else {
-          // 日付フィルターをクリア
-          console.log('Clearing date filter');
-          delete currentFilter['date'];
-        }
+        };
+      } else {
+        // 日付フィルターをクリア
+        console.log('Clearing date filter');
+        delete currentFilter['date'];
+      }
       
         console.log('Setting filter model:', currentFilter);
-        gridRef.current.api.setFilterModel(currentFilter);
+      gridRef.current.api.setFilterModel(currentFilter);
       
         // 選択状態とスクロール位置を復元（少し遅延させる）
-        setTimeout(() => {
+      setTimeout(() => {
           if (gridRef.current?.api) {
             // 選択状態を復元
             if (selectedIds.length > 0) {
-              gridRef.current.api.forEachNode((node) => {
-                if (selectedIds.includes(node.data.id)) {
-                  node.setSelected(true);
-                }
-              });
+          gridRef.current.api.forEachNode((node) => {
+            if (selectedIds.includes(node.data.id)) {
+              node.setSelected(true);
+            }
+          });
             }
             
             // スクロール位置を復元
@@ -122,7 +122,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
                 console.log('Failed to restore scroll position:', error);
               }
             }
-          }
+        }
         }, 100);
       };
 
@@ -1006,7 +1006,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
-          theme={themeAlpine}
+          theme="legacy"
           defaultColDef={{
             sortable: true,
             filter: true,

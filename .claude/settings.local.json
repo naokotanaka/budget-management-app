@@ -81,7 +81,8 @@
       "Bash(git revert:*)",
       "Bash(bash:*)",
       "Bash(git gc:*)",
-      "Bash(fuser:*)"
+      "Bash(fuser:*)",
+      "Bash(git stash:*)"
     ],
     "deny": []
   }
