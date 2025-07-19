@@ -82,7 +82,8 @@
       "Bash(bash:*)",
       "Bash(git gc:*)",
       "Bash(fuser:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }

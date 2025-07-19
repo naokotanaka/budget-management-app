@@ -666,7 +666,7 @@ const GrantsPage: React.FC = () => {
         )}
 
         {/* アクティブな助成金カード */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {grants.filter(g => g.status !== 'applied').map((grant) => {
             const getStatusColor = (status: string) => {
               switch (status) {
@@ -782,7 +782,7 @@ const GrantsPage: React.FC = () => {
                           )}
                         </div>
                       </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(grant.status || 'active')}`}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getStatusColor(grant.status || 'active')}`}>
                         {getStatusText(grant.status || 'active')}
                       </span>
                     </div>
@@ -860,7 +860,7 @@ const GrantsPage: React.FC = () => {
             </div>
 
             {showReportedGrants && (
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                 {grants.filter(g => g.status === 'applied').map((grant) => {
                   const getStatusColor = (status: string) => {
                     switch (status) {
@@ -976,7 +976,7 @@ const GrantsPage: React.FC = () => {
                                 )}
                               </div>
                             </div>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(grant.status || 'active')}`}>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getStatusColor(grant.status || 'active')}`}>
                               {getStatusText(grant.status || 'active')}
                             </span>
                           </div>
@@ -1186,7 +1186,6 @@ const GrantsPage: React.FC = () => {
             })}
             columnDefs={budgetColumnDefs}
             className="ag-theme-alpine"
-            theme="legacy"
             defaultColDef={{
               sortable: true,
               filter: true,

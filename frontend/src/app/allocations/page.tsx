@@ -351,25 +351,52 @@ const AllocationsPage: React.FC = () => {
           <AgGridReact
             rowData={allocations}
             columnDefs={columns}
-            theme="legacy"
+            className="ag-theme-alpine"
             onGridReady={onGridReady}
             defaultColDef={{
-              resizable: true,
               sortable: true,
               filter: true,
-                minWidth: 80,
-              }}
-              rowHeight={32}
-              headerHeight={36}
-              suppressRowHoverHighlight={false}
-              getRowStyle={(params) => {
-                return {
-                  border: 'none',
-                  borderBottom: '1px solid #e0e0e0',
-                  margin: '0',
-                  padding: '0'
-                };
-              }}
+              resizable: true,
+              floatingFilter: true,
+              minWidth: 80
+            }}
+            rowHeight={28}
+            suppressHorizontalScroll={false}
+            getRowStyle={(params) => {
+              return (params.node.rowIndex ?? 0) % 2 === 0
+                ? { backgroundColor: '#f3f4f6' }
+                : { backgroundColor: '#ffffff' };
+            }}
+            pagination={true}
+            paginationPageSize={100}
+            suppressCellFocus={false}
+            localeText={{
+              // フィルター関連
+              filterOoo: 'フィルター...',
+              equals: '等しい',
+              notEqual: '等しくない',
+              lessThan: '未満',
+              greaterThan: 'より大きい',
+              lessThanOrEqual: '以下',
+              greaterThanOrEqual: '以上',
+              inRange: '範囲内',
+              contains: '含む',
+              notContains: '含まない',
+              startsWith: 'で始まる',
+              endsWith: 'で終わる',
+              andCondition: 'AND',
+              orCondition: 'OR',
+              // ページネーション
+              page: 'ページ',
+              of: '/',
+              to: '～',
+              more: 'さらに表示',
+              // その他
+              loading: '読み込み中...',
+              noRowsToShow: '表示するデータがありません',
+              // 日付フィルター
+              dateFormatOoo: 'yyyy-mm-dd'
+            }}
           />
           </div>
         </div>

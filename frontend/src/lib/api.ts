@@ -564,11 +564,17 @@ export const api = {
 
   // バックアップ関連の関数
   async getAllocationBackups(): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/api/allocations/backup/list`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch allocation backups: ${response.status} ${response.statusText}`);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/allocations/backup/list`);
+      if (!response.ok) {
+        console.warn(`Backup API not available: ${response.status} ${response.statusText}`);
+        return { backups: [] }; // 空の結果を返す
+      }
+      return response.json();
+    } catch (error) {
+      console.warn('Backup API not available:', error);
+      return { backups: [] }; // エラー時も空の結果を返す
     }
-    return response.json();
   },
 
   async restoreAllocationBackup(backupId: string): Promise<any> {

@@ -411,7 +411,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     return values;
   }, [budgetItems, grants, loading]);
 
-  const columnDefs: ColDef[] = useMemo(() => [
+    const columnDefs: ColDef[] = useMemo(() => [
     {
       headerName: '',
       field: 'select',
@@ -424,7 +424,10 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       lockPosition: true,
       suppressMovable: true,
       filter: false,
-      sortable: false
+      sortable: false,
+      floatingFilter: false,
+      suppressFloatingFilterButton: true,
+      suppressHeaderMenuButton: true
     },
     {
       field: 'budget_item',
@@ -483,11 +486,14 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellStyle: (params) => {
         const value = params.value;
         const isUnallocated = !value || value === '未割当';
-        return {
+        const style: any = {
           fontWeight: 'bold',
-          color: isUnallocated ? '#9ca3af' : undefined,
           textAlign: 'right'
         };
+        if (isUnallocated) {
+          style.color = '#9ca3af';
+        }
+        return style;
       },
       pinned: 'left'
     },
@@ -705,7 +711,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       width: 100,
       minWidth: 80
     }
-  ], [availableBudgetItems, allocations, budgetItems, grants]);
+  ], [availableBudgetItems, allocations, budgetItems, grants, enableBatchAllocation]);
 
   // データ取得完了後にグリッドをリフレッシュ
   useEffect(() => {
@@ -1006,7 +1012,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
-          theme="legacy"
+          className="ag-theme-alpine"
           defaultColDef={{
             sortable: true,
             filter: true,

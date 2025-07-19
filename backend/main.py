@@ -1890,8 +1890,12 @@ async def import_allocations_replace(
         csv_allocations = []
         errors = []
         
+        print(f"=== CSV行数: {len(lines)} ===")
+        
         for row_num, row in enumerate(reader, 1):
+            print(f"Processing row {row_num}: {row}")
             if len(row) < 3:
+                print(f"Row {row_num} skipped: too few columns")
                 continue
             try:
                 if len(row) >= 4:
@@ -1947,9 +1951,15 @@ async def import_allocations_replace(
                     'amount': amount_value
                 }
                 csv_allocations.append(allocation_data)
+                print(f"Added valid allocation: {allocation_data}")
                 
             except Exception as e:
+                print(f"Exception in row {row_num}: {str(e)}")
                 errors.append(f"行 {row_num}: 処理エラー - {str(e)}")
+        
+        print(f"=== CSV解析完了 ===")
+        print(f"有効な割当データ数: {len(csv_allocations)}")
+        print(f"エラー数: {len(errors)}")
         
         # 現在のDBの割当データを取得
         current_allocations = []
@@ -1967,23 +1977,19 @@ async def import_allocations_replace(
         csv_ids = {alloc['id'] for alloc in csv_allocations if alloc['id'] is not None}
         current_ids = {alloc['id'] for alloc in current_allocations}
         
-        # 削除対象: 現在のDBにあるがCSVにない
-        to_delete = [alloc for alloc in current_allocations if alloc['id'] not in csv_ids]
+        # 完全置換: 現在のDBの全データを削除して、CSVデータで置換
+        to_delete = current_allocations  # 全ての既存データを削除
         
-        # 更新対象: CSVにIDがあり、かつ内容が異なる
+        # 完全置換: 更新はなし（全削除 → 全新規作成）
         to_update = []
-        for csv_alloc in csv_allocations:
-            if csv_alloc['id'] is not None:
-                current_alloc = next((alloc for alloc in current_allocations if alloc['id'] == csv_alloc['id']), None)
-                if current_alloc and (
-                    current_alloc['transaction_id'] != csv_alloc['transaction_id'] or
-                    current_alloc['budget_item_id'] != csv_alloc['budget_item_id'] or
-                    current_alloc['amount'] != csv_alloc['amount']
-                ):
-                    to_update.append(csv_alloc)
         
-        # 新規作成対象: CSVにIDがないもの
-        to_create = [alloc for alloc in csv_allocations if alloc['id'] is None]
+        # 新規作成対象: CSVの全データを新規作成
+        to_create = csv_allocations
+        
+        print(f"=== 差分計算結果 ===")
+        print(f"削除対象: {len(to_delete)}件")
+        print(f"更新対象: {len(to_update)}件")
+        print(f"新規作成対象: {len(to_create)}件")
         
         diff_summary = {
             'to_delete': len(to_delete),
@@ -2149,4 +2155,4 @@ def restore_allocation_backup(backup_id: str, db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8002)

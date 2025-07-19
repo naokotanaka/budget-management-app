@@ -9,6 +9,7 @@ import chardet
 import io
 import json
 from datetime import datetime, date
+import datetime as dt
 
 def parse_date(date_string):
     """複数の日付フォーマットに対応した日付パース"""
@@ -82,7 +83,11 @@ def safe_parse_datetime(row, column_name):
         return None
 import csv
 import os
+import logging
 from dotenv import load_dotenv
+
+# ログ設定
+logger = logging.getLogger(__name__)
 
 # 環境変数を読み込み
 load_dotenv()
@@ -318,24 +323,23 @@ async def import_transactions(file: UploadFile = File(...), db: Session = Depend
                     credit_supplier = safe_get_value(row, '貸方取引先名')
                     supplier = str(debit_supplier) if debit_supplier else (str(credit_supplier) if credit_supplier else '')
                     
-                    update_data = {
-                        'date': safe_parse_datetime(row, '取引日'),
-                        'description': safe_get_value(row, '取引内容') or '',
-                        'amount': amount,
-                        'account': str(account) if account else '',
-                        'supplier': supplier,
-                        'item': str(safe_get_value(row, '借方品目') or ''),
-                        'memo': str(safe_get_value(row, '借方メモ') or ''),
-                        'remark': str(safe_get_value(row, '借方備考') or ''),
-                        'department': str(safe_get_value(row, '借方部門') or ''),
-                        'management_number': str(safe_get_value(row, '管理番号') or ''),
-                        'raw_data': row.to_json()
-                    }
-                    
+                    # 直接更新
                     db.query(Transaction).filter(
                         Transaction.journal_number == int(journal_number),
                         Transaction.journal_line_number == int(journal_line_number)
-                    ).update(update_data, synchronize_session=False)
+                    ).update({
+                        Transaction.date: safe_parse_datetime(row, '取引日'),
+                        Transaction.description: safe_get_value(row, '取引内容') or '',
+                        Transaction.amount: amount,
+                        Transaction.account: str(account) if account else '',
+                        Transaction.supplier: supplier,
+                        Transaction.item: str(safe_get_value(row, '借方品目') or ''),
+                        Transaction.memo: str(safe_get_value(row, '借方メモ') or ''),
+                        Transaction.remark: str(safe_get_value(row, '借方備考') or ''),
+                        Transaction.department: str(safe_get_value(row, '借方部門') or ''),
+                        Transaction.management_number: str(safe_get_value(row, '管理番号') or ''),
+                        Transaction.raw_data: row.to_json()
+                    }, synchronize_session=False)
                     
                     updated_count += 1
                 else:
@@ -1104,8 +1108,14 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
             try:
                 allocation_id, transaction_id, budget_item_id, amount = row[:4]
                 
-                # 既存の割当を確認
-                existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
+                # 既存の割当を確認（IDが空の場合は新規作成）
+                existing_allocation = None
+                if allocation_id and allocation_id.strip():
+                    try:
+                        existing_allocation = db.query(Allocation).filter(Allocation.id == int(allocation_id)).first()
+                    except ValueError:
+                        import_stats['errors'].append(f"無効な割当ID: {allocation_id}")
+                        continue
                 
                 # 取引と予算項目の存在確認
                 transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
@@ -1131,8 +1141,11 @@ async def import_allocations(file: UploadFile = File(...), db: Session = Depends
                         setattr(existing_allocation, key, value)
                     import_stats['allocations_updated'] += 1
                 else:
-                    # 新規作成
-                    new_allocation = Allocation(id=int(allocation_id), **allocation_data)
+                    # 新規作成（IDが空の場合は自動採番）
+                    if allocation_id and allocation_id.strip():
+                        new_allocation = Allocation(id=int(allocation_id), **allocation_data)
+                    else:
+                        new_allocation = Allocation(**allocation_data)
                     db.add(new_allocation)
                     import_stats['allocations_created'] += 1
                     
@@ -1607,13 +1620,20 @@ def get_freee_status(db: Session = Depends(get_db)):
         
         # トークンの有効期限をチェック
         if token.expires_at is not None:
-            # Python の datetime オブジェクトとして比較
-            expires_at_datetime = token.expires_at
-            if datetime.utcnow() >= expires_at_datetime:
-                return {
-                    "connected": False,
-                    "message": "認証の有効期限が切れています。再認証が必要です。"
-                }
+            # データベースから実際の値を取得
+            expires_at_value = token.expires_at
+            current_time = datetime.now(dt.timezone.utc)
+            
+            # 値がdatetimeオブジェクトの場合のみ比較
+            if isinstance(expires_at_value, datetime):
+                # タイムゾーンを揃えて比較
+                if expires_at_value.tzinfo is None:
+                    expires_at_value = expires_at_value.replace(tzinfo=dt.timezone.utc)
+                if current_time >= expires_at_value:
+                    return {
+                        "connected": False,
+                        "message": "認証の有効期限が切れています。再認証が必要です。"
+                    }
         
         return {
             "connected": True,
@@ -1675,6 +1695,41 @@ def disconnect_freee(db: Session = Depends(get_db)):
         return {"message": "freee連携を切断しました"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"切断エラー: {str(e)}")
+
+@app.get("/api/allocations/backup/list")
+async def get_allocation_backups():
+    """割当バックアップ一覧を取得"""
+    try:
+        # バックアップファイル一覧を取得（例）
+        backup_files = []
+        
+        # 実際の実装では、バックアップディレクトリをスキャン
+        import os
+        import glob
+        
+        backup_dir = "backups/allocations"  # バックアップディレクトリ
+        if os.path.exists(backup_dir):
+            backup_pattern = os.path.join(backup_dir, "*.csv")
+            for filepath in glob.glob(backup_pattern):
+                filename = os.path.basename(filepath)
+                file_stat = os.stat(filepath)
+                backup_files.append({
+                    "filename": filename,
+                    "created_at": file_stat.st_ctime,
+                    "size": file_stat.st_size
+                })
+        
+        return {
+            "status": "success",
+            "backups": backup_files
+        }
+        
+    except Exception as e:
+        logger.error(f"バックアップ一覧取得エラー: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"バックアップ一覧の取得に失敗しました: {str(e)}"
+        )
 
 if __name__ == "__main__":
     import uvicorn

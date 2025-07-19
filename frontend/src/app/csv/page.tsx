@@ -109,6 +109,14 @@ export default function CSVManagementPage() {
       if (result.stats && result.stats.errors && result.stats.errors.length > 0) {
         message += `\n注意: ${result.stats.errors.length}件のエラーがありました`;
         console.warn('Import errors:', result.stats.errors);
+        
+        // エラーの詳細を表示（最初の5件のみ）
+        const errorDetails = result.stats.errors.slice(0, 5).join('\n');
+        message += `\n\nエラー詳細（最初の5件）:\n${errorDetails}`;
+        
+        if (result.stats.errors.length > 5) {
+          message += `\n... 他${result.stats.errors.length - 5}件のエラー`;
+        }
       }
       
       alert(message);

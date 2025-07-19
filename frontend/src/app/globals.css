@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
-/* AG Grid basic styles */
-@import "ag-grid-community/styles/ag-grid.css";
+/* AG Grid theme styles */
 @import "ag-grid-community/styles/ag-theme-alpine.css";
 
 /* AG Grid custom styles - remove row margins */
