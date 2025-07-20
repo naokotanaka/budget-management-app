@@ -2482,8 +2482,8 @@ async def get_monthly_summary(
         from sqlalchemy import func, extract
         from datetime import datetime
         
-        # 基本クエリ: 取引 -> 割当 -> 予算項目 -> 助成金
-        query = db.query(
+        # 割当済みの取引
+        allocated_query = db.query(
             Grant.id.label('grant_id'),
             Grant.name.label('grant_name'),
             extract('year', Transaction.date).label('year'),
@@ -2495,16 +2495,16 @@ async def get_monthly_summary(
          .join(BudgetItem, Allocation.budget_item_id == BudgetItem.id)\
          .join(Grant, BudgetItem.grant_id == Grant.id)
         
-        # 期間フィルター
+        # 期間フィルター（割当済み）
         if start_date:
             start_dt = datetime.strptime(start_date, '%Y-%m-%d').date()
-            query = query.filter(Transaction.date >= start_dt)
+            allocated_query = allocated_query.filter(Transaction.date >= start_dt)
         if end_date:
             end_dt = datetime.strptime(end_date, '%Y-%m-%d').date()
-            query = query.filter(Transaction.date <= end_dt)
+            allocated_query = allocated_query.filter(Transaction.date <= end_dt)
         
-        # グループ化と並び順
-        query = query.group_by(
+        # グループ化と並び順（割当済み）
+        allocated_query = allocated_query.group_by(
             Grant.id, Grant.name, 
             extract('year', Transaction.date), 
             extract('month', Transaction.date)
@@ -2514,11 +2514,44 @@ async def get_monthly_summary(
             extract('month', Transaction.date)
         )
         
-        results = query.all()
+        # 未割当の取引（割当テーブルに存在しない取引ID）
+        allocated_transaction_ids = db.query(Allocation.transaction_id).distinct().subquery()
+        
+        from sqlalchemy import literal
+        
+        unallocated_query = db.query(
+            literal(-1).label('grant_id'),
+            literal('未割当').label('grant_name'),
+            extract('year', Transaction.date).label('year'),
+            extract('month', Transaction.date).label('month'),
+            func.sum(Transaction.amount).label('total_amount'),
+            func.count(Transaction.id).label('transaction_count')
+        ).filter(~Transaction.id.in_(db.query(Allocation.transaction_id)))
+        
+        # 期間フィルター（未割当）
+        if start_date:
+            start_dt = datetime.strptime(start_date, '%Y-%m-%d').date()
+            unallocated_query = unallocated_query.filter(Transaction.date >= start_dt)
+        if end_date:
+            end_dt = datetime.strptime(end_date, '%Y-%m-%d').date()
+            unallocated_query = unallocated_query.filter(Transaction.date <= end_dt)
+        
+        # グループ化（未割当）
+        unallocated_query = unallocated_query.group_by(
+            extract('year', Transaction.date), 
+            extract('month', Transaction.date)
+        )
+        
+        # 両方のクエリを実行
+        allocated_results = allocated_query.all()
+        unallocated_results = unallocated_query.all()
+        
+        # 結果を統合
+        all_results = list(allocated_results) + list(unallocated_results)
         
         # データ整形
         monthly_summary = []
-        for row in results:
+        for row in all_results:
             monthly_summary.append({
                 'grant_id': row.grant_id,
                 'grant_name': row.grant_name,

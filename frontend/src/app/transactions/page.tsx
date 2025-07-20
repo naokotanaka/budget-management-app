@@ -1,16 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import TransactionGrid from '@/components/TransactionGrid';
-import SummaryPanel from '@/components/SummaryPanel';
-import { Transaction } from '@/lib/api';
 
 const TransactionsPage: React.FC = () => {
-  const [selectedRows, setSelectedRows] = useState<Transaction[]>([]);
-
-  const handleSelectionChanged = (rows: Transaction[]) => {
-    setSelectedRows(rows);
-  };
 
   return (
     <div className="w-full flex flex-col">
@@ -19,11 +12,8 @@ const TransactionsPage: React.FC = () => {
         </div>
         
         <div className="flex flex-1 min-h-0">
-          <div className="flex-1 min-w-0 pr-2">
-            <TransactionGrid onSelectionChanged={handleSelectionChanged} />
-          </div>
-          <div className="w-64 flex-shrink-0 pl-2">
-            <SummaryPanel selectedRows={selectedRows} />
+          <div className="flex-1 min-w-0">
+            <TransactionGrid />
           </div>
         </div>
     </div>

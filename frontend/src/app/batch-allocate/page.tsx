@@ -9,6 +9,7 @@ const BatchAllocatePage: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Transaction[]>([]);
   const [dateFilter, setDateFilter] = useState<{ start_date: string; end_date: string } | null>(null);
   const transactionGridRef = useRef<any>(null);
+  const batchAllocationPanelRef = useRef<any>(null);
 
   console.log('BatchAllocatePage render, current dateFilter:', dateFilter);
 
@@ -31,6 +32,13 @@ const BatchAllocatePage: React.FC = () => {
     setDateFilter(grant);
   };
 
+  const handleAllocationChanged = () => {
+    // TransactionGridからの個別割当変更通知を受けて、BatchAllocationPanelのデータを再読み込み
+    if (batchAllocationPanelRef.current?.refetchData) {
+      batchAllocationPanelRef.current.refetchData();
+    }
+  };
+
   return (
     <div className="w-full flex flex-col">
       <div className="border-b border-gray-200 pb-1 mb-1 px-2 pt-1 flex-shrink-0" style={{ height: '40px' }}>
@@ -40,6 +48,7 @@ const BatchAllocatePage: React.FC = () => {
       <div className="flex flex-1 min-h-0">
         <div className="w-96 flex-shrink-0 pr-2">
           <BatchAllocationPanel
+            ref={batchAllocationPanelRef}
             selectedRows={selectedRows}
             onAllocationComplete={handleAllocationComplete}
             onBudgetItemSelected={handleBudgetItemSelected}
@@ -51,6 +60,8 @@ const BatchAllocatePage: React.FC = () => {
             onSelectionChanged={handleSelectionChanged}
             enableBatchAllocation={true}
             dateFilter={dateFilter}
+            selectedRows={selectedRows}
+            onAllocationChanged={handleAllocationChanged}
           />
         </div>
       </div>
