@@ -1,5 +1,9 @@
 // Environment-based API URL configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8001'; // Always use port 8001
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 
+  (process.env.NODE_ENV === 'production' 
+    ? 'http://160.251.170.97:8000'  // 本番環境
+    : 'http://160.251.170.97:8001'  // 開発環境
+  );
 
 export interface Transaction {
   id: string;

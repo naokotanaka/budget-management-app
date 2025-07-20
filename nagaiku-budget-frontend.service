@@ -1,0 +1,27 @@
+[Unit]
+Description=NPO Budget Management System - Frontend (Production)
+After=network.target nagaiku-budget-backend.service
+Wants=nagaiku-budget-backend.service
+
+[Service]
+Type=simple
+User=tanaka
+Group=tanaka
+WorkingDirectory=/home/tanaka/nagaiku-budget/frontend
+Environment=NODE_ENV=production
+Environment=NEXT_PUBLIC_API_URL=http://160.251.170.97:8000
+Environment=PORT=3000
+ExecStartPre=/bin/bash -c 'cd /home/tanaka/nagaiku-budget/frontend && rm -rf .next out && NODE_ENV=production npm run build'
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/tanaka/nagaiku-budget/logs/frontend_prod.log
+StandardError=append:/home/tanaka/nagaiku-budget/logs/frontend_prod.log
+
+# プロセス管理
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target 

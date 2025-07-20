@@ -1,0 +1,27 @@
+[Unit]
+Description=NPO Budget Management System - Backend (Production)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=tanaka
+Group=tanaka
+WorkingDirectory=/home/tanaka/nagaiku-budget/backend
+Environment=ENVIRONMENT=production
+Environment=PORT=8000
+Environment=NODE_ENV=production
+ExecStartPre=/bin/bash -c 'source venv/bin/activate'
+ExecStart=/home/tanaka/nagaiku-budget/backend/venv/bin/python main.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/tanaka/nagaiku-budget/logs/backend_prod.log
+StandardError=append:/home/tanaka/nagaiku-budget/logs/backend_prod.log
+
+# プロセス管理
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target 

@@ -5,18 +5,73 @@ from datetime import datetime
 import os
 
 # PostgreSQL database
-DATABASE_USER = os.getenv("DATABASE_USER", "nagaiku_user")
-DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", "nagaiku_password2024")
-DATABASE_HOST = os.getenv("DATABASE_HOST", "localhost")
-DATABASE_PORT = os.getenv("DATABASE_PORT", "5432")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "nagaiku_budget_dev")
-
-SQLALCHEMY_DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
+# グローバル変数を定義
+engine = None
+SessionLocal = None
 Base = declarative_base()
+
+def get_database_url():
+    """データベースURLを取得する関数"""
+    # 環境変数DATABASE_URLが設定されている場合はそれを優先、そうでなければ個別の環境変数から構築
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    if DATABASE_URL:
+        SQLALCHEMY_DATABASE_URL = DATABASE_URL
+    else:
+        # フォールバック: 個別の環境変数から構築
+        DATABASE_USER = os.getenv("DATABASE_USER", "nagaiku_user")
+        DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", "nagaiku_password2024")
+        DATABASE_HOST = os.getenv("DATABASE_HOST", "localhost")
+        DATABASE_PORT = os.getenv("DATABASE_PORT", "5432")
+
+        # 環境に応じたデータベース名を強制設定
+        env = os.getenv("ENVIRONMENT", "development")
+        port = os.getenv("PORT", "8001")
+
+        # ポート番号で確実に判定
+        if port == "8000":
+            DATABASE_NAME = "nagaiku_budget"  # 本番環境
+            print("🏭 本番環境モード: nagaiku_budget データベースを使用")
+        else:
+            DATABASE_NAME = "nagaiku_budget_dev"  # 開発環境
+            print("📝 開発環境モード: nagaiku_budget_dev データベースを使用")
+
+        # 環境変数での上書きは無効化（確実な分離のため）
+        # DATABASE_NAME = os.getenv("DATABASE_NAME", default_db_name)
+        SQLALCHEMY_DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
+
+    # デバッグ情報を表示
+    env = os.getenv("ENVIRONMENT", "development")
+    port = os.getenv("PORT", "8001")
+    print(f"🔧 環境設定: ENVIRONMENT={env}, PORT={port}")
+    print(f"🔗 データベース接続先: {SQLALCHEMY_DATABASE_URL}")
+    if "budget_dev" in SQLALCHEMY_DATABASE_URL:
+        print("📝 開発環境データベース (nagaiku_budget_dev) を使用")
+    else:
+        print("🏭 本番環境データベース (nagaiku_budget) を使用")
+    
+    return SQLALCHEMY_DATABASE_URL
+
+def init_database():
+    """データベースエンジンとセッションを初期化する関数"""
+    global engine, SessionLocal
+    
+    if engine is None:
+        database_url = get_database_url()
+        engine = create_engine(database_url)
+        SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    
+    return engine, SessionLocal
+
+def get_engine():
+    """エンジンを取得（必要に応じて初期化）"""
+    engine, _ = init_database()
+    return engine
+
+def get_session_local():
+    """SessionLocalを取得（必要に応じて初期化）"""
+    _, session_local = init_database()
+    return session_local
 
 class Transaction(Base):
     __tablename__ = "transactions"
@@ -122,10 +177,11 @@ class FreeeSync(Base):
     completed_at = Column(DateTime)
 
 def create_tables():
-    Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=get_engine())
 
 def get_db():
-    db = SessionLocal()
+    SessionLocal = get_session_local()
+    db = SessionLocal()  # ここで実際のセッションを作成
     try:
         yield db
     finally:

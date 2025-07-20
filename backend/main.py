@@ -45,7 +45,20 @@ def parse_amount(amount_string):
         return 0
 
 # 環境変数を読み込み
-load_dotenv()
+import os
+from dotenv import load_dotenv
+
+# 環境に応じて適切な.envファイルを読み込み（上書きを許可）
+env = os.getenv("ENVIRONMENT", "development")
+if env == "production":
+    load_dotenv(".env.production", override=True)
+    print(f"✅ 本番環境設定を読み込みました (.env.production)")
+else:
+    load_dotenv(".env.development", override=True)  
+    print(f"✅ 開発環境設定を読み込みました (.env.development)")
+    
+# 共通設定があれば追加で読み込み（上書きしない）
+load_dotenv()  # .envファイル（存在すれば）
 
 from database import get_db, create_tables, Transaction, Grant, BudgetItem, Allocation, FreeeToken, FreeeSync, Category
 from schemas import (
@@ -81,6 +94,23 @@ app.add_middleware(
 @app.on_event("startup")
 def startup_event():
     create_tables()
+
+# Debug endpoint for database connection
+@app.get("/api/debug/db-info")
+def get_db_info():
+    import os
+    from database import SQLALCHEMY_DATABASE_URL
+    
+    env = os.getenv("ENVIRONMENT", "未設定")
+    port = os.getenv("PORT", "未設定")
+    
+    return {
+        "environment": env,
+        "port": port,
+        "database_url": SQLALCHEMY_DATABASE_URL,
+        "is_dev_db": "budget_dev" in SQLALCHEMY_DATABASE_URL,
+        "is_prod_db": "budget_dev" not in SQLALCHEMY_DATABASE_URL and "nagaiku_budget" in SQLALCHEMY_DATABASE_URL
+    }
 
 # Transactions endpoints
 @app.get("/api/transactions", response_model=List[TransactionWithAllocation])
@@ -2155,4 +2185,8 @@ def restore_allocation_backup(backup_id: str, db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    import os
+    
+    # 環境変数からポートを取得、デフォルトは本番環境用の8000
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

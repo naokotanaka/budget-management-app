@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# 本番環境起動スクリプト
+
+echo "🚀 本番環境を起動します..."
+echo "フロントエンド: ポート3000"
+echo "バックエンド: ポート8000"
+
+# ログディレクトリを作成
+mkdir -p logs
+
+# バックエンドの起動（本番環境）
+echo "📊 バックエンド（本番環境）を起動中..."
+cd backend
+
+# 仮想環境をアクティベート
+if [ -d "venv" ]; then
+    source venv/bin/activate
+else
+    echo "❌ 仮想環境が見つかりません。setup.shを実行してください。"
+    exit 1
+fi
+
+# 本番環境用の設定
+export PORT=8000
+export NODE_ENV=production
+export ENVIRONMENT=production
+
+# バックエンドをバックグラウンドで起動
+nohup python3 main.py > ../logs/backend_prod.log 2>&1 &
+BACKEND_PID=$!
+echo "✅ バックエンド起動完了 (PID: $BACKEND_PID, Port: 8000)"
+
+# フロントエンドの起動（本番環境）
+echo "🌐 フロントエンド（本番環境）を起動中..."
+cd ../frontend
+
+# 本番ビルドを実行
+echo "🔧 本番用ビルドを実行中..."
+echo "🗑️  既存ビルドファイルを削除中..."
+rm -rf .next out
+NODE_ENV=production npm run build
+
+# フロントエンドをバックグラウンドで起動（本番モード）
+nohup npm start > ../logs/frontend_prod.log 2>&1 &
+FRONTEND_PID=$!
+echo "✅ フロントエンド起動完了 (PID: $FRONTEND_PID, Port: 3000)"
+
+# PIDをファイルに保存
+cd ..
+echo $BACKEND_PID > logs/backend_prod.pid
+echo $FRONTEND_PID > logs/frontend_prod.pid
+
+echo ""
+echo "🎉 本番環境が起動しました！"
+echo ""
+echo "📱 アクセス方法:"
+echo "  フロントエンド: http://160.251.170.97:3000"
+echo "  バックエンドAPI: http://160.251.170.97:8000"
+echo "  API仕様書: http://160.251.170.97:8000/docs"
+echo ""
+echo "📝 ログファイル:"
+echo "  バックエンド: logs/backend_prod.log"
+echo "  フロントエンド: logs/frontend_prod.log"
+echo ""
+echo "🛑 停止方法:"
+echo "  ./stop_production.sh を実行してください" 

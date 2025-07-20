@@ -1,0 +1,47 @@
+nohup: ignoring input
+/home/tanaka/nagaiku-budget/backend/main.py:94: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [421333]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+✅ 開発環境設定を読み込みました (.env.development)
+🔗 データベース接続先: postgresql://nagaiku_user:nagaiku_password2024@localhost:5432/nagaiku_budget_dev
+Warning: FREEE_CLIENT_ID and FREEE_CLIENT_SECRET environment variables are not set
+INFO:     160.251.170.97:32892 - "GET /grants HTTP/1.1" 404 Not Found
+INFO:     160.251.170.97:51338 - "GET /grants HTTP/1.1" 404 Not Found
+INFO:     160.251.170.97:46882 - "GET /grants HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:17528 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21624 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9336 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17528 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21624 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13432 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25720 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21624 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29816 - "OPTIONS /api/grants/2 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29816 - "PUT /api/grants/2 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29816 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46200 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42104 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58488 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62584 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50296 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58488 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54392 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5240 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62584 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58488 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9336 - "PUT /api/grants/2 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9336 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13432 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9336 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [421333]

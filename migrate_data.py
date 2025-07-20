@@ -11,11 +11,11 @@ from datetime import datetime
 # データベース設定
 SQLITE_DB = "/root/nagaiku-budget/data/budget.db"
 POSTGRES_CONFIG = {
-    'host': 'localhost',
-    'port': '5432',
-    'database': 'nagaiku_budget',
-    'user': 'nagaiku_user',
-    'password': 'nagaiku_password2024'
+    'host': os.getenv('DATABASE_HOST', 'localhost'),
+    'port': os.getenv('DATABASE_PORT', '5432'),
+    'database': os.getenv('DATABASE_NAME', 'nagaiku_budget'),
+    'user': os.getenv('DATABASE_USER', 'nagaiku_user'),
+    'password': os.getenv('DATABASE_PASSWORD', 'nagaiku_password2024')
 }
 
 def migrate_data():
