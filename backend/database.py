@@ -176,6 +176,17 @@ class FreeeSync(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     completed_at = Column(DateTime)
 
+class WamMapping(Base):
+    __tablename__ = "wam_mappings"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    account_pattern = Column(String, nullable=False)  # 勘定科目のパターン（部分一致用）
+    wam_category = Column(String, nullable=False)  # WAM科目
+    priority = Column(Integer, default=100)  # 優先順位（小さいほど高優先）
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
 def create_tables():
     Base.metadata.create_all(bind=get_engine())
 

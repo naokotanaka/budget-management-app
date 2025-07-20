@@ -2183,6 +2183,294 @@ def restore_allocation_backup(backup_id: str, db: Session = Depends(get_db)):
         db.rollback()
         raise HTTPException(status_code=500, detail=f"復元エラー: {str(e)}")
 
+# WAM報告書関連のエンドポイント
+@app.get("/api/wam-report/data")
+async def get_wam_report_data(
+    db: Session = Depends(get_db),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    grant_id: Optional[int] = Query(None)
+):
+    """WAM報告書用データを取得"""
+    try:
+        from wam_service import WamService
+        wam_data = WamService.get_wam_data_from_db(db, start_date, end_date, grant_id)
+        return {
+            "data": wam_data,
+            "total_count": len(wam_data),
+            "start_date": start_date,
+            "end_date": end_date
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"WAMデータ取得エラー: {str(e)}")
+
+@app.get("/api/wam-report/categories")
+async def get_wam_categories():
+    """WAM科目リストを取得"""
+    try:
+        from wam_service import WamService
+        categories = WamService.get_wam_categories()
+        return {"categories": categories}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"WAM科目取得エラー: {str(e)}")
+
+@app.post("/api/wam-report/export")
+async def export_wam_report_csv(
+    wam_data: List[dict],
+    db: Session = Depends(get_db)
+):
+    """WAM報告書CSVをエクスポート"""
+    try:
+        import io
+        import csv
+        from datetime import datetime
+        
+        output = io.StringIO()
+        # BOMを追加（Excel用）
+        output.write('\ufeff')
+        
+        writer = csv.writer(output)
+        
+        # ヘッダー行
+        headers = ['支出年月日', '科目', '支払いの相手方', '摘要', '金額']
+        writer.writerow(headers)
+        
+        # データ行
+        for item in wam_data:
+            row = [
+                item.get('支出年月日', ''),
+                item.get('科目', ''),
+                item.get('支払いの相手方', ''),
+                item.get('摘要', ''),
+                item.get('金額', 0)
+            ]
+            writer.writerow(row)
+        
+        csv_content = output.getvalue()
+        output.close()
+        
+        # ファイル名を生成
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"wam_report_{timestamp}.csv"
+        
+        return StreamingResponse(
+            io.BytesIO(csv_content.encode('utf-8-sig')),
+            media_type="text/csv",
+            headers={"Content-Disposition": f"attachment; filename={filename}"}
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"CSV出力エラー: {str(e)}")
+
+# WAMマッピング設定関連のエンドポイント
+@app.get("/api/wam-mappings")
+async def get_wam_mappings(db: Session = Depends(get_db)):
+    """WAMマッピングルール一覧を取得"""
+    try:
+        from wam_service import WamService
+        # 初期データが存在しない場合は初期化
+        WamService.initialize_default_mappings(db)
+        mappings = WamService.get_all_mappings(db)
+        return {"mappings": mappings}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"マッピング取得エラー: {str(e)}")
+
+@app.get("/api/account-patterns")
+async def get_account_patterns(db: Session = Depends(get_db)):
+    """既存の勘定科目一覧を取得（マッピング設定用）"""
+    try:
+        # 取引データから勘定科目の一覧を取得
+        accounts = db.query(Transaction.account).distinct().filter(Transaction.account.isnot(None)).all()
+        account_list = [account[0] for account in accounts if account[0]]
+        
+        # 【事】【管】を除去したクリーンなリストも生成
+        from wam_service import WamService
+        clean_accounts = []
+        for account in account_list:
+            clean_account = WamService.clean_account_name(account)
+            if clean_account and clean_account not in clean_accounts:
+                clean_accounts.append(clean_account)
+        
+        # 統計情報も追加
+        account_stats = {}
+        for account in account_list:
+            count = db.query(Transaction).filter(Transaction.account == account).count()
+            account_stats[account] = count
+        
+        return {
+            "original_accounts": sorted(account_list),
+            "clean_accounts": sorted(clean_accounts),
+            "account_stats": account_stats,
+            "total_accounts": len(account_list)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"勘定科目取得エラー: {str(e)}")
+
+@app.post("/api/wam-mappings")
+async def create_wam_mapping(
+    account_pattern: str = Form(...),
+    wam_category: str = Form(...),
+    priority: int = Form(100),
+    db: Session = Depends(get_db)
+):
+    """新しいWAMマッピングルールを作成"""
+    try:
+        from wam_service import WamService
+        mapping_id = WamService.create_mapping(db, account_pattern, wam_category, priority)
+        return {"success": True, "mapping_id": mapping_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"マッピング作成エラー: {str(e)}")
+
+@app.put("/api/wam-mappings/{mapping_id}")
+async def update_wam_mapping(
+    mapping_id: int,
+    account_pattern: str = Form(...),
+    wam_category: str = Form(...),
+    priority: int = Form(100),
+    db: Session = Depends(get_db)
+):
+    """WAMマッピングルールを更新"""
+    try:
+        from wam_service import WamService
+        success = WamService.update_mapping(db, mapping_id, account_pattern, wam_category, priority)
+        if not success:
+            raise HTTPException(status_code=404, detail="マッピングが見つかりません")
+        return {"success": True}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"マッピング更新エラー: {str(e)}")
+
+@app.delete("/api/wam-mappings/{mapping_id}")
+async def delete_wam_mapping(mapping_id: int, db: Session = Depends(get_db)):
+    """WAMマッピングルールを削除"""
+    try:
+        from wam_service import WamService
+        success = WamService.delete_mapping(db, mapping_id)
+        if not success:
+            raise HTTPException(status_code=404, detail="マッピングが見つかりません")
+        return {"success": True}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"マッピング削除エラー: {str(e)}")
+
+@app.get("/api/wam-mappings/export")
+async def export_wam_mappings_csv(db: Session = Depends(get_db)):
+    """WAMマッピングルールをCSVエクスポート"""
+    try:
+        from wam_service import WamService
+        import io
+        import csv
+        from datetime import datetime
+        
+        mappings = WamService.get_all_mappings(db)
+        
+        output = io.StringIO()
+        output.write('\ufeff')  # BOM
+        
+        writer = csv.writer(output)
+        
+        # ヘッダー行
+        headers = ['勘定科目パターン', 'WAM科目', '優先順位', '有効']
+        writer.writerow(headers)
+        
+        # データ行
+        for mapping in mappings:
+            row = [
+                mapping['account_pattern'],
+                mapping['wam_category'],
+                mapping['priority'],
+                'TRUE' if mapping['is_active'] else 'FALSE'
+            ]
+            writer.writerow(row)
+        
+        csv_content = output.getvalue()
+        output.close()
+        
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"wam_mappings_{timestamp}.csv"
+        
+        return StreamingResponse(
+            io.BytesIO(csv_content.encode('utf-8-sig')),
+            media_type="text/csv",
+            headers={"Content-Disposition": f"attachment; filename={filename}"}
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"マッピングCSV出力エラー: {str(e)}")
+
+@app.post("/api/wam-mappings/import")
+async def import_wam_mappings_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    """WAMマッピングルールをCSVインポート"""
+    try:
+        from wam_service import WamService
+        import csv
+        import io
+        
+        # ファイル内容を読み取り
+        content = await file.read()
+        
+        # エンコーディング検出
+        import chardet
+        detected = chardet.detect(content)
+        encoding = detected['encoding'] or 'utf-8'
+        
+        # CSV解析
+        csv_content = content.decode(encoding)
+        csv_reader = csv.DictReader(io.StringIO(csv_content))
+        
+        imported_count = 0
+        errors = []
+        
+        for row_num, row in enumerate(csv_reader, start=2):
+            try:
+                account_pattern = row.get('勘定科目パターン', '').strip()
+                wam_category = row.get('WAM科目', '').strip()
+                priority = int(row.get('優先順位', 100))
+                is_active = row.get('有効', 'TRUE').upper() == 'TRUE'
+                
+                if not account_pattern or not wam_category:
+                    errors.append(f"行{row_num}: 勘定科目パターンとWAM科目は必須です")
+                    continue
+                
+                # 既存のマッピングをチェック
+                existing = db.query(WamMapping).filter(
+                    WamMapping.account_pattern == account_pattern
+                ).first()
+                
+                if existing:
+                    # 更新
+                    existing.wam_category = wam_category
+                    existing.priority = priority
+                    existing.is_active = is_active
+                else:
+                    # 新規作成
+                    from database import WamMapping
+                    mapping = WamMapping(
+                        account_pattern=account_pattern,
+                        wam_category=wam_category,
+                        priority=priority,
+                        is_active=is_active
+                    )
+                    db.add(mapping)
+                
+                imported_count += 1
+                
+            except Exception as e:
+                errors.append(f"行{row_num}: {str(e)}")
+        
+        db.commit()
+        
+        return {
+            "success": True,
+            "imported_count": imported_count,
+            "errors": errors
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"マッピングCSVインポートエラー: {str(e)}")
+
 if __name__ == "__main__":
     import uvicorn
     import os

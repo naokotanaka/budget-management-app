@@ -52,6 +52,9 @@ export default function RootLayout({
                   <a href="/reports" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     レポート
                   </a>
+                  <a href="/wam-report" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                    WAM報告書
+                  </a>
                   <a href="/settings" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     設定
                   </a>
