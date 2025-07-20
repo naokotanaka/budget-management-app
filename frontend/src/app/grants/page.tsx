@@ -155,9 +155,9 @@ const GrantsPage: React.FC = () => {
       minWidth: 100,
       cellStyle: ((params) => {
         const remaining = params.value || 0;
-        return remaining < 0
-          ? { backgroundColor: '#fef2f2', color: '#dc2626' }
-          : { backgroundColor: '#f0fdf4', color: '#16a34a' };
+        return remaining > 0
+          ? { backgroundColor: '#fef2f2', color: '#dc2626', fontWeight: 'bold' }
+          : { color: '#374151' };
       }) as any
     }
   ], [grants, categories, allocations]);
@@ -667,7 +667,15 @@ const GrantsPage: React.FC = () => {
 
         {/* アクティブな助成金カード */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-          {grants.filter(g => g.status !== 'applied').map((grant) => {
+          {grants
+            .filter(g => g.status !== 'applied')
+            .sort((a, b) => {
+              // 終了期間の順（昇順）でソート
+              const dateA = new Date(a.end_date || '9999-12-31');
+              const dateB = new Date(b.end_date || '9999-12-31');
+              return dateA.getTime() - dateB.getTime();
+            })
+            .map((grant) => {
             const getStatusColor = (status: string) => {
               switch (status) {
                 case 'active': return 'bg-green-100 text-green-800';
@@ -807,7 +815,7 @@ const GrantsPage: React.FC = () => {
                       </div>
                       <div className="flex justify-between">
                         <span>残額:</span>
-                        <span className={`font-medium ${getRemainingAmountForGrant(grant) < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                        <span className={`font-medium ${getRemainingAmountForGrant(grant) > 0 ? 'text-red-600 font-bold' : 'text-gray-900'}`}>
                           {getRemainingAmountForGrant(grant).toLocaleString()}円
                         </span>
                       </div>
@@ -861,7 +869,15 @@ const GrantsPage: React.FC = () => {
 
             {showReportedGrants && (
               <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                {grants.filter(g => g.status === 'applied').map((grant) => {
+                {grants
+                  .filter(g => g.status === 'applied')
+                  .sort((a, b) => {
+                    // 終了期間の順（昇順）でソート
+                    const dateA = new Date(a.end_date || '9999-12-31');
+                    const dateB = new Date(b.end_date || '9999-12-31');
+                    return dateA.getTime() - dateB.getTime();
+                  })
+                  .map((grant) => {
                   const getStatusColor = (status: string) => {
                     switch (status) {
                       case 'active': return 'bg-green-100 text-green-800';
@@ -1001,7 +1017,7 @@ const GrantsPage: React.FC = () => {
                             </div>
                             <div className="flex justify-between">
                               <span>残額:</span>
-                              <span className={`font-medium ${getRemainingAmountForGrant(grant) < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                              <span className={`font-medium ${getRemainingAmountForGrant(grant) > 0 ? 'text-red-600 font-bold' : 'text-gray-900'}`}>
                                 {getRemainingAmountForGrant(grant).toLocaleString()}円
                               </span>
                             </div>
@@ -1053,7 +1069,7 @@ const GrantsPage: React.FC = () => {
                 <span className="text-blue-600">
                   割当合計: {getDisplayedAllocatedTotal().toLocaleString()}円
                 </span>
-                <span className={`${getDisplayedRemainingTotal() < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                <span className={`${getDisplayedRemainingTotal() > 0 ? 'text-red-600 font-bold' : 'text-gray-900'}`}>
                   残額合計: {getDisplayedRemainingTotal().toLocaleString()}円
                 </span>
               </div>

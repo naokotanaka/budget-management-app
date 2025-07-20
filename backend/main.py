@@ -2471,6 +2471,167 @@ async def import_wam_mappings_csv(file: UploadFile = File(...), db: Session = De
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"マッピングCSVインポートエラー: {str(e)}")
 
+@app.get("/api/reports/monthly-summary")
+async def get_monthly_summary(
+    db: Session = Depends(get_db),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None)
+):
+    """助成金ごとの月別集計レポートを取得"""
+    try:
+        from sqlalchemy import func, extract
+        from datetime import datetime
+        
+        # 基本クエリ: 取引 -> 割当 -> 予算項目 -> 助成金
+        query = db.query(
+            Grant.id.label('grant_id'),
+            Grant.name.label('grant_name'),
+            extract('year', Transaction.date).label('year'),
+            extract('month', Transaction.date).label('month'),
+            func.sum(Allocation.amount).label('total_amount'),
+            func.count(Transaction.id).label('transaction_count')
+        ).select_from(Transaction)\
+         .join(Allocation, Transaction.id == Allocation.transaction_id)\
+         .join(BudgetItem, Allocation.budget_item_id == BudgetItem.id)\
+         .join(Grant, BudgetItem.grant_id == Grant.id)
+        
+        # 期間フィルター
+        if start_date:
+            start_dt = datetime.strptime(start_date, '%Y-%m-%d').date()
+            query = query.filter(Transaction.date >= start_dt)
+        if end_date:
+            end_dt = datetime.strptime(end_date, '%Y-%m-%d').date()
+            query = query.filter(Transaction.date <= end_dt)
+        
+        # グループ化と並び順
+        query = query.group_by(
+            Grant.id, Grant.name, 
+            extract('year', Transaction.date), 
+            extract('month', Transaction.date)
+        ).order_by(
+            Grant.name,
+            extract('year', Transaction.date), 
+            extract('month', Transaction.date)
+        )
+        
+        results = query.all()
+        
+        # データ整形
+        monthly_summary = []
+        for row in results:
+            monthly_summary.append({
+                'grant_id': row.grant_id,
+                'grant_name': row.grant_name,
+                'year': int(row.year),
+                'month': int(row.month),
+                'year_month': f"{int(row.year)}-{int(row.month):02d}",
+                'total_amount': int(row.total_amount) if row.total_amount else 0,
+                'transaction_count': int(row.transaction_count)
+            })
+        
+        return {
+            "summary": monthly_summary,
+            "total_records": len(monthly_summary),
+            "start_date": start_date,
+            "end_date": end_date
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"月別集計取得エラー: {str(e)}")
+
+@app.get("/api/reports/budget-vs-actual")
+async def get_budget_vs_actual(
+    db: Session = Depends(get_db),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None)
+):
+    """助成金ごとの予算vs実際の支出を取得"""
+    try:
+        from sqlalchemy import func
+        from datetime import datetime
+        
+        # 助成金ごとの予算合計を取得
+        budget_query = db.query(
+            Grant.id.label('grant_id'),
+            Grant.name.label('grant_name'),
+            Grant.total_amount.label('grant_total_amount'),
+            Grant.start_date.label('grant_start_date'),
+            Grant.end_date.label('grant_end_date'),
+            func.sum(BudgetItem.budgeted_amount).label('total_budget')
+        ).select_from(Grant)\
+         .join(BudgetItem)\
+         .group_by(Grant.id, Grant.name, Grant.total_amount, Grant.start_date, Grant.end_date)\
+         .order_by(Grant.name)
+        
+        # 助成金ごとの実際の支出を取得（期間フィルター適用）
+        spent_query = db.query(
+            Grant.id.label('grant_id'),
+            func.sum(Allocation.amount).label('total_spent')
+        ).select_from(Grant)\
+         .join(BudgetItem)\
+         .join(Allocation)\
+         .join(Transaction, Allocation.transaction_id == Transaction.id)
+        
+        # 期間フィルター
+        if start_date:
+            start_dt = datetime.strptime(start_date, '%Y-%m-%d').date()
+            spent_query = spent_query.filter(Transaction.date >= start_dt)
+        if end_date:
+            end_dt = datetime.strptime(end_date, '%Y-%m-%d').date()
+            spent_query = spent_query.filter(Transaction.date <= end_dt)
+        
+        spent_query = spent_query.group_by(Grant.id)
+        
+        # 予算データを取得
+        budget_results = budget_query.all()
+        spent_results = {row.grant_id: row.total_spent for row in spent_query.all()}
+        
+        # データを統合
+        summary = []
+        current_date = datetime.now().date()
+        
+        for row in budget_results:
+            budget = int(row.total_budget) if row.total_budget else 0
+            spent = int(spent_results.get(row.grant_id, 0)) if spent_results.get(row.grant_id) else 0
+            remaining = budget - spent
+            usage_rate = (spent / budget * 100) if budget > 0 else 0
+            
+            # 期間進捗率を計算
+            period_progress = 0
+            if row.grant_start_date and row.grant_end_date:
+                total_days = (row.grant_end_date - row.grant_start_date).days
+                if total_days > 0:
+                    if current_date < row.grant_start_date:
+                        period_progress = 0  # まだ開始前
+                    elif current_date > row.grant_end_date:
+                        period_progress = 100  # 既に終了
+                    else:
+                        elapsed_days = (current_date - row.grant_start_date).days
+                        period_progress = (elapsed_days / total_days * 100)
+            
+            summary.append({
+                'grant_id': row.grant_id,
+                'grant_name': row.grant_name,
+                'grant_total_amount': int(row.grant_total_amount) if row.grant_total_amount else 0,
+                'grant_start_date': row.grant_start_date.strftime('%Y-%m-%d') if row.grant_start_date else None,
+                'grant_end_date': row.grant_end_date.strftime('%Y-%m-%d') if row.grant_end_date else None,
+                'budget_total': budget,
+                'spent_total': spent,
+                'remaining': remaining,
+                'usage_rate': round(usage_rate, 1),
+                'period_progress': round(period_progress, 1)
+            })
+        
+        return {
+            "summary": summary,
+            "total_grants": len(summary),
+            "start_date": start_date,
+            "end_date": end_date
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"予算vs実績データの取得に失敗しました: {str(e)}")
+
 if __name__ == "__main__":
     import uvicorn
     import os
