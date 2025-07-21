@@ -364,7 +364,7 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
               type="number"
               value={allocatedAmount}
               onChange={(e) => setAllocatedAmount(parseFloat(e.target.value) || 0)}
-              className="w-full p-2 border border-gray-300 rounded text-sm font-mono"
+              className="w-full p-2 border border-gray-300 rounded text-sm font-mono text-right"
               disabled={saving}
             />
           </div>
