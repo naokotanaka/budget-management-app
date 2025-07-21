@@ -170,6 +170,34 @@ const SettingsPage: React.FC = () => {
         </div>
       )}
 
+      {/* WAM報告書機能設定セクション */}
+      <div className="bg-white rounded-lg shadow mb-6">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900">機能設定</h2>
+        </div>
+        <div className="p-6">
+          <div className="mb-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">WAM報告書機能</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              WAM助成金報告書作成機能の表示/非表示を切り替えます。<br/>
+              助成金終了後は非表示にして運用を継続できます。
+            </p>
+            <label className="flex items-center">
+              <input 
+                type="checkbox" 
+                checked={true}
+                onChange={() => {
+                  // 将来的に実装: ローカルストレージやAPIで管理
+                  alert('この機能は将来実装予定です');
+                }}
+                className="mr-2"
+              />
+              <span className="text-sm">WAM報告書作成機能を表示</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
       {/* 期間フィルター設定セクション */}
       <div className="bg-white rounded-lg shadow mb-6">
         <div className="px-6 py-4 border-b border-gray-200">
