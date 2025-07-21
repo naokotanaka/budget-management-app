@@ -29,13 +29,19 @@ interface BudgetVsActualItem {
 
 const ReportsPage: React.FC = () => {
   const [crossTableData, setCrossTableData] = useState<any>({});
+  const [categoryCrossTableData, setCategoryCrossTableData] = useState<any>({});
   const [monthlySummary, setMonthlySummary] = useState<MonthlySummaryItem[]>([]);
   const [budgetVsActual, setBudgetVsActual] = useState<BudgetVsActualItem[]>([]);
+  const [budgetItems, setBudgetItems] = useState<any[]>([]);
+  const [grants, setGrants] = useState<any[]>([]);
+  const [allocations, setAllocations] = useState<any[]>([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [loading, setLoading] = useState(false);
+  const [categoryLoading, setCategoryLoading] = useState(false);
   const [monthlyLoading, setMonthlyLoading] = useState(false);
   const [budgetLoading, setBudgetLoading] = useState(false);
+  const [sortBudgetByCategory, setSortBudgetByCategory] = useState(false);
 
   // 初期値設定（デフォルト期間）
   useEffect(() => {
@@ -43,10 +49,30 @@ const ReportsPage: React.FC = () => {
     setEndDate(CONFIG.DEFAULT_DATE_RANGE.END);
   }, []);
 
+  // 初期データを取得
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        const [budgetItemsData, grantsData, allocationsData] = await Promise.all([
+          api.getBudgetItems(),
+          api.getGrants(),
+          api.getAllocations()
+        ]);
+        setBudgetItems(budgetItemsData);
+        setGrants(grantsData);
+        setAllocations(allocationsData);
+      } catch (error) {
+        console.error('Failed to load initial data:', error);
+      }
+    };
+    loadInitialData();
+  }, []);
+
   // 日付が設定されたら自動でデータを取得
   useEffect(() => {
     if (startDate && endDate) {
       loadCrossTableData();
+      loadCategoryCrossTableData();
       loadMonthlySummary();
       loadBudgetVsActual();
     }
@@ -64,6 +90,21 @@ const ReportsPage: React.FC = () => {
       alert('レポートデータの読み込みに失敗しました');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadCategoryCrossTableData = async () => {
+    if (!startDate || !endDate) return;
+
+    try {
+      setCategoryLoading(true);
+      const data = await api.getCategoryCrossTable(startDate, endDate);
+      setCategoryCrossTableData(data);
+    } catch (error) {
+      console.error('Failed to load category cross table data:', error);
+      alert('カテゴリ別レポートデータの読み込みに失敗しました');
+    } finally {
+      setCategoryLoading(false);
     }
   };
 
@@ -156,6 +197,75 @@ const ReportsPage: React.FC = () => {
     }, 0);
   };
 
+  // 予算項目名から予算項目データを取得
+  const getBudgetItemByDisplayName = (displayName: string) => {
+    return budgetItems.find(item => item.display_name === displayName);
+  };
+
+  // 残額を計算
+  const getRemainingAmount = (budgetItem: any) => {
+    if (!budgetItem) return 0;
+    const allocatedAmount = allocations
+      .filter(allocation => allocation.budget_item_id === budgetItem.id)
+      .reduce((total, allocation) => total + (allocation.amount || 0), 0);
+    return budgetItem.budgeted_amount - allocatedAmount;
+  };
+
+  // 助成金の終了日を取得
+  const getGrantEndDate = (budgetItem: any) => {
+    if (!budgetItem) return null;
+    const grant = grants.find(g => g.id === budgetItem.grant_id);
+    return grant?.end_date || null;
+  };
+
+  // 月が助成金終了日以降かどうかを判定
+  const isMonthAfterGrantEnd = (month: string, endDate: string | null) => {
+    if (!endDate) return false;
+    const monthDate = new Date(month + '-01');
+    const grantEndDate = new Date(endDate);
+    return monthDate > grantEndDate;
+  };
+
+  // 予算項目をソートする関数
+  const getSortedCrossTableEntries = () => {
+    const entries = Object.entries(crossTableData);
+    
+    if (!sortBudgetByCategory) {
+      return entries; // 元の順序のまま
+    }
+    
+    // カテゴリでソート
+    return entries.sort(([budgetItemNameA], [budgetItemNameB]) => {
+      const budgetItemA = getBudgetItemByDisplayName(budgetItemNameA);
+      const budgetItemB = getBudgetItemByDisplayName(budgetItemNameB);
+      
+      const categoryA = budgetItemA?.category || '未分類';
+      const categoryB = budgetItemB?.category || '未分類';
+      
+      // カテゴリで比較、同じカテゴリなら予算項目名で比較
+      if (categoryA !== categoryB) {
+        return categoryA.localeCompare(categoryB, 'ja');
+      }
+      return budgetItemNameA.localeCompare(budgetItemNameB, 'ja');
+    });
+  };
+
+  // 残額の色を決定する関数（他のページと同じルール）
+  const getRemainingAmountColor = (remaining: number, endDate?: string) => {
+    if (remaining <= 0) return 'text-gray-900';
+    if (!endDate) return 'text-green-600 font-bold';
+    
+    const today = new Date();
+    const end = new Date(endDate);
+    const diffTime = end.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 0) return 'text-gray-400'; // 終了済み
+    if (diffDays <= 30) return 'text-red-600 font-bold'; // 30日以下
+    if (diffDays <= 60) return 'text-blue-600 font-bold'; // 60日以下
+    return 'text-green-600 font-bold'; // それ以上
+  };
+
   return (
     <div className="px-4 py-6 sm:px-0">
       <div className="border-b border-gray-200 pb-4 mb-6">
@@ -195,13 +305,14 @@ const ReportsPage: React.FC = () => {
             <button
               onClick={() => {
                 loadCrossTableData();
+                loadCategoryCrossTableData();
                 loadMonthlySummary();
                 loadBudgetVsActual();
               }}
-              disabled={loading || !startDate || !endDate}
+              disabled={loading || categoryLoading || !startDate || !endDate}
               className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
             >
-              {loading ? '読み込み中...' : '更新'}
+              {(loading || categoryLoading) ? '読み込み中...' : '更新'}
             </button>
           </div>
         </div>
@@ -216,12 +327,27 @@ const ReportsPage: React.FC = () => {
       ) : (
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
-              予算項目×月 クロス集計表
-            </h3>
-            <p className="text-sm text-gray-600 mt-1">
-              {startDate} ～ {endDate}
-            </p>
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="text-lg font-medium text-gray-900">
+                  予算項目×月 クロス集計表
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  {startDate} ～ {endDate}
+                </p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center text-sm">
+                  <input
+                    type="checkbox"
+                    checked={sortBudgetByCategory}
+                    onChange={(e) => setSortBudgetByCategory(e.target.checked)}
+                    className="mr-2"
+                  />
+                  カテゴリ順で表示
+                </label>
+              </div>
+            </div>
           </div>
           
           <div className="overflow-x-auto">
@@ -231,12 +357,21 @@ const ReportsPage: React.FC = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
                     予算項目
                   </th>
+                  <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[80px] bg-gray-50">
+                    カテゴリ
+                  </th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px] bg-gray-50">
+                    残額
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px] bg-gray-50">
+                    期間終了日
+                  </th>
                   {months.map(month => (
-                    <th key={month} className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                    <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
                       {month}
                     </th>
                   ))}
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
                     合計
                   </th>
                 </tr>
@@ -244,26 +379,60 @@ const ReportsPage: React.FC = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {Object.keys(crossTableData).length === 0 ? (
                   <tr>
-                    <td colSpan={months.length + 2} className="px-6 py-8 text-center text-gray-500">
+                    <td colSpan={months.length + 5} className="px-6 py-8 text-center text-gray-500">
                       データがありません
                     </td>
                   </tr>
                 ) : (
-                  Object.entries(crossTableData).map(([budgetItem, amounts]: [string, any]) => (
-                    <tr key={budgetItem} className="hover:bg-gray-50">
-                      <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
-                        {budgetItem}
-                      </td>
-                      {months.map(month => (
-                        <td key={month} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
-                          {amounts[month] ? amounts[month].toLocaleString() : '-'}
+                  getSortedCrossTableEntries().map(([budgetItemName, amounts]: [string, any], index) => {
+                    const budgetItem = getBudgetItemByDisplayName(budgetItemName);
+                    const remaining = getRemainingAmount(budgetItem);
+                    const endDate = getGrantEndDate(budgetItem);
+                    const category = budgetItem?.category || '未分類';
+                    
+                    // 前の項目とカテゴリが異なる場合、太い境界線を表示
+                    const prevEntry = index > 0 ? getSortedCrossTableEntries()[index - 1] : null;
+                    const prevBudgetItem = prevEntry ? getBudgetItemByDisplayName(prevEntry[0]) : null;
+                    const prevCategory = prevBudgetItem?.category || '未分類';
+                    const isNewCategory = sortBudgetByCategory && index > 0 && category !== prevCategory;
+                    
+                    return (
+                      <tr key={budgetItemName} className={`hover:bg-gray-50 ${isNewCategory ? 'border-t-2 border-gray-700' : ''}`}>
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
+                          {budgetItemName}
                         </td>
-                      ))}
-                      <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-50">
-                        {getBudgetItemTotal(budgetItem).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))
+                        <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-600 bg-gray-50">
+                          {category}
+                        </td>
+                        <td className="px-4 py-2 whitespace-nowrap text-sm text-right bg-gray-50">
+                          <span className={getRemainingAmountColor(remaining, endDate)}>
+                            ¥{remaining.toLocaleString()}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2 whitespace-nowrap text-sm text-center bg-gray-50">
+                          {endDate ? endDate : '-'}
+                        </td>
+                        {months.map(month => {
+                          const isAfterEnd = isMonthAfterGrantEnd(month, endDate);
+                          return (
+                            <td 
+                              key={month} 
+                              className={`px-4 py-2 whitespace-nowrap text-sm text-right ${
+                                isAfterEnd ? 'bg-red-50' : ''
+                              }`}
+                            >
+                              <span className={isAfterEnd ? 'text-red-600 font-bold' : 'text-gray-900'}>
+                                {isAfterEnd ? '-' : (amounts[month] ? amounts[month].toLocaleString() : '-')}
+                              </span>
+                            </td>
+                          );
+                        })}
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-50">
+                          {getBudgetItemTotal(budgetItemName).toLocaleString()}
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
                 
                 {/* 合計行 */}
@@ -271,6 +440,15 @@ const ReportsPage: React.FC = () => {
                   <tr className="bg-blue-50 font-bold">
                     <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
                       合計
+                    </td>
+                    <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-900 bg-blue-50">
+                      -
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-blue-50">
+                      -
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-center bg-blue-50">
+                      -
                     </td>
                     {months.map(month => (
                       <td key={month} className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right">
@@ -288,6 +466,107 @@ const ReportsPage: React.FC = () => {
         </div>
       )}
 
+      {/* カテゴリ別クロス集計表 */}
+      {categoryLoading ? (
+        <div className="text-center py-8">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <p className="mt-2 text-sm text-gray-600">カテゴリ別データを読み込み中...</p>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg shadow overflow-hidden mt-6">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h3 className="text-lg font-medium text-gray-900">
+              カテゴリ×月 クロス集計表
+            </h3>
+            <p className="text-sm text-gray-600 mt-1">
+              {startDate} ～ {endDate}
+            </p>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="min-w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
+                    カテゴリ
+                  </th>
+                  {months.map(month => (
+                    <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                      {month}
+                    </th>
+                  ))}
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
+                    合計
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {Object.keys(categoryCrossTableData).length === 0 ? (
+                  <tr>
+                    <td colSpan={months.length + 2} className="px-6 py-8 text-center text-gray-500">
+                      データがありません
+                    </td>
+                  </tr>
+                ) : (
+                  Object.entries(categoryCrossTableData).map(([category, amounts]: [string, any]) => (() => {
+                    // カテゴリごとの合計を計算
+                    const categoryTotal = Object.values(amounts).reduce((total: number, amount: any) => total + (amount || 0), 0);
+                    
+                    return (
+                      <tr key={category} className="hover:bg-gray-50">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
+                          {category}
+                        </td>
+                        {months.map(month => (
+                          <td key={month} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
+                            {amounts[month] ? amounts[month].toLocaleString() : '-'}
+                          </td>
+                        ))}
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-50">
+                          {categoryTotal.toLocaleString()}
+                        </td>
+                      </tr>
+                    );
+                  })())
+                )}
+                
+                {/* 合計行 */}
+                {Object.keys(categoryCrossTableData).length > 0 && (() => {
+                  // 月ごとの合計を計算
+                  const getCategoryMonthTotal = (month: string) => {
+                    return Object.values(categoryCrossTableData).reduce((total: number, amounts: any) => {
+                      return total + (amounts[month] || 0);
+                    }, 0);
+                  };
+                  
+                  // 総合計を計算
+                  const getCategoryGrandTotal = () => {
+                    return Object.values(categoryCrossTableData).reduce((total: number, amounts: any) => {
+                      return total + Object.values(amounts).reduce((subtotal: number, amount: any) => subtotal + (amount || 0), 0);
+                    }, 0);
+                  };
+                  
+                  return (
+                    <tr className="bg-blue-50 font-bold">
+                      <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
+                        合計
+                      </td>
+                      {months.map(month => (
+                        <td key={month} className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right">
+                          {getCategoryMonthTotal(month).toLocaleString()}
+                        </td>
+                      ))}
+                      <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-100">
+                        {getCategoryGrandTotal().toLocaleString()}
+                      </td>
+                    </tr>
+                  );
+                })()}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* 予算vs実績比較テーブル */}
       <div className="mt-6">
@@ -326,7 +605,7 @@ const ReportsPage: React.FC = () => {
                         執行率
                       </th>
                       <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        期間進捗
+                        残り日数
                       </th>
                     </tr>
                   </thead>
@@ -343,22 +622,57 @@ const ReportsPage: React.FC = () => {
                           {item.spent_total.toLocaleString()}円
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap text-sm text-right">
-                          <span className={item.remaining > 0 ? 'text-red-600 font-bold' : 'text-gray-900'}>
-                            {item.remaining.toLocaleString()}円
+                          <span className={(() => {
+                            if (item.grant_name === '未割当') return 'text-gray-900';
+                            if (item.remaining <= 0) return 'text-gray-900';
+                            if (!item.grant_end_date) return 'text-green-600 font-bold';
+                            
+                            const today = new Date();
+                            const end = new Date(item.grant_end_date);
+                            const diffTime = end.getTime() - today.getTime();
+                            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                            
+                            if (diffDays < 0) return 'text-gray-400'; // 終了済み
+                            if (diffDays <= 30) return 'text-red-600 font-bold'; // 30日以下
+                            if (diffDays <= 60) return 'text-blue-600 font-bold'; // 60日以下
+                            return 'text-green-600 font-bold'; // それ以上
+                          })()}>
+                            {item.grant_name === '未割当' ? '-' : `${item.remaining.toLocaleString()}円`}
                           </span>
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap text-sm text-right">
                           <span className={item.usage_rate > 100 ? 'text-red-600 font-bold' : 'text-gray-900'}>
-                            {item.usage_rate}%
+                            {item.grant_name === '未割当' ? '-' : `${item.usage_rate}%`}
                           </span>
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap text-sm text-right">
-                          <span className={
-                            item.period_progress >= 90 ? 'text-red-600 font-bold' : 
-                            item.period_progress >= 80 ? 'text-blue-600 font-bold' : 
-                            'text-gray-900'
-                          }>
-                            {item.period_progress}%
+                          <span className={(() => {
+                            if (item.grant_name === '未割当') return 'text-gray-900';
+                            if (!item.grant_end_date) return 'text-gray-900';
+                            
+                            const today = new Date();
+                            const end = new Date(item.grant_end_date);
+                            const diffTime = end.getTime() - today.getTime();
+                            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                            
+                            if (diffDays < 0) return 'text-gray-400'; // 終了済み
+                            if (diffDays <= 30) return 'text-red-600 font-bold'; // 30日以下
+                            if (diffDays <= 60) return 'text-blue-600 font-bold'; // 60日以下
+                            return 'text-gray-900'; // それ以上
+                          })()}>
+                            {(() => {
+                              if (item.grant_name === '未割当') return '-';
+                              if (!item.grant_end_date) return '-';
+                              
+                              const today = new Date();
+                              const end = new Date(item.grant_end_date);
+                              const diffTime = end.getTime() - today.getTime();
+                              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                              
+                              if (diffDays < 0) return '終了済み';
+                              if (diffDays === 0) return '本日終了';
+                              return `${diffDays}日`;
+                            })()}
                           </span>
                         </td>
                       </tr>

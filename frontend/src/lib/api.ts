@@ -478,6 +478,12 @@ export const api = {
     return response.json();
   },
 
+  async getCategoryCrossTable(startDate: string, endDate: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/reports/category-cross-table?start_date=${startDate}&end_date=${endDate}`);
+    if (!response.ok) throw new Error('Failed to fetch category cross table');
+    return response.json();
+  },
+
   // CSV Export/Import
   async exportGrantsBudgetAllocations(): Promise<Blob> {
     const response = await fetch(`${API_BASE_URL}/api/export/grants-budget-allocations`);
