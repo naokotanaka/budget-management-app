@@ -11,9 +11,13 @@ interface TransactionGridProps {
   onSelectionChanged?: (selectedRows: Transaction[]) => void;
   enableBatchAllocation?: boolean;
   dateFilter?: { start_date: string; end_date: string } | null;
+  onTransactionSelect?: (transaction: Transaction | null) => void;
+  selectedTransaction?: Transaction | null;
+  selectedBudgetItem?: any;
+  allocations?: any[];
 }
 
-const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelectionChanged: onSelectionChangedProp, enableBatchAllocation = false, dateFilter }, ref) => {
+const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelectionChanged: onSelectionChangedProp, enableBatchAllocation = false, dateFilter, onTransactionSelect, selectedTransaction, selectedBudgetItem, allocations: propAllocations }, ref) => {
   const [rowData, setRowData] = useState<Transaction[]>([]);
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
@@ -22,6 +26,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
   const [selectedRows, setSelectedRows] = useState<Transaction[]>([]);
   const [allocations, setAllocations] = useState<{ [key: string]: any }>({});
   const [apiAllocations, setApiAllocations] = useState<any[]>([]);
+  const [displayedRowStats, setDisplayedRowStats] = useState({ count: 0, totalAmount: 0, totalAllocatedAmount: 0 });
 
   const gridRef = useRef<AgGridReact>(null);
 
@@ -50,6 +55,13 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
   useEffect(() => {
     console.log('grants state changed:', grants);
   }, [grants]);
+
+  // 割当データが変更された時に統計を更新
+  useEffect(() => {
+    if (!loading && apiAllocations.length >= 0) {
+      setTimeout(updateDisplayedRowStats, 100);
+    }
+  }, [apiAllocations]);
 
     // dateFilterが変更された際にグリッドのフィルターを適用
   useEffect(() => {
@@ -179,6 +191,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     // 初期フィルターを適用（少し遅延させる）
     setTimeout(() => {
       applyInitialFilters();
+      updateDisplayedRowStats();
     }, 100);
   };
 
@@ -362,6 +375,8 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       alert('データの読み込みに失敗しました: ' + (error instanceof Error ? error.message : 'Unknown error'));
     } finally {
       setLoading(false);
+      // データ読み込み完了後に統計を更新（遅延実行）
+      setTimeout(updateDisplayedRowStats, 200);
     }
   };
 
@@ -443,6 +458,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         defaultOption: 'contains',
         suppressAndOrCondition: false
       },
+      cellClass: 'budget-item-cell',
       valueGetter: (params) => {
         const allocation = allocations[params.data.id];
         return allocation?.budget_item || params.data.budget_item || '未割当';
@@ -488,7 +504,8 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         const isUnallocated = !value || value === '未割当';
         const style: any = {
           fontWeight: 'bold',
-          textAlign: 'right'
+          textAlign: 'left',
+          fontSize: '12px'
         };
         if (isUnallocated) {
           style.color = '#9ca3af';
@@ -536,7 +553,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellClass: 'text-right',
       width: 140,
       minWidth: 120,
-      cellStyle: { fontWeight: 'bold' },
+      cellStyle: { fontWeight: 'bold', fontSize: '12px' },
       pinned: 'left'
     },
     {
@@ -548,6 +565,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         return `${date.format('MM/DD')} ${weekdays[date.day()]}`;
       },
       filter: 'agDateColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 100,
       minWidth: 100,
       pinned: 'left'
@@ -557,6 +575,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       headerName: '金額',
       valueFormatter: (params) => params.value?.toLocaleString() || '0',
       cellClass: 'text-right',
+      cellStyle: { fontSize: '12px' },
       filter: 'agNumberColumnFilter',
       width: 100,
       minWidth: 100,
@@ -571,6 +590,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         defaultOption: 'contains',
         suppressAndOrCondition: false
       },
+      cellStyle: { fontSize: '12px' },
       width: 150,
       minWidth: 120
     },
@@ -583,6 +603,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         defaultOption: 'contains',
         suppressAndOrCondition: false
       },
+      cellStyle: { fontSize: '12px' },
       width: 200,
       minWidth: 150
     },
@@ -590,6 +611,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       field: 'description',
       headerName: '取引内容',
       filter: 'agTextColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 300,
       minWidth: 200
     },
@@ -602,6 +624,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         defaultOption: 'contains',
         suppressAndOrCondition: false
       },
+      cellStyle: { fontSize: '12px' },
       width: 150,
       minWidth: 120
     },
@@ -614,6 +637,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         defaultOption: 'contains',
         suppressAndOrCondition: false
       },
+      cellStyle: { fontSize: '12px' },
       width: 200,
       minWidth: 150
     },
@@ -621,6 +645,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       field: 'remark',
       headerName: '備考',
       filter: 'agTextColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 200,
       minWidth: 150,
       tooltipField: 'remark'
@@ -629,6 +654,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       field: 'memo',
       headerName: 'メモ',
       filter: 'agTextColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 150,
       minWidth: 100
     },
@@ -636,6 +662,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       field: 'management_number',
       headerName: '管理番号',
       filter: 'agTextColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 100,
       minWidth: 80
     },
@@ -643,6 +670,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       field: 'journal_number',
       headerName: '仕訳番号',
       filter: 'agNumberColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 90,
       minWidth: 70
     },
@@ -650,6 +678,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       field: 'journal_line_number',
       headerName: '行番号',
       filter: 'agNumberColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 70,
       minWidth: 50
     },
@@ -687,6 +716,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         defaultOption: 'notEqual',
         defaultValue: '報告済み'
       },
+      cellStyle: { fontSize: '12px' },
       width: 80,
       minWidth: 70
     },
@@ -708,6 +738,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         return budgetItem?.category || '';
       },
       filter: 'agTextColumnFilter',
+      cellStyle: { fontSize: '12px' },
       width: 100,
       minWidth: 80
     }
@@ -917,6 +948,9 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         alert('予算項目の割り当てに失敗しました: ' + (error as Error).message);
         // Revert changes on error
         params.api.refreshCells({ rowNodes: [params.node], force: true });
+      } finally {
+        // データ変更後に統計を更新
+        setTimeout(updateDisplayedRowStats, 100);
       }
     }
   };
@@ -928,6 +962,13 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       if (onSelectionChangedProp) {
         onSelectionChangedProp(selectedRows);
       }
+    }
+  };
+
+  // 行クリック時のハンドラー
+  const onRowClicked = (event: any) => {
+    if (onTransactionSelect) {
+      onTransactionSelect(event.data);
     }
   };
 
@@ -960,6 +1001,30 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     }
   };
 
+  // 表示されている行の統計を更新
+  const updateDisplayedRowStats = () => {
+    if (!gridRef.current?.api) return;
+
+    const displayedRows: Transaction[] = [];
+    gridRef.current.api.forEachNodeAfterFilterAndSort((node) => {
+      if (node.data) {
+        displayedRows.push(node.data);
+      }
+    });
+
+    const totalAmount = displayedRows.reduce((sum, row) => sum + (row.amount || 0), 0);
+    const totalAllocatedAmount = displayedRows.reduce((sum, row) => {
+      const allocation = apiAllocations.find(a => a.transaction_id === row.id);
+      return sum + (allocation?.amount || 0);
+    }, 0);
+
+    setDisplayedRowStats({
+      count: displayedRows.length,
+      totalAmount,
+      totalAllocatedAmount
+    });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -970,6 +1035,14 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
 
   return (
     <div className="w-full flex flex-col">
+      <style>{`
+        .budget-item-cell {
+          text-align: left !important;
+        }
+        .ag-cell.budget-item-cell {
+          text-align: left !important;
+        }
+      `}</style>
 
       {/* フィルター操作 */}
       <div className="flex gap-2 items-center flex-wrap flex-shrink-0" style={{ marginBottom: '4px' }}>
@@ -1006,8 +1079,109 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         </button>
       </div>
 
+      {/* 表示中の取引統計 */}
+      <div className="flex items-center text-sm text-gray-600 mb-2">
+        <span>表示中: {displayedRowStats.count}件</span>
+        <span className="ml-3 font-mono">
+          金額計: ¥{displayedRowStats.totalAmount.toLocaleString()}
+        </span>
+        <span className="ml-3 font-mono">
+          割当計: ¥{displayedRowStats.totalAllocatedAmount.toLocaleString()}
+        </span>
+        {enableBatchAllocation && (
+          <>
+            <span className="ml-6 text-gray-500">|</span>
+            <span className="ml-3">選択された取引 - 件数: {selectedRows.length}件</span>
+            <span className="ml-3 font-mono">
+              合計金額: ¥{selectedRows.reduce((sum, row) => sum + row.amount, 0).toLocaleString()}
+            </span>
+          </>
+        )}
+      </div>
+
+      {/* 選択された予算項目の表示 */}
+      {enableBatchAllocation && selectedBudgetItem && (() => {
+        // 選択された予算項目の残額を計算
+        const budgetItemAllocations = (propAllocations || apiAllocations).filter(a => a.budget_item_id === selectedBudgetItem.id);
+        const allocatedAmount = budgetItemAllocations.reduce((sum, a) => sum + a.amount, 0);
+        const budgetItemRemaining = selectedBudgetItem.budgeted_amount - allocatedAmount;
+        
+        // 選択された予算項目が属する助成金の情報を取得
+        const grant = grants.find(g => g.id === selectedBudgetItem.grant_id);
+        let grantRemaining = 0;
+        
+        // 残り日数を計算して色を決定する関数
+        const getRemainingAmountColor = (remaining: number, endDate?: string) => {
+          if (remaining <= 0) return 'text-gray-900';
+          if (!endDate) return 'text-green-600 font-bold';
+          
+          const today = new Date();
+          const end = new Date(endDate);
+          const diffTime = end.getTime() - today.getTime();
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          
+          if (diffDays < 0) return 'text-gray-400'; // 終了済み
+          if (diffDays <= 30) return 'text-red-600 font-bold'; // 30日以下
+          if (diffDays <= 60) return 'text-blue-600 font-bold'; // 60日以下
+          return 'text-green-600 font-bold'; // それ以上
+        };
+        
+        if (grant) {
+          // 助成金全体の予算項目を取得
+          const grantBudgetItems = budgetItems.filter(item => item.grant_id === grant.id);
+          const totalGrantBudget = grantBudgetItems.reduce((sum, item) => sum + item.budgeted_amount, 0);
+          
+          // 助成金全体の割当済み金額を計算
+          const grantAllocations = (propAllocations || apiAllocations).filter(a => 
+            grantBudgetItems.some(item => item.id === a.budget_item_id)
+          );
+          const totalGrantAllocated = grantAllocations.reduce((sum, a) => sum + a.amount, 0);
+          grantRemaining = totalGrantBudget - totalGrantAllocated;
+        }
+        
+        return (
+          <div className="bg-blue-50 p-2 rounded flex-shrink-0 mb-2">
+            <div className="flex items-center gap-6 text-sm">
+              <div className="font-medium text-blue-700">{selectedBudgetItem.display_name}</div>
+              <div className={`flex items-center gap-1 ${getRemainingAmountColor(budgetItemRemaining, grant?.end_date)}`}>
+                <span>項目残額:</span>
+                <span className="font-mono">¥{budgetItemRemaining.toLocaleString()}</span>
+              </div>
+              {grant && (
+                <div className={`flex items-center gap-1 ${getRemainingAmountColor(grantRemaining, grant.end_date)}`}>
+                  <span>助成金残額:</span>
+                  <span className="font-mono">¥{grantRemaining.toLocaleString()}</span>
+                </div>
+              )}
+              {grant?.end_date && (() => {
+                const today = new Date();
+                const end = new Date(grant.end_date);
+                const diffTime = end.getTime() - today.getTime();
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                return (
+                  <div className="flex items-center gap-1 text-gray-600">
+                    <span>終了日:</span>
+                    <span className="font-mono">{grant.end_date} ({diffDays}日)</span>
+                  </div>
+                );
+              })()}
+            </div>
+          </div>
+        );
+      })()}
+
       {/* グリッド */}
       <div style={{ height: 'calc(100vh - 200px)', width: '100%' }}>
+        <style>{`
+          .ag-theme-alpine .ag-row .ag-cell {
+            font-size: 11px !important;
+            font-family: inherit !important;
+          }
+          .ag-theme-alpine .ag-cell-value {
+            font-size: 11px !important;
+          }
+        `}</style>
         <AgGridReact
           ref={gridRef}
           rowData={rowData}
@@ -1031,6 +1205,9 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           onSelectionChanged={onGridSelectionChanged}
           onCellValueChanged={onCellValueChanged}
           onGridReady={onGridReady}
+          onFilterChanged={updateDisplayedRowStats}
+          onSortChanged={updateDisplayedRowStats}
+          onRowClicked={onRowClicked}
           pagination={true}
           paginationPageSize={100}
           suppressCellFocus={false}

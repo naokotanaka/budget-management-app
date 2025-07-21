@@ -10,9 +10,10 @@ interface BatchAllocationPanelProps {
   selectedRows: Transaction[];
   onAllocationComplete?: () => void;
   onBudgetItemSelected?: (grant: { start_date: string; end_date: string } | null) => void;
+  onSelectedBudgetItemChange?: (budgetItem: any) => void;
 }
 
-const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete, onBudgetItemSelected }) => {
+const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete, onBudgetItemSelected, onSelectedBudgetItemChange }) => {
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
   const [allocations, setAllocations] = useState<Allocation[]>([]);
@@ -99,11 +100,33 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       valueFormatter: (params: any) => `¥${params.value?.toLocaleString() || 0}`,
       cellStyle: (params: any) => {
         const remaining = params.value || 0;
+        const budgetItem = params.data;
+        const grant = grants.find(g => g.id === budgetItem.grant_id);
+        const endDate = grant?.end_date;
+        
+        // 残額の色を決定（統一ルール）
+        let color = '#374151'; // text-gray-900 default
+        if (remaining <= 0) {
+          color = '#374151'; // text-gray-900
+        } else if (!endDate) {
+          color = '#059669'; // text-green-600
+        } else {
+          const today = new Date();
+          const end = new Date(endDate);
+          const diffTime = end.getTime() - today.getTime();
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          
+          if (diffDays < 0) color = '#9ca3af'; // text-gray-400 終了済み
+          else if (diffDays <= 30) color = '#dc2626'; // text-red-600 30日以下
+          else if (diffDays <= 60) color = '#2563eb'; // text-blue-600 60日以下
+          else color = '#059669'; // text-green-600 それ以上
+        }
+        
         return {
           fontSize: '12px',
           textAlign: 'right',
           backgroundColor: remaining < 0 ? '#fef2f2' : '#f0fdf4',
-          color: remaining < 0 ? '#dc2626' : '#16a34a',
+          color: color,
           fontWeight: 'bold'
         };
       }
@@ -138,6 +161,11 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       
       setSelectedBudgetItem(budgetItem);
       setSelectedBudgetItemId(budgetItem.id);
+      
+      // 親コンポーネントに選択された予算項目を通知
+      if (onSelectedBudgetItemChange) {
+        onSelectedBudgetItemChange(budgetItem);
+      }
 
       // 選択された行を表示領域に保持（より確実に）
       if (budgetGridRef.current?.api && selectedNode.rowIndex !== undefined) {
@@ -358,15 +386,6 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       )}
 
       <div className="flex flex-col h-full space-y-4">
-        {/* 選択された取引の情報 */}
-        <div className="bg-gray-50 p-3 rounded flex-shrink-0">
-          <h3 className="font-medium text-gray-700 mb-2">選択された取引</h3>
-          <div className="text-sm text-gray-600">
-            <div>件数: {selectedRows.length}件</div>
-            <div>合計金額: ¥{totalAmount.toLocaleString()}</div>
-          </div>
-        </div>
-
         {/* 予算項目グリッド */}
         <div className="flex-1 min-h-0">
           <div className="flex justify-between items-center mb-2">
@@ -381,6 +400,9 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
                   }
                   if (onBudgetItemSelected) {
                     onBudgetItemSelected(null);
+                  }
+                  if (onSelectedBudgetItemChange) {
+                    onSelectedBudgetItemChange(null);
                   }
                 }}
                 className="text-sm px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
@@ -415,49 +437,6 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
           </div>
         </div>
 
-        {/* 選択された予算項目の情報 */}
-        {selectedBudgetItem && (() => {
-          // 選択された予算項目の残額を計算
-          const budgetItemAllocations = allocations.filter(a => a.budget_item_id === selectedBudgetItem.id);
-          const allocatedAmount = budgetItemAllocations.reduce((sum, a) => sum + a.amount, 0);
-          const budgetItemRemaining = selectedBudgetItem.budgeted_amount - allocatedAmount;
-          
-          // 選択された予算項目が属する助成金の情報を取得
-          const grant = grants.find(g => g.id === selectedBudgetItem.grant_id);
-          let grantRemaining = 0;
-          
-          if (grant) {
-            // 助成金全体の予算項目を取得
-            const grantBudgetItems = budgetItems.filter(item => item.grant_id === grant.id);
-            const totalGrantBudget = grantBudgetItems.reduce((sum, item) => sum + item.budgeted_amount, 0);
-            
-            // 助成金全体の割当済み金額を計算
-            const grantAllocations = allocations.filter(a => 
-              grantBudgetItems.some(item => item.id === a.budget_item_id)
-            );
-            const totalGrantAllocated = grantAllocations.reduce((sum, a) => sum + a.amount, 0);
-            grantRemaining = totalGrantBudget - totalGrantAllocated;
-          }
-          
-          return (
-            <div className="bg-blue-50 p-3 rounded flex-shrink-0">
-              <h4 className="font-medium text-blue-700 mb-2">選択された予算項目</h4>
-              <div className="text-sm text-blue-600 space-y-1">
-                <div className="font-medium">{selectedBudgetItem.display_name}</div>
-                <div>予算額: ¥{selectedBudgetItem.budgeted_amount.toLocaleString()}</div>
-                <div>割当済み: ¥{allocatedAmount.toLocaleString()}</div>
-                <div className={`font-medium ${budgetItemRemaining > 0 ? 'text-red-600' : 'text-gray-700'}`}>
-                  項目残額: ¥{budgetItemRemaining.toLocaleString()}
-                </div>
-                {grant && (
-                  <div className={`font-medium ${grantRemaining > 0 ? 'text-red-600' : 'text-gray-700'}`}>
-                    助成金残額: ¥{grantRemaining.toLocaleString()} ({grant.name})
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })()}
 
         {/* 実行ボタン */}
         <div className="flex-shrink-0 space-y-2">

@@ -8,6 +8,7 @@ import { Transaction } from '@/lib/api';
 const BatchAllocatePage: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Transaction[]>([]);
   const [dateFilter, setDateFilter] = useState<{ start_date: string; end_date: string } | null>(null);
+  const [selectedBudgetItem, setSelectedBudgetItem] = useState<any>(null);
   const transactionGridRef = useRef<any>(null);
 
   console.log('BatchAllocatePage render, current dateFilter:', dateFilter);
@@ -31,6 +32,10 @@ const BatchAllocatePage: React.FC = () => {
     setDateFilter(grant);
   };
 
+  const handleSelectedBudgetItemChange = (budgetItem: any) => {
+    setSelectedBudgetItem(budgetItem);
+  };
+
   return (
     <div className="w-full flex flex-col">
       <div className="border-b border-gray-200 pb-1 mb-1 px-2 pt-1 flex-shrink-0" style={{ height: '40px' }}>
@@ -43,6 +48,7 @@ const BatchAllocatePage: React.FC = () => {
             selectedRows={selectedRows}
             onAllocationComplete={handleAllocationComplete}
             onBudgetItemSelected={handleBudgetItemSelected}
+            onSelectedBudgetItemChange={handleSelectedBudgetItemChange}
           />
         </div>
         <div className="flex-1 min-w-0 pl-2">
@@ -51,6 +57,7 @@ const BatchAllocatePage: React.FC = () => {
             onSelectionChanged={handleSelectionChanged}
             enableBatchAllocation={true}
             dateFilter={dateFilter}
+            selectedBudgetItem={selectedBudgetItem}
           />
         </div>
       </div>
