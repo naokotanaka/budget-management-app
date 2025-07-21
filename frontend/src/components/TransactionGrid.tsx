@@ -11,11 +11,9 @@ interface TransactionGridProps {
   onSelectionChanged?: (selectedRows: Transaction[]) => void;
   enableBatchAllocation?: boolean;
   dateFilter?: { start_date: string; end_date: string } | null;
-  selectedRows?: Transaction[];
-  onAllocationChanged?: () => void;
 }
 
-const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelectionChanged: onSelectionChangedProp, enableBatchAllocation = false, dateFilter, selectedRows: externalSelectedRows, onAllocationChanged }, ref) => {
+const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelectionChanged: onSelectionChangedProp, enableBatchAllocation = false, dateFilter }, ref) => {
   const [rowData, setRowData] = useState<Transaction[]>([]);
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
@@ -24,7 +22,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
   const [selectedRows, setSelectedRows] = useState<Transaction[]>([]);
   const [allocations, setAllocations] = useState<{ [key: string]: any }>({});
   const [apiAllocations, setApiAllocations] = useState<any[]>([]);
-  const [filteredData, setFilteredData] = useState<Transaction[]>([]);
 
   const gridRef = useRef<AgGridReact>(null);
 
@@ -33,17 +30,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     api: gridRef.current?.api,
     reloadData: loadData
   }));
-
-  // フィルター変更時にフィルター後のデータを更新
-  const onFilterChanged = () => {
-    if (gridRef.current?.api) {
-      const filteredNodes: any[] = [];
-      gridRef.current.api.forEachNodeAfterFilter((node) => {
-        filteredNodes.push(node.data);
-      });
-      setFilteredData(filteredNodes);
-    }
-  };
 
   // Register AG Grid modules and load data on mount
   useEffect(() => {
@@ -342,7 +328,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
 
       setRowData(prev => {
         console.log('setRowData called with transactions count:', transactions.length);
-        setFilteredData(transactions); // 初期状態ではフィルターなしなのでrowDataと同じ
         return transactions;
       });
 
@@ -843,14 +828,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
               force: true
             });
 
-            // 親コンポーネントに変更を通知
-            if (onAllocationChanged) {
-              onAllocationChanged();
-            }
-
-            // フィルター後のデータを再計算
-            onFilterChanged();
-
             console.log('予算項目の割当を解除しました');
           } catch (error) {
             console.error('Failed to delete allocation:', error);
@@ -874,14 +851,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           // Update display fields
           params.data.allocated_budget_item = params.data.budget_item;
           params.data.allocated_amount = allocationAmount;
-
-          // 親コンポーネントに変更を通知
-          if (onAllocationChanged) {
-            onAllocationChanged();
-          }
-
-          // フィルター後のデータを再計算
-          onFilterChanged();
 
           // ローカルストレージに保存
           // 割当情報はAPIから取得済み
@@ -1035,20 +1004,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         >
           再読込
         </button>
-        
-        {/* 表示中の取引合計 */}
-        <div className="ml-4 bg-blue-50 px-3 py-1 rounded text-sm text-blue-700">
-          表示中: {filteredData.length}件 
-          (¥{filteredData.reduce((sum, row) => sum + row.amount, 0).toLocaleString()})
-        </div>
-        
-        {/* 選択された取引の情報（一括割当モード時のみ） */}
-        {enableBatchAllocation && externalSelectedRows && (
-          <div className="ml-4 bg-gray-50 px-3 py-1 rounded text-sm text-gray-700">
-            選択中: {externalSelectedRows.length}件 
-            (¥{externalSelectedRows.reduce((sum, row) => sum + row.amount, 0).toLocaleString()})
-          </div>
-        )}
       </div>
 
       {/* グリッド */}
@@ -1076,7 +1031,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           onSelectionChanged={onGridSelectionChanged}
           onCellValueChanged={onCellValueChanged}
           onGridReady={onGridReady}
-          onFilterChanged={onFilterChanged}
           pagination={true}
           paginationPageSize={100}
           suppressCellFocus={false}

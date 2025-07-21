@@ -12,7 +12,7 @@ interface BatchAllocationPanelProps {
   onBudgetItemSelected?: (grant: { start_date: string; end_date: string } | null) => void;
 }
 
-const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({ selectedRows, onAllocationComplete, onBudgetItemSelected }, ref) => {
+const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete, onBudgetItemSelected }) => {
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
   const [allocations, setAllocations] = useState<Allocation[]>([]);
@@ -24,26 +24,6 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
 
   const budgetGridRef = useRef<AgGridReact>(null);
 
-  // 親コンポーネントからのrefを設定
-  React.useImperativeHandle(ref, () => ({
-    refetchData: refetchData
-  }));
-
-  // データを再取得する関数
-  const refetchData = async () => {
-    try {
-      const [budgetItemsResponse, grantsResponse, allocationsResponse] = await Promise.all([
-        api.getBudgetItems(),
-        api.getGrants(),
-        api.getAllocations()
-      ]);
-      setBudgetItems(budgetItemsResponse);
-      setGrants(grantsResponse);
-      setAllocations(allocationsResponse);
-    } catch (err) {
-      console.error('Error refetching data:', err);
-    }
-  };
 
   // 予算項目データを取得
   useEffect(() => {
@@ -122,9 +102,9 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
         return {
           fontSize: '12px',
           textAlign: 'right',
-          backgroundColor: remaining > 0 ? '#fef2f2' : 'transparent',
-          color: remaining > 0 ? '#dc2626' : '#374151',
-          fontWeight: remaining > 0 ? 'bold' : 'normal'
+          backgroundColor: remaining < 0 ? '#fef2f2' : '#f0fdf4',
+          color: remaining < 0 ? '#dc2626' : '#16a34a',
+          fontWeight: 'bold'
         };
       }
     },
@@ -248,9 +228,6 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
         if (onAllocationComplete) {
           onAllocationComplete();
         }
-        
-        // 残額情報を再計算するためにデータを再取得
-        refetchData();
       } else if (successful > 0) {
         // 部分的に成功
         setError(`${successful}件解除成功、${failed}件解除失敗しました`);
@@ -261,9 +238,6 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
         if (onAllocationComplete) {
           onAllocationComplete();
         }
-        
-        // 残額情報を再計算するためにデータを再取得
-        refetchData();
       } else {
         // 全て失敗
         throw new Error('全ての割当解除が失敗しました');
@@ -341,9 +315,6 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
         if (onAllocationComplete) {
           onAllocationComplete();
         }
-        
-        // 残額情報を再計算するためにデータを再取得
-        refetchData();
       } else if (successful > 0) {
         // 部分的に成功
         setError(`${successful}件成功、${failed}件失敗しました`);
@@ -354,9 +325,6 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
         if (onAllocationComplete) {
           onAllocationComplete();
         }
-        
-        // 残額情報を再計算するためにデータを再取得
-        refetchData();
       } else {
         // 全て失敗
         throw new Error('全ての割当が失敗しました');
@@ -390,6 +358,15 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
       )}
 
       <div className="flex flex-col h-full space-y-4">
+        {/* 選択された取引の情報 */}
+        <div className="bg-gray-50 p-3 rounded flex-shrink-0">
+          <h3 className="font-medium text-gray-700 mb-2">選択された取引</h3>
+          <div className="text-sm text-gray-600">
+            <div>件数: {selectedRows.length}件</div>
+            <div>合計金額: ¥{totalAmount.toLocaleString()}</div>
+          </div>
+        </div>
+
         {/* 予算項目グリッド */}
         <div className="flex-1 min-h-0">
           <div className="flex justify-between items-center mb-2">
@@ -509,8 +486,6 @@ const BatchAllocationPanel = React.forwardRef<any, BatchAllocationPanelProps>(({
       </div>
     </div>
   );
-});
-
-BatchAllocationPanel.displayName = 'BatchAllocationPanel';
+};
 
 export default BatchAllocationPanel;
