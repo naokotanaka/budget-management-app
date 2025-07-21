@@ -13,6 +13,14 @@ import csv
 import os
 from dotenv import load_dotenv
 
+# WAMサービスのimport
+try:
+    from wam_service import WamService
+    WAM_SERVICE_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️  WAM Service import failed: {e}")
+    WAM_SERVICE_AVAILABLE = False
+
 def parse_date(date_string):
     """複数の日付フォーマットに対応した日付パース"""
     if not date_string or not date_string.strip():
@@ -51,14 +59,24 @@ from dotenv import load_dotenv
 # 環境に応じて適切な.envファイルを読み込み（上書きを許可）
 env = os.getenv("ENVIRONMENT", "development")
 if env == "production":
-    load_dotenv(".env.production", override=True)
-    print(f"✅ 本番環境設定を読み込みました (.env.production)")
+    # 本番環境の場合
+    if os.path.exists(".env.production"):
+        load_dotenv(".env.production", override=True)
+        print(f"✅ 本番環境設定を読み込みました (.env.production)")
+    else:
+        print(f"⚠️  .env.productionファイルが見つかりません。環境変数で設定してください。")
 else:
-    load_dotenv(".env.development", override=True)  
-    print(f"✅ 開発環境設定を読み込みました (.env.development)")
+    # 開発環境の場合
+    if os.path.exists(".env.development"):
+        load_dotenv(".env.development", override=True)  
+        print(f"✅ 開発環境設定を読み込みました (.env.development)")
+    else:
+        print(f"⚠️  .env.developmentファイルが見つかりません。環境変数で設定してください。")
     
 # 共通設定があれば追加で読み込み（上書きしない）
-load_dotenv()  # .envファイル（存在すれば）
+if os.path.exists(".env"):
+    load_dotenv()  # .envファイル（存在すれば）
+    print(f"✅ 共通設定ファイル (.env) を読み込みました")
 
 from database import get_db, create_tables, Transaction, Grant, BudgetItem, Allocation, FreeeToken, FreeeSync, Category
 from schemas import (
@@ -74,18 +92,25 @@ from freee_service import FreeeService
 
 app = FastAPI(title="NPO Budget Management System")
 
-# CORS middleware - explicit configuration for external access
+# CORS middleware - 環境別のセキュアな設定
+allowed_origins = [
+    "http://localhost:3001",  # 開発環境フロントエンド
+    "http://160.251.170.97:3001",  # 開発環境外部アクセス
+    "http://localhost:3000",  # 本番環境フロントエンド  
+    "http://160.251.170.97:3000",  # 本番環境外部アクセス
+    "http://160.251.170.97:3005"  # 追加アクセス用
+]
+
+# 開発環境でのみワイルドカードを許可
+if env == "development":
+    # 開発環境では利便性のためワイルドカードを許可（但し警告表示）
+    print("⚠️  開発環境: CORS設定でワイルドカード(*)を許可しています")
+    allowed_origins.append("*")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3001",  # 開発環境フロントエンド
-        "http://160.251.170.97:3001",  # 開発環境外部アクセス
-        "http://localhost:3000",  # 本番環境フロントエンド
-        "http://160.251.170.97:3000",  # 本番環境外部アクセス
-        "http://160.251.170.97:3005",
-        "*"
-    ],
-    allow_credentials=False,  # Set to False when using wildcard origins
+    allow_origins=allowed_origins,
+    allow_credentials=False,  # ワイルドカード使用時はFalse必須
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
@@ -2189,29 +2214,37 @@ async def get_wam_report_data(
     db: Session = Depends(get_db),
     start_date: Optional[str] = Query(None),
     end_date: Optional[str] = Query(None),
-    grant_id: Optional[int] = Query(None)
+    grant_id: Optional[int] = Query(None),
+    force_remap: Optional[bool] = Query(False)
 ):
     """WAM報告書用データを取得"""
+    if not WAM_SERVICE_AVAILABLE:
+        raise HTTPException(status_code=503, detail="WAM Service is not available")
+    
     try:
-        from wam_service import WamService
-        wam_data = WamService.get_wam_data_from_db(db, start_date, end_date, grant_id)
+        wam_data = WamService.get_wam_data_from_db(db, start_date, end_date, grant_id, force_remap)
         return {
             "data": wam_data,
             "total_count": len(wam_data),
             "start_date": start_date,
-            "end_date": end_date
+            "end_date": end_date,
+            "force_remap": force_remap
         }
     except Exception as e:
+        print(f"❌ WAM Data Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"WAMデータ取得エラー: {str(e)}")
 
 @app.get("/api/wam-report/categories")
 async def get_wam_categories():
     """WAM科目リストを取得"""
+    if not WAM_SERVICE_AVAILABLE:
+        raise HTTPException(status_code=503, detail="WAM Service is not available")
+    
     try:
-        from wam_service import WamService
         categories = WamService.get_wam_categories()
         return {"categories": categories}
     except Exception as e:
+        print(f"❌ WAM Categories Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"WAM科目取得エラー: {str(e)}")
 
 @app.post("/api/wam-report/export")
@@ -2266,13 +2299,16 @@ async def export_wam_report_csv(
 @app.get("/api/wam-mappings")
 async def get_wam_mappings(db: Session = Depends(get_db)):
     """WAMマッピングルール一覧を取得"""
+    if not WAM_SERVICE_AVAILABLE:
+        raise HTTPException(status_code=503, detail="WAM Service is not available")
+    
     try:
-        from wam_service import WamService
         # 初期データが存在しない場合は初期化
         WamService.initialize_default_mappings(db)
         mappings = WamService.get_all_mappings(db)
         return {"mappings": mappings}
     except Exception as e:
+        print(f"❌ WAM Mappings Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"マッピング取得エラー: {str(e)}")
 
 @app.get("/api/account-patterns")
@@ -2315,6 +2351,9 @@ async def create_wam_mapping(
 ):
     """新しいWAMマッピングルールを作成"""
     try:
+        import sys
+        import os
+        sys.path.append(os.path.dirname(__file__))
         from wam_service import WamService
         mapping_id = WamService.create_mapping(db, account_pattern, wam_category, priority)
         return {"success": True, "mapping_id": mapping_id}
@@ -2331,6 +2370,9 @@ async def update_wam_mapping(
 ):
     """WAMマッピングルールを更新"""
     try:
+        import sys
+        import os
+        sys.path.append(os.path.dirname(__file__))
         from wam_service import WamService
         success = WamService.update_mapping(db, mapping_id, account_pattern, wam_category, priority)
         if not success:
@@ -2345,6 +2387,9 @@ async def update_wam_mapping(
 async def delete_wam_mapping(mapping_id: int, db: Session = Depends(get_db)):
     """WAMマッピングルールを削除"""
     try:
+        import sys
+        import os
+        sys.path.append(os.path.dirname(__file__))
         from wam_service import WamService
         success = WamService.delete_mapping(db, mapping_id)
         if not success:
@@ -2359,6 +2404,9 @@ async def delete_wam_mapping(mapping_id: int, db: Session = Depends(get_db)):
 async def export_wam_mappings_csv(db: Session = Depends(get_db)):
     """WAMマッピングルールをCSVエクスポート"""
     try:
+        import sys
+        import os
+        sys.path.append(os.path.dirname(__file__))
         from wam_service import WamService
         import io
         import csv
@@ -2404,6 +2452,9 @@ async def export_wam_mappings_csv(db: Session = Depends(get_db)):
 async def import_wam_mappings_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
     """WAMマッピングルールをCSVインポート"""
     try:
+        import sys
+        import os
+        sys.path.append(os.path.dirname(__file__))
         from wam_service import WamService
         import csv
         import io

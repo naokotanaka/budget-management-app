@@ -83,7 +83,12 @@
       "Bash(git gc:*)",
       "Bash(fuser:*)",
       "Bash(git stash:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(./pre_deploy_check.sh:*)",
+      "Bash(./stop_dev.sh:*)",
+      "Bash(./safe_deploy_enhanced.sh)",
+      "Bash(./deploy_no_sudo.sh:*)",
+      "Bash(NODE_ENV=production npm run build)"
     ],
     "deny": []
   }

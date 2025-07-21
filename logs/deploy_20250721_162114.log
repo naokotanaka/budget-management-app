@@ -1,0 +1,10 @@
+[0;34m[INFO][0m === Enhanced Safe Deployment Started at Mon Jul 21 04:21:14 PM JST 2025 ===
+[0;34m[INFO][0m Phase 1: 事前確認開始
+[0;34m[INFO][0m Git状態を確認中...
+[1;33m[WARNING][0m 未コミットの変更があります:
+ M .claude/settings.local.json
+ M backend/__pycache__/database.cpython-312.pyc
+ M logs/backend_dev_new.log
+ M logs/frontend_dev.log
+?? backups/backup_prod_20250721_161242.sql
+?? logs/deploy_20250721_162114.log

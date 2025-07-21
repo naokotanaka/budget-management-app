@@ -114,28 +114,33 @@ class WamService:
         return " ".join(filter(None, parts))
     
     @classmethod
-    def convert_transactions_to_wam_format(cls, transactions: List[Dict], db: Session = None) -> List[Dict]:
+    def convert_transactions_to_wam_format(cls, transactions: List[Dict], db: Session = None, force_remap: bool = False) -> List[Dict]:
         """取引データをWAM報告書形式に変換"""
         wam_data = []
         
         for transaction in transactions:
+            # 自動マッピングを実行
+            mapped_category = cls.map_to_wam_category(transaction.get('account', ''), db)
+            
             wam_item = {
                 '支出年月日': transaction.get('date', ''),
-                '科目': cls.map_to_wam_category(transaction.get('account', ''), db),
+                '科目': mapped_category,
                 '支払いの相手方': transaction.get('supplier', ''),
                 '摘要': cls.generate_summary(transaction),
                 '金額': transaction.get('amount', 0),
                 # 元データも保持（編集用）
                 '_original_transaction_id': transaction.get('id'),
                 '_original_account': transaction.get('account', ''),
-                '_auto_mapped': True
+                '_auto_mapped': True,
+                '_force_remap': force_remap,  # 強制再マッピングフラグ
+                '_mapped_by': 'database_mapping' if db else 'default_mapping'
             }
             wam_data.append(wam_item)
         
         return wam_data
     
     @classmethod
-    def get_wam_data_from_db(cls, db: Session, start_date: str = None, end_date: str = None, grant_id: int = None) -> List[Dict]:
+    def get_wam_data_from_db(cls, db: Session, start_date: str = None, end_date: str = None, grant_id: int = None, force_remap: bool = False) -> List[Dict]:
         """データベースからWAM報告書用データを取得・変換"""
         query = db.query(Transaction)
         
@@ -166,8 +171,8 @@ class WamService:
                 'remark': t.remark or ''
             })
         
-        # WAM形式に変換
-        return cls.convert_transactions_to_wam_format(transaction_dicts, db)
+        # WAM形式に変換（force_remapフラグを渡す）
+        return cls.convert_transactions_to_wam_format(transaction_dicts, db, force_remap)
     
     @classmethod
     def initialize_default_mappings(cls, db: Session):

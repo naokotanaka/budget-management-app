@@ -1,15 +1,22 @@
-/home/tanaka/nagaiku-budget/backend/main.py:94: DeprecationWarning: 
+/home/tanaka/nagaiku-budget/backend/main_dev_8001.py:8: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+/home/tanaka/nagaiku-budget/backend/main_dev_8001.py:94: DeprecationWarning: 
         on_event is deprecated, use lifespan event handlers instead.
 
         Read more about it in the
         [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
         
   @app.on_event("startup")
-INFO:     Started server process [432681]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [432681]
+WARNING:  You must pass the application as an import string to enable 'reload' or 'workers'.
+🚀 開発環境バックエンド起動設定:
+   PORT: 8001
+   FRONTEND_URL: http://160.251.170.97:3001
+   ENVIRONMENT: development
+   NODE_ENV: development
+🚀 開発環境バックエンドを起動します (ポート: 8001)

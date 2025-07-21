@@ -8,10 +8,14 @@ Type=simple
 User=tanaka
 Group=tanaka
 WorkingDirectory=/home/tanaka/nagaiku-budget/frontend
+# 本番環境用環境変数設定 - IPアドレスを環境変数化
 Environment=NODE_ENV=production
+Environment=ENVIRONMENT=production
+Environment=SERVER_IP=160.251.170.97
 Environment=NEXT_PUBLIC_API_URL=http://160.251.170.97:8000
 Environment=PORT=3000
-ExecStartPre=/bin/bash -c 'cd /home/tanaka/nagaiku-budget/frontend && rm -rf .next out && NODE_ENV=production npm run build'
+# ビルドは事前に完了済みを前提とし、高速起動
+# ExecStartPre=/bin/bash -c 'echo "✅ 事前ビルド済みのNext.jsアプリケーションを起動します"'
 ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=10
