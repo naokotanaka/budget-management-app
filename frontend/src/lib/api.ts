@@ -1,9 +1,7 @@
-// Environment-based API URL configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 
-  (process.env.NODE_ENV === 'production' 
-    ? 'http://160.251.170.97:8000'  // 本番環境
-    : 'http://160.251.170.97:8001'  // 開発環境
-  );
+import { API_CONFIG } from './config';
+
+// 統一されたAPI URL設定を使用
+const API_BASE_URL = API_CONFIG.BASE_URL;
 
 export interface Transaction {
   id: string;

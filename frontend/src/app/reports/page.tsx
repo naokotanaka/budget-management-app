@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { api } from '@/lib/api';
-import { CONFIG } from '@/lib/config';
+import { CONFIG, API_CONFIG } from '@/lib/config';
 
 interface MonthlySummaryItem {
   grant_id: number;
@@ -72,14 +72,9 @@ const ReportsPage: React.FC = () => {
 
     try {
       setMonthlyLoading(true);
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 
-        (process.env.NODE_ENV === 'production' 
-          ? 'http://160.251.170.97:8000'
-          : 'http://160.251.170.97:8001'
-        );
       
       const response = await fetch(
-        `${API_BASE_URL}/api/reports/monthly-summary?start_date=${startDate}&end_date=${endDate}`
+        `${API_CONFIG.BASE_URL}/api/reports/monthly-summary?start_date=${startDate}&end_date=${endDate}`
       );
       
       if (!response.ok) {
@@ -101,14 +96,9 @@ const ReportsPage: React.FC = () => {
 
     try {
       setBudgetLoading(true);
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 
-        (process.env.NODE_ENV === 'production' 
-          ? 'http://160.251.170.97:8000'
-          : 'http://160.251.170.97:8001'
-        );
       
       const response = await fetch(
-        `${API_BASE_URL}/api/reports/budget-vs-actual?start_date=${startDate}&end_date=${endDate}`
+        `${API_CONFIG.BASE_URL}/api/reports/budget-vs-actual?start_date=${startDate}&end_date=${endDate}`
       );
       
       if (!response.ok) {
