@@ -62,15 +62,20 @@ const getApiUrl = (): string => {
   // 開発環境判定を強化
   const isDevelopment = !isProduction || isDevFrontend;
 
+  // APIホストを取得（環境変数またはデフォルト値）
+  const apiHost = process.env.NEXT_PUBLIC_API_HOST || '160.251.170.97';
+  
   // 本番環境: 8000ポート、開発環境: 8001ポート
   const apiUrl = (isProduction && !isDevFrontend)
-    ? 'http://160.251.170.97:8000'
-    : 'http://160.251.170.97:8001';
+    ? `http://${apiHost}:8000`
+    : `http://${apiHost}:8001`;
 
   // デバッグ情報をコンソールに出力
   console.log('🌐 Environment detection result:', {
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
+    NEXT_PUBLIC_API_HOST: process.env.NEXT_PUBLIC_API_HOST,
+    apiHost,
     hostname: typeof window !== 'undefined' ? window.location.hostname : 'server',
     port: typeof window !== 'undefined' ? window.location.port : 'server',
     isProduction,

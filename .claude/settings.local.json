@@ -88,7 +88,18 @@
       "Bash(./stop_dev.sh:*)",
       "Bash(./safe_deploy_enhanced.sh)",
       "Bash(./deploy_no_sudo.sh:*)",
-      "Bash(NODE_ENV=production npm run build)"
+      "Bash(NODE_ENV=production npm run build)",
+      "Bash(./start_dev_tmux.sh:*)",
+      "Bash(tmux attach:*)",
+      "Bash(tmux list-sessions:*)",
+      "Bash(tmux capture-pane:*)",
+      "Bash(tmux kill-session:*)",
+      "Bash(tmux list-panes:*)",
+      "Bash(tmux send-keys:*)",
+      "Bash(./stop_development.sh:*)",
+      "Bash(tmux list-windows:*)",
+      "Bash(tmux new-session:*)",
+      "Bash(tmux new-window:*)"
     ],
     "deny": []
   }

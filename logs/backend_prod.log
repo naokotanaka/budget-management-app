@@ -104,3 +104,127 @@ INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
 INFO:     Finished server process [380635]
+/home/tanaka/nagaiku-budget/backend/main.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+/home/tanaka/nagaiku-budget/backend/main.py:119: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [370410]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+✅ 本番環境設定を読み込みました (.env.production)
+Warning: FREEE_CLIENT_ID and FREEE_CLIENT_SECRET environment variables are not set
+🏭 本番環境モード: nagaiku_budget データベースを使用
+🔧 環境設定: ENVIRONMENT=production, PORT=8000
+🔗 データベース接続先: postgresql://nagaiku_user:nagaiku_password2024@localhost:5432/nagaiku_budget
+🏭 本番環境データベース (nagaiku_budget) を使用
+INFO:     60.102.51.25:51809 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51818 - "GET /api/wam-report/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51817 - "GET /api/wam-mappings HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51819 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51819 - "GET /api/wam-report/data?start_date=2025-04-01&end_date=2026-03-31&grant_id=1 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51828 - "OPTIONS /api/wam-report/export HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51828 - "POST /api/wam-report/export HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51833 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51835 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51832 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51834 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51834 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51832 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51835 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51834 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51835 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51836 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51833 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51837 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51841 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:51840 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:52772 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:52773 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:52774 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53614 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53615 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53613 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53615 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53614 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53618 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53616 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53617 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53619 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53620 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53626 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53627 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53628 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53625 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53659 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53662 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53660 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:53661 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     80.75.212.17:55454 - "CONNECT httpbin.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     167.94.138.183:51082 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.183:55062 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.183:55072 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.138.183:45670 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     167.94.138.183:45684 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.138.183:45750 - "GET /sitemap.xml HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     104.248.169.246:33288 - "GET / HTTP/1.1" 404 Not Found
+INFO:     104.248.169.246:33298 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     176.65.149.182:33164 - "CONNECT ipv4-internet.yandex.net%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     152.32.219.77:54922 - "GET / HTTP/1.1" 404 Not Found
+INFO:     152.32.219.77:54938 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     152.32.219.77:54950 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     152.32.219.77:54966 - "GET /sitemap.xml HTTP/1.1" 404 Not Found
+INFO:     152.32.219.77:54976 - "GET /sse HTTP/1.1" 404 Not Found
+INFO:     152.32.219.77:56826 - "GET /mcp HTTP/1.1" 404 Not Found
+INFO:     152.32.219.77:56832 - "GET /mcp-sse HTTP/1.1" 404 Not Found
+INFO:     205.210.31.82:57976 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     195.20.19.42:50128 - "GET / HTTP/1.1" 404 Not Found
+INFO:     60.102.51.25:54991 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     60.102.51.25:55047 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:55049 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:55048 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:55050 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:55061 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:55062 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:55063 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     80.75.212.17:60564 - "CONNECT httpbin.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.175:64976 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     80.75.212.17:58574 - "CONNECT httpbin.org%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     91.196.152.160:43947 - "GET / HTTP/1.1" 404 Not Found
+INFO:     91.196.152.230:45873 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:38007 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     198.235.24.143:60542 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:58487 - "GET /api/reports/category-cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:54391 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58487 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50295 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38007 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42103 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58487 - "GET /api/reports/category-cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:54391 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50295 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58487 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38007 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42103 - "GET /api/grants HTTP/1.1" 200 OK

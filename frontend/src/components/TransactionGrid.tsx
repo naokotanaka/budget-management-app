@@ -86,11 +86,15 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         console.log('Applying date filter:', dateFilter.start_date, 'to', dateFilter.end_date);
           
           // AG Gridの日付フィルター形式に変換
-          // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
+          // inRangeは境界値を含まないため、時刻を調整して対応
           const startDate = new Date(dateFilter.start_date);
-          startDate.setDate(startDate.getDate() - 1);
           const endDate = new Date(dateFilter.end_date);
-          endDate.setDate(endDate.getDate() + 1);
+          
+          // 開始日の00:00:00の1秒前、終了日の23:59:59の1秒後を設定
+          startDate.setHours(0, 0, 0, 0);
+          startDate.setTime(startDate.getTime() - 1000);
+          endDate.setHours(23, 59, 59, 999);
+          endDate.setTime(endDate.getTime() + 1000);
           
           const dateFromFormatted = startDate.toISOString().split('T')[0];
           const dateToFormatted = endDate.toISOString().split('T')[0];
@@ -168,11 +172,15 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
 
     // dateFilterがある場合は即座に適用
     if (dateFilter) {
-      // inRangeは境界値を含まないため、開始日を1日前、終了日を1日後に調整
+      // inRangeは境界値を含まないため、時刻を調整して対応
       const startDate = new Date(dateFilter.start_date);
-      startDate.setDate(startDate.getDate() - 1);
       const endDate = new Date(dateFilter.end_date);
-      endDate.setDate(endDate.getDate() + 1);
+      
+      // 開始日の00:00:00の1秒前、終了日の23:59:59の1秒後を設定
+      startDate.setHours(0, 0, 0, 0);
+      startDate.setTime(startDate.getTime() - 1000);
+      endDate.setHours(23, 59, 59, 999);
+      endDate.setTime(endDate.getTime() + 1000);
       
       const dateFromFormatted = startDate.toISOString().split('T')[0];
       const dateToFormatted = endDate.toISOString().split('T')[0];
@@ -841,6 +849,10 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
             if (existingAllocation) {
               await api.deleteAllocation(existingAllocation.id);
               console.log('Allocation deleted successfully');
+              
+              // APIから最新のアロケーションデータを再取得
+              const updatedAllocations = await api.getAllocations();
+              setApiAllocations(updatedAllocations);
             }
 
             // ローカル状態をクリア
@@ -878,6 +890,10 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           console.log('Creating allocation:', allocation);
           const result = await api.createAllocation(allocation);
           console.log('Allocation result:', result);
+
+          // APIから最新のアロケーションデータを再取得
+          const updatedAllocations = await api.getAllocations();
+          setApiAllocations(updatedAllocations);
 
           // Update display fields
           params.data.allocated_budget_item = params.data.budget_item;
