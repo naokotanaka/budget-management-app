@@ -99,8 +99,10 @@ allowed_origins = [
     "http://localhost:3000",  # 本番環境フロントエンド  
     "http://160.251.170.97:3000",  # 本番環境外部アクセス
     "http://160.251.170.97:3005",  # 追加アクセス用
-    "http://nagaiku.top",  # ドメイン名アクセス
-    "https://nagaiku.top"  # HTTPS経由のアクセス
+    "http://nagaiku.top",  # ドメイン名アクセス（ポートなし）
+    "http://nagaiku.top:3000",  # ドメイン名アクセス（本番フロントエンド）
+    "https://nagaiku.top",  # HTTPS経由のアクセス（ポートなし）
+    "https://nagaiku.top:3000"  # HTTPS経由のアクセス（本番フロントエンド）
 ]
 
 # 開発環境でのみワイルドカードを許可
