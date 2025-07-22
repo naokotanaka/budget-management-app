@@ -98,7 +98,9 @@ allowed_origins = [
     "http://160.251.170.97:3001",  # 開発環境外部アクセス
     "http://localhost:3000",  # 本番環境フロントエンド  
     "http://160.251.170.97:3000",  # 本番環境外部アクセス
-    "http://160.251.170.97:3005"  # 追加アクセス用
+    "http://160.251.170.97:3005",  # 追加アクセス用
+    "http://nagaiku.top",  # ドメイン名アクセス
+    "https://nagaiku.top"  # HTTPS経由のアクセス
 ]
 
 # 開発環境でのみワイルドカードを許可
@@ -124,17 +126,18 @@ def startup_event():
 @app.get("/api/debug/db-info")
 def get_db_info():
     import os
-    from database import SQLALCHEMY_DATABASE_URL
+    from database import get_database_url
     
     env = os.getenv("ENVIRONMENT", "未設定")
     port = os.getenv("PORT", "未設定")
+    database_url = get_database_url()
     
     return {
         "environment": env,
         "port": port,
-        "database_url": SQLALCHEMY_DATABASE_URL,
-        "is_dev_db": "budget_dev" in SQLALCHEMY_DATABASE_URL,
-        "is_prod_db": "budget_dev" not in SQLALCHEMY_DATABASE_URL and "nagaiku_budget" in SQLALCHEMY_DATABASE_URL
+        "database_url": database_url,
+        "is_dev_db": "budget_dev" in database_url,
+        "is_prod_db": "budget_dev" not in database_url and "nagaiku_budget" in database_url
     }
 
 # Transactions endpoints
@@ -649,6 +652,42 @@ def create_batch_allocations(allocations: List[AllocationCreate], db: Session = 
     return {"message": f"{len(allocations)}件の割り当てを作成しました"}
 
 # Reports endpoints
+@app.get("/api/reports/category-cross-table")
+def get_category_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db)):
+    try:
+        # カテゴリごとのクロス集計クエリ
+        query = """
+        SELECT 
+            COALESCE(bi.category, '未分類') as category,
+            TO_CHAR(t.date, 'YYYY-MM') as month,
+            SUM(a.amount) as total
+        FROM allocations a
+        JOIN transactions t ON a.transaction_id = t.id
+        JOIN budget_items bi ON a.budget_item_id = bi.id
+        JOIN grants g ON bi.grant_id = g.id
+        WHERE t.date BETWEEN :start_date AND :end_date
+        GROUP BY COALESCE(bi.category, '未分類'), TO_CHAR(t.date, 'YYYY-MM')
+        ORDER BY COALESCE(bi.category, '未分類'), month
+        """
+        
+        # Use text() for raw SQL with proper parameter binding
+        results = db.execute(text(query), {"start_date": start_date, "end_date": end_date})
+        
+        # Convert to pivot format
+        pivot_data = {}
+        for row in results:
+            category = row[0]     # category
+            month = row[1]        # month
+            total = row[2]        # total
+            
+            if category not in pivot_data:
+                pivot_data[category] = {}
+            pivot_data[category][month] = total
+        
+        return pivot_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"カテゴリ別クロス集計表の取得中にエラーが発生しました: {str(e)}")
+
 @app.get("/api/reports/cross-table")
 def get_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db)):
     try:
@@ -2689,4 +2728,11 @@ if __name__ == "__main__":
     
     # 環境変数からポートを取得、デフォルトは本番環境用の8000
     port = int(os.getenv("PORT", 8000))
+    environment = os.getenv("ENVIRONMENT", "production")
+    
+    # 本番環境起動ログ
+    print(f"🏭 本番環境バックエンド起動: http://0.0.0.0:{port}")
+    print(f"📊 環境: {environment}")
+    print(f"🗄️  ポート設定: {port}")
+    
     uvicorn.run(app, host="0.0.0.0", port=port)

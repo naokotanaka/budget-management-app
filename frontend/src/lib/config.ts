@@ -63,7 +63,7 @@ const getApiUrl = (): string => {
   const isDevelopment = !isProduction || isDevFrontend;
 
   // APIホストを取得（環境変数またはデフォルト値）
-  const apiHost = process.env.NEXT_PUBLIC_API_HOST || '160.251.170.97';
+  const apiHost = process.env.NEXT_PUBLIC_API_HOST || 'nagaiku.top';
   
   // 本番環境: 8000ポート、開発環境: 8001ポート
   const apiUrl = (isProduction && !isDevFrontend)
