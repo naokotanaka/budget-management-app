@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // 本番環境でサブパス設定
+  basePath: process.env.NODE_ENV === 'production' ? '/budget' : '',
+  trailingSlash: false,
+  
   env: {
     // 環境変数から直接取得、なければデフォルト値を使用
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 

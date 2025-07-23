@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "@/lib/ag-grid-setup";
+import { linkPath } from '@/lib/basePath';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,34 +29,34 @@ export default function RootLayout({
                   </h1>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <a href="/" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     ダッシュボード
                   </a>
-                  <a href="/transactions" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/transactions")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     取引一覧
                   </a>
-                  <a href="/batch-allocate" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/batch-allocate")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     一括割当
                   </a>
-                  <a href="/allocations" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/allocations")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     割当データ
                   </a>
-                  <a href="/grants" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/grants")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     助成金管理
                   </a>
-                  <a href="/csv" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/csv")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     CSV管理
                   </a>
-                  <a href="/freee" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/freee")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     freee連携
                   </a>
-                  <a href="/reports" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/reports")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     レポート
                   </a>
-                  <a href="/wam-report" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/wam-report")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     WAM報告書
                   </a>
-                  <a href="/settings" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href={linkPath("/settings")} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     設定
                   </a>
                 </div>
