@@ -159,6 +159,7 @@ def get_transactions(skip: int = 0, limit: int = 1000, db: Session = Depends(get
             "remark": transaction.remark,
             "department": transaction.department,
             "management_number": transaction.management_number,
+            "freee_deal_id": transaction.freee_deal_id,
             "created_at": transaction.created_at,
             "budget_item": None,
             "allocated_amount": None
@@ -271,7 +272,7 @@ async def import_transactions(file: UploadFile = File(...), db: Session = Depend
         
         for _, row in filtered_df.iterrows():
             try:
-                # Determine account and amount
+                # 支払のみを対象とするため、借方の【事】【管】勘定科目のみ処理
                 if str(row['借方勘定科目']).startswith(('【事】', '【管】')):
                     account = row['借方勘定科目']
                     # Try to get amount from available amount columns
@@ -282,13 +283,8 @@ async def import_transactions(file: UploadFile = File(...), db: Session = Depend
                         except (ValueError, TypeError):
                             amount = 0
                 else:
-                    account = row['貸方勘定科目']
-                    amount = 0
-                    if '貸方金額' in df.columns and pd.notna(row['貸方金額']):
-                        try:
-                            amount = int(float(row['貸方金額'])) if str(row['貸方金額']).strip() else 0
-                        except (ValueError, TypeError):
-                            amount = 0
+                    # 貸方の【事】【管】は収入の可能性が高いのでスキップ
+                    continue
                 
                 # Skip transactions with zero or negative amounts (e.g., income transactions)
                 if amount <= 0:
@@ -1852,7 +1848,7 @@ from pydantic import BaseModel
 
 class FreeeCallbackRequest(BaseModel):
     code: str
-    state: str
+    state: Optional[str] = None
 
 @app.post("/api/freee/callback", response_model=FreeeTokenResponse)
 async def freee_callback(request: FreeeCallbackRequest, db: Session = Depends(get_db)):
@@ -1915,12 +1911,13 @@ async def sync_freee_journals(
                 "journal_entries": result.get("journal_entries", []),
                 "journals_data": result.get("journals_data", []),
                 "csv_data": result.get("csv_data"),  # 仕訳帳CSVデータを追加
+                "csv_converted_transactions": result.get("csv_converted_transactions", []),  # CSV変換データを追加
                 "converted_transactions": result.get("converted_transactions", []),
                 "needs_reauth": result.get("needs_reauth", False)
             }
         else:
-            # 実際の同期
-            result = await freee_service.sync_journals(db, request.start_date, request.end_date)
+            # 実際の同期（CSVデータを使用）
+            result = await freee_service.sync_journals_csv(db, request.start_date, request.end_date)
             return FreeeSyncResponse(
                 message=result["message"],
                 sync_id=result["sync_id"],
@@ -1953,6 +1950,98 @@ def get_freee_syncs(db: Session = Depends(get_db)):
         ]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"同期履歴取得エラー: {str(e)}")
+
+@app.get("/api/freee/receipts/{deal_id}")
+async def get_freee_receipts(deal_id: str, db: Session = Depends(get_db)):
+    """取引に紐づくファイルボックス情報を取得"""
+    try:
+        from freee_service_receipts import FreeeReceiptsService
+        
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        receipts_service = FreeeReceiptsService()
+        receipts_data = await receipts_service.get_receipts(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            deal_id=deal_id
+        )
+        
+        return receipts_data
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"ファイルボックス取得エラー: {str(e)}")
+
+@app.get("/api/freee/receipts/")
+async def get_all_freee_receipts(db: Session = Depends(get_db)):  
+    """全ファイルボックス情報を取得"""
+    try:
+        from freee_service_receipts import FreeeReceiptsService
+        
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        receipts_service = FreeeReceiptsService()
+        receipts_data = await receipts_service.get_receipts(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            deal_id=None
+        )
+        
+        return receipts_data
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"ファイルボックス取得エラー: {str(e)}")
+
+@app.get("/api/freee/receipt/{receipt_id}")
+async def get_freee_receipt_detail(receipt_id: str, db: Session = Depends(get_db)):
+    """個別ファイルボックス詳細情報を取得"""
+    try:
+        from freee_service_receipts import FreeeReceiptsService
+        
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        receipts_service = FreeeReceiptsService()
+        receipt_detail = await receipts_service.get_receipt_detail(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            receipt_id=receipt_id
+        )
+        
+        return receipt_detail
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"ファイル詳細取得エラー: {str(e)}")
+
+@app.get("/api/freee/deal/{deal_id}")
+async def get_freee_deal_detail(deal_id: str, db: Session = Depends(get_db)):
+    """取引詳細情報を取得（receipts配列を含む）"""
+    try:
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        from freee_deal_service import FreeDealService
+        
+        deal_service = FreeDealService()
+        deal_detail = await deal_service.get_deal_detail(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            deal_id=deal_id
+        )
+        
+        return deal_detail
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"取引詳細取得エラー: {str(e)}")
 
 @app.delete("/api/freee/disconnect")
 def disconnect_freee(db: Session = Depends(get_db)):

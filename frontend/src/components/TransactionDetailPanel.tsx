@@ -21,6 +21,8 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
   const [allocatedAmount, setAllocatedAmount] = useState<number>(0);
   const [saving, setSaving] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [receipts, setReceipts] = useState<any[]>([]);
+  const [loadingReceipts, setLoadingReceipts] = useState<boolean>(false);
 
   // 初期データの読み込み
   useEffect(() => {
@@ -46,6 +48,38 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
     setSelectedBudgetItem(transaction.budget_item || '');
     setAllocatedAmount(transaction.allocated_amount_edit || transaction.amount || 0);
   }, [transaction]);
+
+  // Freeeファイルボックス情報を取得（Deal APIから取引詳細を取得）
+  useEffect(() => {
+    const loadReceipts = async () => {
+      if (transaction.freee_deal_id) {
+        setLoadingReceipts(true);
+        try {
+          // Freee Deal APIから取引詳細を取得
+          console.log('Loading receipts for deal ID:', transaction.freee_deal_id);
+          const dealDetail = await api.getFreeeDealDetail(transaction.freee_deal_id.toString());
+          console.log('Deal detail received:', dealDetail);
+          
+          if (dealDetail && dealDetail.deal && dealDetail.deal.receipts && dealDetail.deal.receipts.length > 0) {
+            // receipts配列にはすでにファイルの詳細情報が含まれている
+            const receipts = dealDetail.deal.receipts;
+            console.log('Receipts found:', receipts);
+            setReceipts(receipts);
+          } else {
+            console.log('No receipts found for this deal');
+            setReceipts([]);
+          }
+        } catch (error) {
+          console.error('ファイルボックス情報の取得に失敗しました:', error);
+          setReceipts([]);
+        } finally {
+          setLoadingReceipts(false);
+        }
+      }
+    };
+    
+    loadReceipts();
+  }, [transaction.freee_deal_id]);
 
   // 残額の色を決定する関数（他のページと同じルール）
   const getRemainingAmountColor = (remaining: number, endDate?: string) => {
@@ -193,7 +227,7 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
   };
 
   return (
-    <div className="w-1/3 border-l border-gray-200 bg-gray-50 p-4 overflow-y-auto">
+    <div className="w-1/4 border-l border-gray-200 bg-gray-50 p-4 overflow-y-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-900">取引詳細</h2>
         <button
@@ -203,67 +237,9 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
           ✕
         </button>
       </div>
-      
-      <div className="bg-white p-4 rounded-lg shadow-sm space-y-3">
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-gray-600">仕訳番号:</span>
-            <span className="font-mono">{transaction.journal_number}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">行番号:</span>
-            <span className="font-mono">{transaction.journal_line_number}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">日付:</span>
-            <span className="font-mono">{transaction.date}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">金額:</span>
-            <span className="font-mono font-bold">¥{transaction.amount?.toLocaleString()}</span>
-          </div>
-          
-          <hr className="my-3" />
-          
-          <div>
-            <span className="text-gray-600">摘要:</span>
-            <p className="mt-1 text-gray-900">{transaction.description}</p>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">勘定科目:</span>
-            <span>{transaction.account}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">取引先:</span>
-            <span>{transaction.supplier}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">品目:</span>
-            <span>{transaction.item}</span>
-          </div>
-          
-          {(transaction.memo || transaction.remark) && (
-            <>
-              <hr className="my-3" />
-              {transaction.memo && (
-                <div>
-                  <span className="text-gray-600">メモ:</span>
-                  <p className="mt-1 text-gray-900">{transaction.memo}</p>
-                </div>
-              )}
-              {transaction.remark && (
-                <div>
-                  <span className="text-gray-600">備考:</span>
-                  <p className="mt-1 text-gray-900">{transaction.remark}</p>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </div>
 
       {/* 予算割当編集 */}
-      <div className="bg-white p-4 rounded-lg shadow-sm mt-4">
+      <div className="bg-white p-4 rounded-lg shadow-sm mb-4">
         <h3 className="text-sm font-medium text-gray-700 mb-3">予算割当</h3>
         
         <div className="space-y-3">
@@ -428,6 +404,137 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
           >
             取引金額をコピー
           </button>
+        </div>
+      </div>
+      
+      <div className="bg-white p-4 rounded-lg shadow-sm space-y-3">
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600">仕訳番号:</span>
+            <div className="flex items-center space-x-2">
+              <span className="font-mono">{transaction.journal_number}</span>
+              {transaction.freee_deal_id && (
+                <button
+                  onClick={() => window.open(`https://secure.freee.co.jp/deals/standards?txn_number=${transaction.journal_number}`, '_blank')}
+                  className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                  title="Freeeの取引を開く"
+                >
+                  開く
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">行番号:</span>
+            <span className="font-mono">{transaction.journal_line_number}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">日付:</span>
+            <span className="font-mono">{transaction.date}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">金額:</span>
+            <span className="font-mono font-bold">¥{transaction.amount?.toLocaleString()}</span>
+          </div>
+          
+          <hr className="my-3" />
+          
+          <div>
+            <span className="text-gray-600">摘要:</span>
+            <p className="mt-1 text-gray-900">{transaction.description}</p>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">勘定科目:</span>
+            <span>{transaction.account}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">取引先:</span>
+            <span>{transaction.supplier}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">品目:</span>
+            <span>{transaction.item}</span>
+          </div>
+          
+          {(transaction.memo || transaction.remark) && (
+            <>
+              <hr className="my-3" />
+              {transaction.memo && (
+                <div>
+                  <span className="text-gray-600">メモ:</span>
+                  <p className="mt-1 text-gray-900">{transaction.memo}</p>
+                </div>
+              )}
+              {transaction.remark && (
+                <div>
+                  <span className="text-gray-600">備考:</span>
+                  <p className="mt-1 text-gray-900">{transaction.remark}</p>
+                </div>
+              )}
+            </>
+          )}
+          
+          {/* ファイルボックス情報 */}
+          {transaction.freee_deal_id && (
+            <>
+              <hr className="my-3" />
+              <div>
+                <span className="text-gray-600">添付ファイル:</span>
+                {loadingReceipts ? (
+                  <p className="mt-1 text-gray-500">読み込み中...</p>
+                ) : receipts.length > 0 ? (
+                  <div className="mt-2 space-y-4">
+                    {receipts.map((receipt: any, index: number) => (
+                      <div key={receipt.id || index} className="bg-gray-50 rounded-lg p-3">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex-1">
+                            <p className="text-sm font-medium">
+                              {receipt.receipt_metadatum?.partner_name || receipt.description || `${receipt.mime_type?.split('/')[1] || 'ファイル'}`}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {receipt.receipt_metadatum?.issue_date || new Date(receipt.created_at).toLocaleDateString('ja-JP')}
+                              {receipt.receipt_metadatum?.amount && ` - ¥${receipt.receipt_metadatum.amount.toLocaleString()}`}
+                            </p>
+                          </div>
+                          <div className="flex space-x-2">
+                            <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                              {receipt.mime_type?.split('/')[1] || 'file'}
+                            </span>
+                            <button
+                              onClick={() => window.open(`https://secure.freee.co.jp/receipts/${receipt.id}`, '_blank')}
+                              className="px-2 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+                              title="Freeeでファイルを表示"
+                            >
+                              表示
+                            </button>
+                          </div>
+                        </div>
+                        
+                        {/* 画像の場合は直接表示 */}
+                        {receipt.mime_type?.startsWith('image/') && receipt.file_src && (
+                          <div className="mt-2">
+                            <img 
+                              src={receipt.file_src}
+                              alt={`${receipt.receipt_metadatum?.partner_name || 'Receipt'} - ${receipt.receipt_metadatum?.issue_date || ''}`}
+                              className="max-w-full h-auto max-h-[48rem] rounded border shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+                              onClick={() => window.open(receipt.file_src, '_blank')}
+                              onError={(e) => {
+                                console.error('Image failed to load:', receipt.file_src);
+                                // 画像読み込み失敗時は非表示
+                                (e.target as HTMLImageElement).style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="mt-1 text-gray-500">添付ファイルはありません</p>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

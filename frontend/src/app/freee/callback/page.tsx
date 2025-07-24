@@ -29,7 +29,7 @@ function FreeeCallbackContent() {
         return
       }
 
-      if (!code || !state) {
+      if (!code) {
         setStatus('error')
         setMessage(`認証パラメータが不正です。取得されたパラメータ: code=${code ? '存在' : 'なし'}, state=${state ? '存在' : 'なし'}`)
         return

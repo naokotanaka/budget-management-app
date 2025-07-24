@@ -15,6 +15,7 @@ class TransactionBase(BaseModel):
     remark: Optional[str] = None
     department: Optional[str] = None
     management_number: Optional[str] = None
+    freee_deal_id: Optional[int] = None
 
 class TransactionCreate(TransactionBase):
     id: str
@@ -78,7 +79,7 @@ class AllocationCreate(AllocationBase):
 
 class Allocation(AllocationBase):
     id: int
-    created_at: datetime
+    created_at: Optional[datetime] = None
     
     class Config:
         from_attributes = True

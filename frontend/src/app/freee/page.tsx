@@ -42,6 +42,7 @@ export default function FreeePage() {
   const [syncing, setSyncing] = useState(false)
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null)
   const [journalEntries, setJournalEntries] = useState<FreeeJournalEntry[]>([])
+  const [saving, setSaving] = useState(false)
 
   const fetchStatus = async () => {
     try {
@@ -128,6 +129,45 @@ export default function FreeePage() {
       setMessage('同期処理中にエラーが発生しました')
     } finally {
       setSyncing(false)
+    }
+  }
+
+  const handleSave = async () => {
+    if (!startDate || !endDate) {
+      setMessage('開始日と終了日を指定してください')
+      return
+    }
+
+    setSaving(true)
+    setMessage('')
+
+    try {
+      const apiUrl = process.env.NODE_ENV === 'production' 
+        ? 'https://nagaiku.top/budget/api/freee/sync'
+        : 'http://160.251.170.97:8001/api/freee/sync'
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          start_date: startDate,
+          end_date: endDate,
+          preview: false  // 保存モード
+        }),
+      })
+
+      const data = await response.json()
+      
+      if (response.ok) {
+        setMessage(`保存が完了しました。${data.message}`)
+      } else {
+        setMessage(data.detail || '保存エラーが発生しました')
+      }
+    } catch (error) {
+      setMessage('保存処理中にエラーが発生しました')
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -248,17 +288,33 @@ export default function FreeePage() {
             </div>
           </div>
           
-          <button 
-            onClick={handleSync}
-            disabled={syncing}
-            className={`${
-              syncing 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-green-500 hover:bg-green-700'
-            } text-white font-bold py-2 px-4 rounded`}
-          >
-            {syncing ? 'データ取得中...' : 'データ取得'}
-          </button>
+          <div className="flex gap-4">
+            <button 
+              onClick={handleSync}
+              disabled={syncing || saving}
+              className={`${
+                syncing || saving
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-green-500 hover:bg-green-700'
+              } text-white font-bold py-2 px-4 rounded`}
+            >
+              {syncing ? 'データ取得中...' : 'データ取得'}
+            </button>
+            
+            {syncResult?.csv_converted_transactions && syncResult.csv_converted_transactions.length > 0 && (
+              <button 
+                onClick={handleSave}
+                disabled={syncing || saving}
+                className={`${
+                  syncing || saving
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-blue-500 hover:bg-blue-700'
+                } text-white font-bold py-2 px-4 rounded`}
+              >
+                {saving ? '保存中...' : '保存'}
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -343,6 +399,98 @@ export default function FreeePage() {
             <pre className="bg-gray-100 p-4 rounded text-xs overflow-auto max-h-96 whitespace-pre-wrap">
               {syncResult.csv_data}
             </pre>
+          </div>
+        </div>
+      )}
+
+      {syncResult?.csv_converted_transactions && syncResult.csv_converted_transactions.length > 0 && (
+        <div className="bg-white shadow rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4">仕訳帳CSV変換後データ（取引ID付き）</h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 text-xs">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">仕訳ID</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">仕訳番号</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">仕訳行番号</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">管理番号</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">取引日</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">借方勘定科目</th>
+                  <th className="px-2 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-tight">借方金額</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">借方取引先名</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">貸方勘定科目</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">貸方取引先名</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">借方品目</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">借方部門</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">借方メモ</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">借方備考</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">取引内容</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">作成日時</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">更新日時</th>
+                  <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-tight">Freee取引ID</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {syncResult.csv_converted_transactions.map((transaction: any, index: number) => (
+                  <tr key={index} className="text-xs">
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.journal_id || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.journal_number || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.journal_line_number || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.management_number || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.date}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-32 truncate">
+                      {transaction.debit_account || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 text-right whitespace-nowrap">
+                      ¥{transaction.debit_amount ? transaction.debit_amount.toLocaleString() : '0'}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-24 truncate">
+                      {transaction.debit_supplier || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-32 truncate">
+                      {transaction.credit_account || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-24 truncate">
+                      {transaction.credit_supplier || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-20 truncate">
+                      {transaction.debit_item || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-20 truncate">
+                      {transaction.debit_department || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-20 truncate">
+                      {transaction.debit_memo || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-20 truncate">
+                      {transaction.debit_remark || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 max-w-32 truncate">
+                      {transaction.description || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.created_at || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.updated_at || ''}
+                    </td>
+                    <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
+                      {transaction.freee_deal_id || ''}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}

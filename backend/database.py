@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime, ForeignKey, Text, Boolean
+from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime, ForeignKey, Text, Boolean, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, relationship
 from datetime import datetime
@@ -89,6 +89,7 @@ class Transaction(Base):
     remark = Column(String)
     department = Column(String)
     management_number = Column(String)
+    freee_deal_id = Column(BigInteger)  # Freee取引ID
     raw_data = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
     

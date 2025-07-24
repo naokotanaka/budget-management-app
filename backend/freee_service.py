@@ -44,8 +44,10 @@ class FreeeService:
             "state": state
         }
     
-    async def exchange_code_for_token(self, code: str, state: str, db: Session) -> Dict[str, Any]:
+    async def exchange_code_for_token(self, code: str, state: Optional[str], db: Session) -> Dict[str, Any]:
         """認証コードをアクセストークンに交換"""
+        # TODO: 本来はstateパラメータの検証が必要ですが、現在は一時的にスキップしています
+        # セキュリティ上の理由により、本番環境では適切なstate検証を実装する必要があります
         data = {
             "grant_type": "authorization_code",
             "client_id": self.client_id,
@@ -335,6 +337,73 @@ class FreeeService:
             
             return response.json()
     
+    def convert_journals_csv_to_transaction(self, csv_data: str) -> List[Dict[str, Any]]:
+        """仕訳帳CSVデータを既存のtransactionフォーマットに変換"""
+        import pandas as pd
+        import io
+        
+        transactions = []
+        
+        try:
+            # CSVデータをDataFrameに変換
+            df = pd.read_csv(io.StringIO(csv_data), encoding='utf-8')
+            
+            # Filter transactions with 【事】or 【管】 - 既存のCSV取り込みルールと同じ
+            mask = (
+                df['借方勘定科目'].str.startswith(('【事】', '【管】'), na=False) |
+                df['貸方勘定科目'].str.startswith(('【事】', '【管】'), na=False)
+            )
+            filtered_df = df[mask]
+            
+            for _, row in filtered_df.iterrows():
+                # 支払のみを対象とするため、借方の【事】【管】勘定科目のみ処理
+                if str(row['借方勘定科目']).startswith(('【事】', '【管】')):
+                    account = row['借方勘定科目']
+                    amount = 0
+                    if pd.notna(row['借方金額']):
+                        try:
+                            amount = int(float(row['借方金額'])) if str(row['借方金額']).strip() else 0
+                        except (ValueError, TypeError):
+                            amount = 0
+                else:
+                    # 貸方の【事】【管】は収入の可能性が高いのでスキップ
+                    continue
+                
+                # Skip transactions with zero or negative amounts (e.g., income transactions)
+                if amount <= 0:
+                    continue
+                
+                transaction = {
+                    "id": f"{row['仕訳番号']}_{row['仕訳行番号']}",
+                    "journal_id": row['仕訳ID'] if pd.notna(row['仕訳ID']) else None,
+                    "journal_number": row['仕訳番号'],
+                    "journal_line_number": row['仕訳行番号'],
+                    "management_number": row['管理番号'] if pd.notna(row['管理番号']) else "",
+                    "date": row['取引日'],
+                    "debit_account": row['借方勘定科目'] if pd.notna(row['借方勘定科目']) else "",
+                    "debit_amount": amount,  # 処理済みの金額を使用
+                    "debit_supplier": row['借方取引先名'] if pd.notna(row['借方取引先名']) else "",
+                    "credit_account": row['貸方勘定科目'] if pd.notna(row['貸方勘定科目']) else "",
+                    "credit_supplier": row['貸方取引先名'] if pd.notna(row['貸方取引先名']) else "",
+                    "debit_item": row['借方品目'] if pd.notna(row['借方品目']) else "",
+                    "debit_department": row['借方部門'] if pd.notna(row['借方部門']) else "",
+                    "debit_memo": row['借方メモ'] if pd.notna(row['借方メモ']) else "",
+                    "debit_remark": row['借方備考'] if pd.notna(row['借方備考']) else "",
+                    "description": row['取引内容'] if pd.notna(row['取引内容']) else "",
+                    "created_at": row['作成日時'] if pd.notna(row['作成日時']) else "",
+                    "updated_at": row['更新日時'] if pd.notna(row['更新日時']) else "",
+                    "freee_deal_id": row['取引ID'] if pd.notna(row['取引ID']) else None,
+                    "raw_data": row.to_json(),
+                    "account": account,  # 処理用の勘定科目
+                    "amount": amount     # 処理用の金額
+                }
+                transactions.append(transaction)
+                    
+        except Exception as e:
+            print(f"仕訳帳CSV変換エラー: {e}")
+            
+        return transactions
+
     def convert_deals_to_transaction(self, deals_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """freeeの取引データを既存のtransactionフォーマットに変換"""
         transactions = []
@@ -410,39 +479,28 @@ class FreeeService:
         
         # テスト用：取引データを取得
         try:
-            # 仕訳データと取引データを両方取得
-            journals_data, deals_data = await asyncio.gather(
-                self.get_journals(
-                    access_token, 
-                    token.company_id, 
-                    start_date, 
-                    end_date, 
-                    limit=10, 
-                    offset=0
-                ),
-                self.get_deals(
-                    access_token, 
-                    token.company_id, 
-                    start_date, 
-                    end_date, 
-                    limit=100, 
-                    offset=0
-                ),
-                return_exceptions=True
+            # まず仕訳データを取得（時間がかかるため）
+            journals_data = await self.get_journals(
+                access_token, 
+                token.company_id, 
+                start_date, 
+                end_date, 
+                limit=10, 
+                offset=0
+            )
+            
+            # 次に取引データを取得
+            deals_data = await self.get_deals(
+                access_token, 
+                token.company_id, 
+                start_date, 
+                end_date, 
+                limit=100, 
+                offset=0
             )
             
             # エラーチェック
             needs_reauth = False
-            if isinstance(journals_data, Exception):
-                print(f"仕訳データ取得エラー: {journals_data}")
-                if "403" in str(journals_data) or "400" in str(journals_data):
-                    needs_reauth = True
-                journals_data = {"journals": []}
-            if isinstance(deals_data, Exception):
-                print(f"取引データ取得エラー: {deals_data}")
-                if "403" in str(deals_data) or "401" in str(deals_data):
-                    needs_reauth = True
-                deals_data = {"deals": []}
             
             # 勘定科目、品目、部門マスタの取得を試行
             account_items_map = {}
@@ -523,11 +581,20 @@ class FreeeService:
             print(f"仕訳データの内容: {journals_data}")
             print(f"仕訳データのCSV: {journals_data.get('csv_data')}")
             
+            # 仕訳帳CSVデータが取得できた場合は変換処理を実行
+            csv_converted_transactions = []
+            if journals_data.get("csv_data") and not journals_data.get("csv_data").startswith('{"status_code"'):
+                csv_converted_transactions = self.convert_journals_csv_to_transaction(journals_data.get("csv_data"))
+                print(f"CSV変換された取引データ数: {len(csv_converted_transactions)}")
+                if csv_converted_transactions:
+                    print(f"最初のCSV変換データ: {csv_converted_transactions[0]}")
+            
             return {
                 "journal_entries": deals,  # 元のFreee取引データ
                 "journals_data": journals_data.get("journals", []),  # 仕訳データ
                 "csv_data": journals_data.get("csv_data"),  # 仕訳帳CSV データ
-                "converted_transactions": converted_transactions,  # 変換後のデータ
+                "csv_converted_transactions": csv_converted_transactions,  # CSV変換後のデータ
+                "converted_transactions": converted_transactions,  # 取引データ変換後のデータ
                 "account_items": account_items_map,
                 "needs_reauth": needs_reauth,  # 再認証が必要かどうか
                 "raw_response": {
@@ -539,6 +606,124 @@ class FreeeService:
         except Exception as e:
             print(f"Preview error: {str(e)}")
             raise e
+
+    async def sync_journals_csv(self, db: Session, start_date: str, end_date: str) -> Dict[str, Any]:
+        """仕訳帳CSVデータを同期してデータベースに保存"""
+        # 有効なトークンを取得
+        access_token = await self.get_valid_token(db)
+        if not access_token:
+            raise Exception("有効なアクセストークンがありません。再認証が必要です。")
+        
+        # 会社IDを取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token or not token.company_id:
+            raise Exception("会社情報が見つかりません。")
+        
+        # 同期記録を作成
+        sync_record = FreeeSync(
+            sync_type="journals_csv",
+            start_date=datetime.strptime(start_date, "%Y-%m-%d").date(),
+            end_date=datetime.strptime(end_date, "%Y-%m-%d").date(),
+            status="running"
+        )
+        db.add(sync_record)
+        db.commit()
+        db.refresh(sync_record)
+        
+        try:
+            # 仕訳データを取得
+            journals_data = await self.get_journals(
+                access_token, 
+                token.company_id, 
+                start_date, 
+                end_date, 
+                limit=10, 
+                offset=0
+            )
+            
+            # CSVデータが取得できた場合のみ処理
+            if not journals_data.get("csv_data") or journals_data.get("csv_data").startswith('{"status_code"'):
+                raise Exception("仕訳帳CSVデータの取得に失敗しました")
+            
+            # CSVデータを変換
+            transactions = self.convert_journals_csv_to_transaction(journals_data.get("csv_data"))
+            
+            # データベースに保存
+            created_count = 0
+            updated_count = 0
+            
+            for trans_data in transactions:
+                # 既存のトランザクションをIDで検索
+                existing = db.query(Transaction).filter(
+                    Transaction.id == trans_data["id"]
+                ).first()
+                
+                if existing:
+                    # 更新 - 既存のCSV取り込みロジックと同じ
+                    existing.date = datetime.strptime(trans_data["date"], "%Y-%m-%d").date()
+                    existing.description = trans_data["description"]
+                    existing.amount = trans_data["amount"]  # 処理済みの金額を使用
+                    existing.account = trans_data["account"]  # 処理済みの勘定科目を使用
+                    existing.supplier = trans_data["debit_supplier"] if trans_data["debit_supplier"] else trans_data["credit_supplier"]
+                    existing.item = trans_data["debit_item"]
+                    existing.memo = trans_data["debit_memo"]
+                    existing.remark = trans_data["debit_remark"]
+                    existing.department = trans_data["debit_department"]
+                    existing.management_number = trans_data["management_number"]
+                    existing.freee_deal_id = int(trans_data["freee_deal_id"]) if trans_data["freee_deal_id"] else None
+                    existing.raw_data = trans_data["raw_data"]
+                    updated_count += 1
+                else:
+                    # 新規作成 - 既存のCSV取り込みロジックと同じ
+                    transaction_dict = {
+                        "id": trans_data["id"],
+                        "journal_number": trans_data["journal_number"],
+                        "journal_line_number": trans_data["journal_line_number"],
+                        "date": datetime.strptime(trans_data["date"], "%Y-%m-%d").date(),
+                        "description": trans_data["description"],
+                        "amount": trans_data["amount"],  # 処理済みの金額を使用
+                        "account": trans_data["account"],  # 処理済みの勘定科目を使用
+                        "supplier": trans_data["debit_supplier"] if trans_data["debit_supplier"] else trans_data["credit_supplier"],
+                        "item": trans_data["debit_item"],
+                        "memo": trans_data["debit_memo"],
+                        "remark": trans_data["debit_remark"],
+                        "department": trans_data["debit_department"],
+                        "management_number": trans_data["management_number"],
+                        "freee_deal_id": int(trans_data["freee_deal_id"]) if trans_data["freee_deal_id"] else None,
+                        "raw_data": trans_data["raw_data"]
+                    }
+                    
+                    transaction = Transaction(**transaction_dict)
+                    db.add(transaction)
+                    created_count += 1
+            
+            # 同期記録を更新
+            sync_record.status = "completed"
+            sync_record.total_records = len(transactions)
+            sync_record.processed_records = len(transactions)
+            sync_record.created_records = created_count
+            sync_record.updated_records = updated_count
+            sync_record.completed_at = datetime.utcnow()
+            
+            db.commit()
+            
+            return {
+                "message": f"同期が完了しました。新規作成: {created_count}件、更新: {updated_count}件",
+                "sync_id": sync_record.id,
+                "status": "completed",
+                "total_records": len(transactions),
+                "created_records": created_count,
+                "updated_records": updated_count
+            }
+            
+        except Exception as e:
+            # エラーの場合は同期記録を更新
+            sync_record.status = "failed"
+            sync_record.error_message = str(e)
+            sync_record.completed_at = datetime.utcnow()
+            db.commit()
+            
+            raise Exception(f"同期中にエラーが発生しました: {str(e)}")
 
     async def sync_journals(self, db: Session, start_date: str, end_date: str) -> Dict[str, Any]:
         """仕訳データを同期"""

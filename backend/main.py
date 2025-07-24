@@ -164,6 +164,7 @@ def get_transactions(skip: int = 0, limit: int = 1000, db: Session = Depends(get
             "remark": transaction.remark,
             "department": transaction.department,
             "management_number": transaction.management_number,
+            "freee_deal_id": transaction.freee_deal_id,
             "created_at": transaction.created_at,
             "budget_item": None,
             "allocated_amount": None
@@ -276,7 +277,7 @@ async def import_transactions(file: UploadFile = File(...), db: Session = Depend
         
         for _, row in filtered_df.iterrows():
             try:
-                # Determine account and amount
+                # 支払のみを対象とするため、借方の【事】【管】勘定科目のみ処理
                 if str(row['借方勘定科目']).startswith(('【事】', '【管】')):
                     account = row['借方勘定科目']
                     # Try to get amount from available amount columns
@@ -287,13 +288,8 @@ async def import_transactions(file: UploadFile = File(...), db: Session = Depend
                         except (ValueError, TypeError):
                             amount = 0
                 else:
-                    account = row['貸方勘定科目']
-                    amount = 0
-                    if '貸方金額' in df.columns and pd.notna(row['貸方金額']):
-                        try:
-                            amount = int(float(row['貸方金額'])) if str(row['貸方金額']).strip() else 0
-                        except (ValueError, TypeError):
-                            amount = 0
+                    # 貸方の【事】【管】は収入の可能性が高いのでスキップ
+                    continue
                 
                 # Skip transactions with zero or negative amounts (e.g., income transactions)
                 if amount <= 0:
@@ -1854,10 +1850,10 @@ def get_freee_auth_url():
         raise HTTPException(status_code=500, detail=f"認証URL生成エラー: {str(e)}")
 
 @app.post("/api/freee/callback", response_model=FreeeTokenResponse)
-async def freee_callback(code: str, state: str, db: Session = Depends(get_db)):
+async def freee_callback(code: str, state: Optional[str] = None, db: Session = Depends(get_db)):
     """freee OAuth認証コールバック"""
     try:
-        print(f"Received callback with code: {code[:10]}... and state: {state[:10]}...")
+        print(f"Received callback with code: {code[:10]}... and state: {state[:10] if state else 'None'}...")
         result = await freee_service.exchange_code_for_token(code, state, db)
         print(f"Token exchange successful: {result}")
         return FreeeTokenResponse(
@@ -1952,6 +1948,29 @@ def get_freee_syncs(db: Session = Depends(get_db)):
         ]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"同期履歴取得エラー: {str(e)}")
+
+@app.get("/api/freee/receipts/{deal_id}")
+async def get_freee_receipts(deal_id: str, db: Session = Depends(get_db)):
+    """取引に紐づくファイルボックス情報を取得"""
+    try:
+        from freee_service_receipts import FreeeReceiptsService
+        
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        receipts_service = FreeeReceiptsService()
+        receipts_data = await receipts_service.get_receipts(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            deal_id=deal_id
+        )
+        
+        return receipts_data
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"ファイルボックス取得エラー: {str(e)}")
 
 @app.delete("/api/freee/disconnect")
 def disconnect_freee(db: Session = Depends(get_db)):

@@ -733,6 +733,37 @@ export const api = {
     };
   },
 
+  // Freee file box functions
+  async getFreeeReceipts(dealId: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/freee/receipts/${dealId}`);
+    
+    if (!response.ok) {
+      throw new Error('ファイルボックス情報の取得に失敗しました');
+    }
+    
+    return response.json();
+  },
+
+  async getFreeeReceiptDetail(receiptId: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/freee/receipt/${receiptId}`);
+    
+    if (!response.ok) {
+      throw new Error('ファイル詳細情報の取得に失敗しました');
+    }
+    
+    return response.json();
+  },
+
+  async getFreeeDealDetail(dealId: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/freee/deal/${dealId}`);
+    
+    if (!response.ok) {
+      throw new Error('取引詳細情報の取得に失敗しました');
+    }
+    
+    return response.json();
+  },
+
   // Admin functions
   async resetAllData(): Promise<{message: string}> {
     const response = await fetch(`${API_BASE_URL}/api/admin/reset-all-data`, {
