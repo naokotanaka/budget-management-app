@@ -1972,6 +1972,29 @@ async def get_freee_receipts(deal_id: str, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"ファイルボックス取得エラー: {str(e)}")
 
+@app.get("/api/freee/deal/{deal_id}")
+async def get_freee_deal_detail(deal_id: str, db: Session = Depends(get_db)):
+    """取引詳細情報を取得（receipts配列を含む）"""
+    try:
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        from freee_deal_service import FreeDealService
+        
+        deal_service = FreeDealService()
+        deal_detail = await deal_service.get_deal_detail(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            deal_id=deal_id
+        )
+        
+        return deal_detail
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"取引詳細取得エラー: {str(e)}")
+
 @app.delete("/api/freee/disconnect")
 def disconnect_freee(db: Session = Depends(get_db)):
     """freee連携を切断"""
