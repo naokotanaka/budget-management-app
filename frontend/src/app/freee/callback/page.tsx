@@ -14,6 +14,14 @@ function FreeeCallbackContent() {
       const code = searchParams.get('code')
       const state = searchParams.get('state')
       const error = searchParams.get('error')
+      
+      // デバッグ用ログ
+      console.log('Callback URL params:', {
+        code: code,
+        state: state,
+        error: error,
+        allParams: Array.from(searchParams.entries())
+      })
 
       if (error) {
         setStatus('error')
@@ -23,12 +31,15 @@ function FreeeCallbackContent() {
 
       if (!code || !state) {
         setStatus('error')
-        setMessage('認証パラメータが不正です')
+        setMessage(`認証パラメータが不正です。取得されたパラメータ: code=${code ? '存在' : 'なし'}, state=${state ? '存在' : 'なし'}`)
         return
       }
 
       try {
-        const response = await fetch('/api/freee/callback', {
+        const apiUrl = process.env.NODE_ENV === 'production' 
+          ? 'https://nagaiku.top/budget/api/freee/callback'
+          : 'http://160.251.170.97:8001/api/freee/callback'
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -47,7 +58,16 @@ function FreeeCallbackContent() {
         } else {
           const error = await response.json()
           setStatus('error')
-          setMessage(error.detail || '認証処理に失敗しました')
+          // エラーオブジェクトの処理を改善
+          if (typeof error.detail === 'string') {
+            setMessage(error.detail)
+          } else if (Array.isArray(error.detail)) {
+            setMessage(error.detail.map(e => e.msg || e.message || JSON.stringify(e)).join(', '))
+          } else if (error.detail && typeof error.detail === 'object') {
+            setMessage(error.detail.msg || error.detail.message || JSON.stringify(error.detail))
+          } else {
+            setMessage('認証処理に失敗しました')
+          }
         }
       } catch (error) {
         setStatus('error')

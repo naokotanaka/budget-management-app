@@ -8,12 +8,14 @@ Type=simple
 User=tanaka
 Group=tanaka
 WorkingDirectory=/home/tanaka/nagaiku-budget/backend
-# 本番環境用環境変数設定 - IPアドレスを環境変数化
+# 本番環境用環境変数設定 - 環境分離方針維持
 Environment=NODE_ENV=production
 Environment=ENVIRONMENT=production
 Environment=SERVER_IP=160.251.170.97
 Environment=PORT=8000
 Environment=FRONTEND_URL=http://160.251.170.97:3000
+Environment=DATABASE_URL=postgresql://nagaiku_user:nagaiku_password2024@localhost:5432/nagaiku_budget
+Environment=CORS_ORIGINS=http://160.251.170.97:3000
 ExecStartPre=/bin/bash -c 'source venv/bin/activate'
 ExecStart=/home/tanaka/nagaiku-budget/backend/venv/bin/python main.py
 Restart=always

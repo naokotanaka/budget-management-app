@@ -151,10 +151,28 @@ class FreeeTokenResponse(BaseModel):
     company_id: Optional[str] = None
     expires_at: datetime
 
+class FreeeSyncRequest(BaseModel):
+    start_date: str
+    end_date: str
+    preview: Optional[bool] = False
+
 class FreeeSyncResponse(BaseModel):
     message: str
     sync_id: int
     status: str
+
+class FreeeJournalEntry(BaseModel):
+    id: str
+    issue_date: str
+    description: str
+    total_amount: float
+    details: List[dict]
+
+class FreeeSyncPreviewResponse(BaseModel):
+    status: str
+    message: str
+    imported_count: int
+    journal_entries: List[FreeeJournalEntry]
 
 class CategoryBase(BaseModel):
     name: str

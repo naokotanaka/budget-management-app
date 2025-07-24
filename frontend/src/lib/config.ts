@@ -65,9 +65,11 @@ const getApiUrl = (): string => {
   // APIホストを取得（環境変数またはデフォルト値）
   const apiHost = process.env.NEXT_PUBLIC_API_HOST || 'nagaiku.top';
   
-  // 本番環境: 8000ポート、開発環境: 8001ポート
+  // 本番環境: nginxプロキシ経由、開発環境: 8001ポート
   const apiUrl = (isProduction && !isDevFrontend)
-    ? `http://${apiHost}:8000`
+    ? (typeof window !== 'undefined' && window.location.protocol === 'https:' 
+        ? `https://${apiHost}` 
+        : `http://${apiHost}:8000`)
     : `http://${apiHost}:8001`;
 
   // デバッグ情報をコンソールに出力

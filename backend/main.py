@@ -1857,13 +1857,18 @@ def get_freee_auth_url():
 async def freee_callback(code: str, state: str, db: Session = Depends(get_db)):
     """freee OAuth認証コールバック"""
     try:
+        print(f"Received callback with code: {code[:10]}... and state: {state[:10]}...")
         result = await freee_service.exchange_code_for_token(code, state, db)
+        print(f"Token exchange successful: {result}")
         return FreeeTokenResponse(
             message=result["message"],
             company_id=result.get("company_id"),
             expires_at=result["expires_at"]
         )
     except Exception as e:
+        print(f"Token exchange error: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=400, detail=f"認証エラー: {str(e)}")
 
 @app.get("/api/freee/status")
@@ -1894,20 +1899,32 @@ def get_freee_status(db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"状況取得エラー: {str(e)}")
 
-@app.post("/api/freee/sync", response_model=FreeeSyncResponse)
+from schemas import FreeeSyncRequest, FreeeSyncResponse, FreeeSyncPreviewResponse
+
+@app.post("/api/freee/sync")
 async def sync_freee_journals(
-    start_date: str, 
-    end_date: str, 
+    request: FreeeSyncRequest,
     db: Session = Depends(get_db)
 ):
-    """freee仕訳データを同期"""
+    """freee仕訳データを同期またはプレビュー"""
     try:
-        result = await freee_service.sync_journals(db, start_date, end_date)
-        return FreeeSyncResponse(
-            message=result["message"],
-            sync_id=result["sync_id"],
-            status=result["status"]
-        )
+        if request.preview:
+            # プレビューモード：データ取得のみ
+            result = await freee_service.preview_journals(db, request.start_date, request.end_date)
+            return FreeeSyncPreviewResponse(
+                status="success",
+                message=f"{len(result['journal_entries'])}件の仕訳データを取得しました",
+                imported_count=len(result['journal_entries']),
+                journal_entries=result['journal_entries']
+            )
+        else:
+            # 通常の同期モード：データ取得と保存
+            result = await freee_service.sync_journals(db, request.start_date, request.end_date)
+            return FreeeSyncResponse(
+                message=result["message"],
+                sync_id=result["sync_id"],
+                status=result["status"]
+            )
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"同期エラー: {str(e)}")
 

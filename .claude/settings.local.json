@@ -99,7 +99,15 @@
       "Bash(./stop_development.sh:*)",
       "Bash(tmux list-windows:*)",
       "Bash(tmux new-session:*)",
-      "Bash(tmux new-window:*)"
+      "Bash(tmux new-window:*)",
+      "Bash(./build_production.sh:*)",
+      "Bash(certbot:*)",
+      "Bash(./start_development.sh:*)",
+      "Bash(ping:*)",
+      "Bash(nslookup:*)",
+      "WebFetch(domain:developer.freee.co.jp)",
+      "Bash(PGPASSWORD=nagaiku_password2024 psql -h localhost -U nagaiku_user -d nagaiku_budget -c \"\nSELECT column_name, data_type, is_nullable FROM information_schema.columns \nWHERE table_name = ''transactions'' AND table_schema = ''public'' \nORDER BY ordinal_position;\")",
+      "Bash(PGPASSWORD=nagaiku_password2024 psql -h localhost -U nagaiku_user -d nagaiku_budget -c \"SELECT date, description, amount, account, supplier, item, memo FROM transactions LIMIT 5;\")"
     ],
     "deny": []
   }

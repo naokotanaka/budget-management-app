@@ -13,6 +13,9 @@ import csv
 import os
 from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv('.env.development')
+
 # WAMサービスのimport
 try:
     from wam_service import WamService
@@ -80,7 +83,7 @@ from schemas import (
     BudgetItemCreate, BudgetItem as BudgetItemSchema, BudgetItemWithGrant,
     AllocationCreate, Allocation as AllocationSchema,
     ImportResponse, PreviewResponse,
-    FreeeAuthResponse, FreeeTokenResponse, FreeeSyncResponse,
+    FreeeAuthResponse, FreeeTokenResponse, FreeeSyncRequest, FreeeSyncResponse,
     CategoryCreate, Category as CategorySchema
 )
 from freee_service import FreeeService
@@ -1845,17 +1848,26 @@ def get_freee_auth_url():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"認証URL生成エラー: {str(e)}")
 
+from pydantic import BaseModel
+
+class FreeeCallbackRequest(BaseModel):
+    code: str
+    state: str
+
 @app.post("/api/freee/callback", response_model=FreeeTokenResponse)
-async def freee_callback(code: str, state: str, db: Session = Depends(get_db)):
+async def freee_callback(request: FreeeCallbackRequest, db: Session = Depends(get_db)):
     """freee OAuth認証コールバック"""
     try:
-        result = await freee_service.exchange_code_for_token(code, state, db)
+        result = await freee_service.exchange_code_for_token(request.code, request.state, db)
         return FreeeTokenResponse(
             message=result["message"],
             company_id=result.get("company_id"),
             expires_at=result["expires_at"]
         )
     except Exception as e:
+        print(f"FREEE CALLBACK ERROR: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=400, detail=f"認証エラー: {str(e)}")
 
 @app.get("/api/freee/status")
@@ -1886,20 +1898,34 @@ def get_freee_status(db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"状況取得エラー: {str(e)}")
 
-@app.post("/api/freee/sync", response_model=FreeeSyncResponse)
+@app.post("/api/freee/sync")
 async def sync_freee_journals(
-    start_date: str, 
-    end_date: str, 
+    request: FreeeSyncRequest,
     db: Session = Depends(get_db)
 ):
-    """freee仕訳データを同期"""
+    """freee仕訳データを同期またはプレビュー"""
     try:
-        result = await freee_service.sync_journals(db, start_date, end_date)
-        return FreeeSyncResponse(
-            message=result["message"],
-            sync_id=result["sync_id"],
-            status=result["status"]
-        )
+        if request.preview:
+            # プレビューモード
+            result = await freee_service.preview_journals(db, request.start_date, request.end_date)
+            return {
+                "status": "preview",
+                "message": "プレビューデータを取得しました",
+                "imported_count": len(result.get("journal_entries", [])),
+                "journal_entries": result.get("journal_entries", []),
+                "journals_data": result.get("journals_data", []),
+                "csv_data": result.get("csv_data"),  # 仕訳帳CSVデータを追加
+                "converted_transactions": result.get("converted_transactions", []),
+                "needs_reauth": result.get("needs_reauth", False)
+            }
+        else:
+            # 実際の同期
+            result = await freee_service.sync_journals(db, request.start_date, request.end_date)
+            return FreeeSyncResponse(
+                message=result["message"],
+                sync_id=result["sync_id"],
+                status=result["status"]
+            )
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"同期エラー: {str(e)}")
 

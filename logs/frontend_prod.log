@@ -1934,3 +1934,2702 @@ Require stack:
  ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
  ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
  ✓ Ready in 383ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 395ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/.next/server/webpack-runtime.js
+- /home/tanaka/nagaiku-budget/frontend/.next/server/pages/_document.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/.next/server/webpack-runtime.js',
+    '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_document.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 361ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 410ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 398ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 414ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 514ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 395ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 366ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 372ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 373ms
+(node:618301) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 375ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 401ms
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
+ ⨯ Error: Cannot find module '/home/tanaka/nagaiku-budget/frontend/.next/server/pages/_error.js'
+Require stack:
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js
+- /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at mod.require (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:135:16) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/require.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/next.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js',
+    '/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/cli/next-start.js'
+  ]
+}
