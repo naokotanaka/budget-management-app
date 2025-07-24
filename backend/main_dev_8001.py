@@ -648,19 +648,35 @@ def create_batch_allocations(allocations: List[AllocationCreate], db: Session = 
 @app.get("/api/reports/cross-table")
 def get_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db)):
     try:
-        # PostgreSQL-compatible query for cross-tabulation with grant names
+        # PostgreSQL-compatible query for cross-tabulation with grant names (including unallocated)
         query = """
-        SELECT 
-            CONCAT(g.name, '-', bi.name) as budget_item,
-            TO_CHAR(t.date, 'YYYY-MM') as month,
-            SUM(a.amount) as total
-        FROM allocations a
-        JOIN transactions t ON a.transaction_id = t.id
-        JOIN budget_items bi ON a.budget_item_id = bi.id
-        JOIN grants g ON bi.grant_id = g.id
-        WHERE t.date BETWEEN :start_date AND :end_date
-        GROUP BY g.name, bi.name, TO_CHAR(t.date, 'YYYY-MM')
-        ORDER BY g.name, bi.name, month
+        WITH allocated_data AS (
+            SELECT 
+                CONCAT(g.name, '-', bi.name) as budget_item,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(a.amount) as total
+            FROM allocations a
+            JOIN transactions t ON a.transaction_id = t.id
+            JOIN budget_items bi ON a.budget_item_id = bi.id
+            JOIN grants g ON bi.grant_id = g.id
+            WHERE t.date BETWEEN :start_date AND :end_date
+            GROUP BY g.name, bi.name, TO_CHAR(t.date, 'YYYY-MM')
+        ),
+        unallocated_data AS (
+            SELECT 
+                '未割当' as budget_item,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(t.amount) as total
+            FROM transactions t
+            LEFT JOIN allocations a ON t.id = a.transaction_id
+            WHERE t.date BETWEEN :start_date AND :end_date
+              AND a.transaction_id IS NULL
+            GROUP BY TO_CHAR(t.date, 'YYYY-MM')
+        )
+        SELECT budget_item, month, total FROM allocated_data
+        UNION ALL
+        SELECT budget_item, month, total FROM unallocated_data
+        ORDER BY budget_item, month
         """
         
         # Use text() for raw SQL with proper parameter binding
@@ -684,19 +700,35 @@ def get_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db
 @app.get("/api/reports/category-cross-table")
 def get_category_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db)):
     try:
-        # カテゴリごとのクロス集計クエリ
+        # カテゴリごとのクロス集計クエリ (including unallocated)
         query = """
-        SELECT 
-            COALESCE(bi.category, '未分類') as category,
-            TO_CHAR(t.date, 'YYYY-MM') as month,
-            SUM(a.amount) as total
-        FROM allocations a
-        JOIN transactions t ON a.transaction_id = t.id
-        JOIN budget_items bi ON a.budget_item_id = bi.id
-        JOIN grants g ON bi.grant_id = g.id
-        WHERE t.date BETWEEN :start_date AND :end_date
-        GROUP BY COALESCE(bi.category, '未分類'), TO_CHAR(t.date, 'YYYY-MM')
-        ORDER BY COALESCE(bi.category, '未分類'), month
+        WITH allocated_data AS (
+            SELECT 
+                COALESCE(bi.category, '未分類') as category,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(a.amount) as total
+            FROM allocations a
+            JOIN transactions t ON a.transaction_id = t.id
+            JOIN budget_items bi ON a.budget_item_id = bi.id
+            JOIN grants g ON bi.grant_id = g.id
+            WHERE t.date BETWEEN :start_date AND :end_date
+            GROUP BY COALESCE(bi.category, '未分類'), TO_CHAR(t.date, 'YYYY-MM')
+        ),
+        unallocated_data AS (
+            SELECT 
+                '未割当' as category,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(t.amount) as total
+            FROM transactions t
+            LEFT JOIN allocations a ON t.id = a.transaction_id
+            WHERE t.date BETWEEN :start_date AND :end_date
+              AND a.transaction_id IS NULL
+            GROUP BY TO_CHAR(t.date, 'YYYY-MM')
+        )
+        SELECT category, month, total FROM allocated_data
+        UNION ALL
+        SELECT category, month, total FROM unallocated_data
+        ORDER BY category, month
         """
         
         # Use text() for raw SQL with proper parameter binding
