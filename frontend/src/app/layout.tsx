@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "NPO予算管理システム - ながいく",
   description: "NPO法人ながいくの予算管理システム",
+  icons: {
+    icon: '/budget/favicon.ico',
+  },
 };
 
 export default function RootLayout({
