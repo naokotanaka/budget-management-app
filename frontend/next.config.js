@@ -30,19 +30,7 @@ const nextConfig = {
     ]
   },
   
-  // ルートパスから/budgetへのリダイレクト
-  async redirects() {
-    if (process.env.NODE_ENV === 'production') {
-      return [
-        {
-          source: '/',
-          destination: '/budget',
-          permanent: false,
-        },
-      ]
-    }
-    return []
-  },
+  // nginx側でリダイレクト処理されるため、Next.js側でのリダイレクトは不要
 }
 
 module.exports = nextConfig
