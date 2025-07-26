@@ -18,7 +18,7 @@ export NODE_ENV=production
 export ENVIRONMENT=production
 # API URLは環境変数が設定されていない場合のみデフォルト値を使用
 if [ -z "$NEXT_PUBLIC_API_URL" ]; then
-    export NEXT_PUBLIC_API_URL=http://nagaiku.top:8000
+    export NEXT_PUBLIC_API_URL=https://nagaiku.top/budget
 fi
 export PORT=3000
 

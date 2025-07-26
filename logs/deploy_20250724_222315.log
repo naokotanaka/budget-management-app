@@ -1,0 +1,28 @@
+=== デプロイ完了記録 ===
+日時: Thu Jul 24 10:23:15 PM JST 2025
+コミット: 3da7153 fix: 本番環境にFreee Deal API エンドポイントを追加
+バックアップ: backups/backup_prod_20250721_192208.sql
+
+🎯 デプロイ内容:
+- Freeeファイルボックス機能実装とUI改善
+- 画像表示サイズ2倍拡大、取引詳細パネル最適化
+- APIエンドポイント同期問題を緊急修正
+- /api/freee/deal/{deal_id} エンドポイントを本番環境に追加
+
+✅ 動作確認結果:
+- バックエンドAPI: 正常動作 (http://160.251.170.97:8000)
+- フロントエンド: 正常動作 (http://160.251.170.97:3000/budget)
+- Freee機能: 基本機能デプロイ完了
+- データベース: freee_deal_id列追加済み
+
+⚠️ 今後の課題:
+- 一部レポートAPIエンドポイントが本番環境に不足
+- 完全なAPI同期が必要（61個のエンドポイント差分）
+
+🏭 サービス状態:
+- nagaiku-budget-backend: Active (running) - PID 650600
+- nagaiku-budget-frontend: Active (running) - PID 653685
+
+📊 リソース使用量:
+- バックエンド: 94.4MB メモリ、CPU 2.810s
+- フロントエンド: 56.5MB メモリ、CPU 1.107s

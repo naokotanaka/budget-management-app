@@ -1,0 +1,4 @@
+LISTEN 0      511          0.0.0.0:3001      0.0.0.0:*    users:(("next-server (v1",pid=630941,fd=22))                   
+LISTEN 0      2048         0.0.0.0:8001      0.0.0.0:*    users:(("python3",pid=647824,fd=3),("python3",pid=641861,fd=3))
+LISTEN 0      2048         0.0.0.0:8000      0.0.0.0:*    users:(("python",pid=597875,fd=7))                             
+LISTEN 0      511                *:3000            *:*    users:(("next-server (v1",pid=629551,fd=21))                   

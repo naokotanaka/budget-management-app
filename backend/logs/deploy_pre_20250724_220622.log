@@ -1,0 +1,22 @@
+● nagaiku-budget-backend.service - NPO Budget Management System - Backend (Production)
+     Loaded: loaded (/etc/systemd/system/nagaiku-budget-backend.service; disabled; preset: enabled)
+     Active: active (running) since Wed 2025-07-23 23:26:09 JST; 22h ago
+    Process: 597874 ExecStartPre=/bin/bash -c source venv/bin/activate (code=exited, status=0/SUCCESS)
+   Main PID: 597875 (python)
+      Tasks: 5 (limit: 4603)
+     Memory: 97.6M (peak: 106.1M swap: 64.0M swap peak: 64.0M)
+        CPU: 2min 28.945s
+     CGroup: /system.slice/nagaiku-budget-backend.service
+             └─597875 /home/tanaka/nagaiku-budget/backend/venv/bin/python main.py
+
+● nagaiku-budget-frontend.service - NPO Budget Management System - Frontend (Production)
+     Loaded: loaded (/etc/systemd/system/nagaiku-budget-frontend.service; disabled; preset: enabled)
+     Active: active (running) since Thu 2025-07-24 08:21:47 JST; 13h ago
+   Main PID: 629539 (npm start)
+      Tasks: 23 (limit: 4603)
+     Memory: 72.8M (peak: 86.9M swap: 14.8M swap peak: 14.8M)
+        CPU: 7.619s
+     CGroup: /system.slice/nagaiku-budget-frontend.service
+             ├─629539 "npm start"
+             ├─629550 sh -c "next start"
+             └─629551 "next-server (v14.2.30)"

@@ -26,10 +26,14 @@ const SettingsPage: React.FC = () => {
   const [currentVersion, setCurrentVersion] = useState<any>(null);
   const [githubLoading, setGithubLoading] = useState(false);
 
+  // システム情報
+  const [systemInfo, setSystemInfo] = useState<any>(null);
+
   useEffect(() => {
     fetchFreeSyncs();
     fetchGitHubData();
     fetchCurrentVersion();
+    fetchSystemInfo();
   }, []);
 
   const fetchFreeSyncs = async () => {
@@ -66,6 +70,18 @@ const SettingsPage: React.FC = () => {
       setCurrentVersion(version);
     } catch (err) {
       console.error('Failed to fetch current version:', err);
+    }
+  };
+
+  const fetchSystemInfo = async () => {
+    try {
+      const response = await fetch('/api/system-info');
+      if (response.ok) {
+        const info = await response.json();
+        setSystemInfo(info);
+      }
+    } catch (err) {
+      console.error('Failed to fetch system info:', err);
     }
   };
 
@@ -429,6 +445,35 @@ const SettingsPage: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-900">システム情報</h2>
         </div>
         <div className="p-6">
+          {/* システム情報 */}
+          <div className="mb-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">システム構成</h3>
+            {systemInfo ? (
+              <div className="bg-blue-50 rounded-lg p-4 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-medium text-gray-900">データベース</h4>
+                    <p className="text-sm text-blue-800 font-mono">{systemInfo.database_name}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">環境</h4>
+                    <p className="text-sm text-gray-600">{systemInfo.environment}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">ポート</h4>
+                    <p className="text-sm text-gray-600">{systemInfo.port}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">設定ファイル</h4>
+                    <p className="text-sm text-gray-600 font-mono">{systemInfo.env_file || 'デフォルト'}</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-gray-500 mb-6">システム情報を取得中...</div>
+            )}
+          </div>
+
           {/* 現在のバージョン情報 */}
           <div className="mb-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">現在のバージョン</h3>

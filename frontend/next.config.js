@@ -6,10 +6,7 @@ const nextConfig = {
   
   env: {
     // 環境変数から直接取得、なければデフォルト値を使用
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 
-      (process.env.NODE_ENV === 'production' 
-        ? 'http://160.251.170.97:8000'
-        : 'http://160.251.170.97:8001')
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8000'
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -18,14 +15,14 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   experimental: {
-    allowedDevOrigins: ['160.251.170.97:3001']
+    allowedDevOrigins: ['160.251.170.97:3000']
   },
   // CORS対応
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8001'}/api/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://160.251.170.97:8000'}/api/:path*`,
       },
     ]
   },

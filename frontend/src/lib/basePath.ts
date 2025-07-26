@@ -1,7 +1,7 @@
 // basePathヘルパー関数
+// 本番環境ではNext.jsが自動的にbasePathを処理するので、ここでは追加しない
 export const getBasePath = () => {
-  // 本番環境では/budgetを追加、開発環境では何もしない
-  return process.env.NODE_ENV === 'production' ? '/budget' : '';
+  return '';
 };
 
 // リンク用のパスを生成

@@ -301,7 +301,7 @@ export default function FreeePage() {
               {syncing ? 'データ取得中...' : 'データ取得'}
             </button>
             
-            {syncResult?.csv_converted_transactions && syncResult.csv_converted_transactions.length > 0 && (
+            {syncResult?.converted_transactions && syncResult.converted_transactions.length > 0 && (
               <button 
                 onClick={handleSave}
                 disabled={syncing || saving}
@@ -403,7 +403,7 @@ export default function FreeePage() {
         </div>
       )}
 
-      {syncResult?.csv_converted_transactions && syncResult.csv_converted_transactions.length > 0 && (
+      {syncResult?.converted_transactions && syncResult.converted_transactions.length > 0 && (
         <div className="bg-white shadow rounded-lg p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">仕訳帳CSV変換後データ（取引ID付き）</h2>
           <div className="overflow-x-auto">
@@ -431,7 +431,7 @@ export default function FreeePage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {syncResult.csv_converted_transactions.map((transaction: any, index: number) => (
+                {syncResult.converted_transactions.map((transaction: any, index: number) => (
                   <tr key={index} className="text-xs">
                     <td className="px-2 py-1 text-xs text-gray-900 whitespace-nowrap">
                       {transaction.journal_id || ''}

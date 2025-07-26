@@ -6,6 +6,8 @@ import { ColDef, GridApi, ModuleRegistry, AllCommunityModule } from 'ag-grid-com
 import dayjs from 'dayjs';
 import { api, Transaction, BudgetItem, Grant } from '@/lib/api';
 import { CONFIG } from '@/lib/config';
+import { generateMonthlyPresets, generateYearlyPresets } from '@/lib/dateUtils';
+import type { ICellRendererParams } from 'ag-grid-community';
 
 interface TransactionGridProps {
   onSelectionChanged?: (selectedRows: Transaction[]) => void;
@@ -389,11 +391,42 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
   };
 
   const loadSavedFilters = () => {
-    // フィルターはAPIから管理するか、セッションストレージを使用
-    const saved = sessionStorage.getItem('savedFilters');
-    if (saved) {
-      setSavedFilters(JSON.parse(saved));
+    // 月次プリセットフィルターを生成
+    const monthlyPresets = generateMonthlyPresets();
+    const yearlyPresets = generateYearlyPresets();
+    
+    // セッションストレージから助成金期間フィルターを確認
+    const grantPeriodFilterData = sessionStorage.getItem('grantPeriodFilter');
+    let grantPeriodPreset: Array<{
+      id: string;
+      name: string;
+      startDate: string;
+      endDate: string;
+      isPermanent: boolean;
+      isGrantPeriod: boolean;
+    }> = [];
+    if (grantPeriodFilterData) {
+      try {
+        const grantFilter = JSON.parse(grantPeriodFilterData);
+        grantPeriodPreset = [{
+          id: 'selected_grant_period',
+          name: `${grantFilter.grantName}の期間（${grantFilter.startDate}〜${grantFilter.endDate}）`,
+          startDate: grantFilter.startDate,
+          endDate: grantFilter.endDate,
+          isPermanent: false,
+          isGrantPeriod: true
+        }];
+      } catch (error) {
+        console.error('Failed to parse grant period filter:', error);
+      }
     }
+    
+    // セッションストレージから保存されたカスタムフィルターを読み込む
+    const saved = sessionStorage.getItem('savedFilters');
+    const customFilters = saved ? JSON.parse(saved) : [];
+    
+    // プリセットとカスタムフィルターを結合
+    setSavedFilters([...monthlyPresets, ...yearlyPresets, ...grantPeriodPreset, ...customFilters]);
   };
 
   // 報告済み助成金の予算項目を除外した選択肢を計算
@@ -486,7 +519,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         // 割当情報はAPI経由で管理
         return true;
       },
-      cellRenderer: (params) => {
+      cellRenderer: (params: ICellRendererParams) => {
         const allocation = allocations[params.data.id];
         const value = allocation?.budget_item || params.data.budget_item || params.value;
 
@@ -510,13 +543,15 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellStyle: (params) => {
         const value = params.value;
         const isUnallocated = !value || value === '未割当';
-        const style: any = {
-          fontWeight: 'bold',
+        const style: { [key: string]: string | number } = {
           textAlign: 'left',
           fontSize: '12px'
         };
         if (isUnallocated) {
           style.color = '#9ca3af';
+        }
+        if (!isUnallocated) {
+          style.fontWeight = 'bold';
         }
         return style;
       },
@@ -994,20 +1029,79 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
 
     const name = prompt('フィルター名を入力してください');
     if (name) {
+      // 現在のフィルターモデルから日付フィルターを取得
+      const currentFilterModel = gridRef.current.api.getFilterModel();
+      let startDate = null;
+      let endDate = null;
+      
+      if (currentFilterModel?.date) {
+        const dateFilter = currentFilterModel.date;
+        if (dateFilter.dateFrom && dateFilter.dateTo) {
+          // inRangeの調整を元に戻す
+          const start = new Date(dateFilter.dateFrom);
+          start.setDate(start.getDate() + 1);
+          startDate = start.toISOString().split('T')[0];
+          
+          const end = new Date(dateFilter.dateTo);
+          end.setDate(end.getDate() - 1);
+          endDate = end.toISOString().split('T')[0];
+        }
+      }
+      
       const filterState = {
         name,
-        filters: gridRef.current.api.getFilterModel()
+        filters: currentFilterModel,
+        startDate,
+        endDate,
+        isCustom: true
       };
-      const updated = [...savedFilters, filterState];
-      setSavedFilters(updated);
-      sessionStorage.setItem('savedFilters', JSON.stringify(updated));
+      // カスタムフィルターのみを保存
+      const customFilters = savedFilters.filter(f => f.isCustom);
+      const newCustomFilters = [...customFilters, filterState];
+      sessionStorage.setItem('savedFilters', JSON.stringify(newCustomFilters));
+      
+      // 全体のフィルターリストを更新
+      loadSavedFilters();
     }
   };
 
-  const loadFilter = (filterName: string) => {
-    const filter = savedFilters.find(f => f.name === filterName);
+  const loadFilter = (filterIdentifier: string) => {
+    const filter = savedFilters.find(f => 
+      f.id === filterIdentifier || f.name === filterIdentifier
+    );
     if (filter && gridRef.current) {
-      gridRef.current.api.setFilterModel(filter.filters);
+      // 月次・年次・助成金期間プリセットの場合は日付フィルターを適用
+      if (filter.isMonthlyPreset || filter.isYearlyPreset || filter.isGrantPeriod) {
+        const currentFilter = gridRef.current.api.getFilterModel() || {};
+        
+        // 日付をinRange用に調整
+        const startDate = new Date(filter.startDate);
+        startDate.setDate(startDate.getDate() - 1);
+        const endDate = new Date(filter.endDate);
+        endDate.setDate(endDate.getDate() + 1);
+        
+        currentFilter['date'] = {
+          filterType: 'date',
+          type: 'inRange',
+          dateFrom: startDate.toISOString().split('T')[0],
+          dateTo: endDate.toISOString().split('T')[0]
+        };
+        
+        gridRef.current.api.setFilterModel(currentFilter);
+        
+        // 助成金期間フィルターの場合は使用後にセッションストレージから削除
+        if (filter.isGrantPeriod) {
+          sessionStorage.removeItem('grantPeriodFilter');
+          // フィルターリストを再読み込みして助成金期間フィルターを削除
+          setTimeout(() => loadSavedFilters(), 100);
+        }
+        
+        // 統計を更新
+        setTimeout(updateDisplayedRowStats, 100);
+      } else {
+        // カスタムフィルターの場合は保存されたフィルターをそのまま適用
+        gridRef.current.api.setFilterModel(filter.filters);
+      }
     }
   };
 
@@ -1071,9 +1165,30 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           }}
         >
           <option value="">保存したフィルター</option>
-          {savedFilters.map(f => (
-            <option key={f.name} value={f.name}>{f.name}</option>
-          ))}
+          <optgroup label="月次">
+            {savedFilters.filter(f => f.isMonthlyPreset).map(f => (
+              <option key={f.id} value={f.id}>{f.name}</option>
+            ))}
+          </optgroup>
+          <optgroup label="年度">
+            {savedFilters.filter(f => f.isYearlyPreset).map(f => (
+              <option key={f.id} value={f.id}>{f.name}</option>
+            ))}
+          </optgroup>
+          {savedFilters.some(f => f.isGrantPeriod) && (
+            <optgroup label="助成金期間">
+              {savedFilters.filter(f => f.isGrantPeriod).map(f => (
+                <option key={f.id} value={f.id}>{f.name}</option>
+              ))}
+            </optgroup>
+          )}
+          {savedFilters.some(f => f.isCustom) && (
+            <optgroup label="カスタム">
+              {savedFilters.filter(f => f.isCustom).map(f => (
+                <option key={f.name} value={f.name}>{f.name}</option>
+              ))}
+            </optgroup>
+          )}
         </select>
         <button
           className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm"

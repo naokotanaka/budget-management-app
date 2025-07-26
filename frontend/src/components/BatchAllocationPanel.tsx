@@ -5,6 +5,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColDef } from 'ag-grid-community';
 import { api, Transaction, BudgetItem, Grant, Allocation } from '@/lib/api';
 import '@/lib/ag-grid-setup';
+import { useRouter } from 'next/navigation';
 
 interface BatchAllocationPanelProps {
   selectedRows: Transaction[];
@@ -14,6 +15,7 @@ interface BatchAllocationPanelProps {
 }
 
 const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRows, onAllocationComplete, onBudgetItemSelected, onSelectedBudgetItemChange }) => {
+  const router = useRouter();
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
   const [allocations, setAllocations] = useState<Allocation[]>([]);
@@ -22,6 +24,28 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // グローバル関数として期間フィルター機能を設定
+  useEffect(() => {
+    (window as any).filterByGrantPeriod = (startDate: string, endDate: string, grantName: string) => {
+      // セッションストレージに助成金期間フィルター情報を保存
+      const grantPeriodFilter = {
+        startDate,
+        endDate,
+        grantName,
+        type: 'grant_period'
+      };
+      sessionStorage.setItem('grantPeriodFilter', JSON.stringify(grantPeriodFilter));
+      
+      // 取引一覧ページに移動
+      router.push('/transactions');
+    };
+
+    // クリーンアップ
+    return () => {
+      delete (window as any).filterByGrantPeriod;
+    };
+  }, [router]);
 
   const budgetGridRef = useRef<AgGridReact>(null);
 
@@ -148,6 +172,48 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         const status = grant?.status || 'active';
         const statusText = status === 'active' ? '実行中' : status === 'completed' ? '終了' : '報告済み';
         return statusText;
+      }
+    },
+    {
+      headerName: '期間',
+      field: 'grant_period',
+      width: 200,
+      cellStyle: { fontSize: '11px', padding: '2px' },
+      cellRenderer: (params: any) => {
+        const grant = grants.find(g => g.id === params.data.grant_id);
+        if (!grant) return '';
+        
+        const startDate = grant.start_date ? new Date(grant.start_date).toLocaleDateString('ja-JP', { 
+          year: 'numeric', month: 'numeric', day: 'numeric' 
+        }) : '';
+        const endDate = grant.end_date ? new Date(grant.end_date).toLocaleDateString('ja-JP', { 
+          year: 'numeric', month: 'numeric', day: 'numeric' 
+        }) : '';
+        
+        const periodText = startDate && endDate ? `${startDate}〜${endDate}` : '期間未設定';
+        
+        return `
+          <div style="display: flex; align-items: center; gap: 4px; height: 100%;">
+            <span style="flex: 1; font-size: 10px;">${periodText}</span>
+            <button 
+              onclick="window.filterByGrantPeriod('${grant.start_date}', '${grant.end_date}', '${grant.name}')"
+              style="
+                padding: 1px 4px; 
+                font-size: 9px; 
+                background: #3b82f6; 
+                color: white; 
+                border: none; 
+                border-radius: 2px; 
+                cursor: pointer;
+                white-space: nowrap;
+              "
+              onmouseover="this.style.background='#2563eb'"
+              onmouseout="this.style.background='#3b82f6'"
+            >
+              期間で絞込
+            </button>
+          </div>
+        `;
       }
     }
   ];

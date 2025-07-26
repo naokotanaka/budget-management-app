@@ -16,8 +16,8 @@ Environment=PORT=8000
 Environment=FRONTEND_URL=http://160.251.170.97:3000
 Environment=DATABASE_URL=postgresql://nagaiku_user:nagaiku_password2024@localhost:5432/nagaiku_budget
 Environment=CORS_ORIGINS=http://160.251.170.97:3000
-ExecStartPre=/bin/bash -c 'source venv/bin/activate'
-ExecStart=/home/tanaka/nagaiku-budget/backend/venv/bin/python main.py
+Environment=ENV_FILE=/home/tanaka/nagaiku-budget/backend/.env
+ExecStart=/home/tanaka/nagaiku-budget/backend/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
 Restart=always
 RestartSec=10
 StandardOutput=append:/home/tanaka/nagaiku-budget/logs/backend_prod.log

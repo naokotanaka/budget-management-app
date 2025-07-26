@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { linkPath } from '@/lib/basePath'
 
 function FreeeCallbackContent() {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
@@ -38,7 +39,7 @@ function FreeeCallbackContent() {
       try {
         const apiUrl = process.env.NODE_ENV === 'production' 
           ? 'https://nagaiku.top/budget/api/freee/callback'
-          : 'http://160.251.170.97:8001/api/freee/callback'
+          : 'http://160.251.170.97:8000/api/freee/callback'
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
@@ -53,7 +54,7 @@ function FreeeCallbackContent() {
           setMessage(data.message)
           
           setTimeout(() => {
-            router.push('/freee')
+            router.push(linkPath('/freee'))
           }, 3000)
         } else {
           const error = await response.json()
@@ -62,7 +63,11 @@ function FreeeCallbackContent() {
           if (typeof error.detail === 'string') {
             setMessage(error.detail)
           } else if (Array.isArray(error.detail)) {
-            setMessage(error.detail.map(e => e.msg || e.message || JSON.stringify(e)).join(', '))
+            setMessage(
+              (error.detail as Array<{ msg?: string; message?: string }>).map(
+                (e) => e.msg || e.message || JSON.stringify(e)
+              ).join(', ')
+            )
           } else if (error.detail && typeof error.detail === 'object') {
             setMessage(error.detail.msg || error.detail.message || JSON.stringify(error.detail))
           } else {
@@ -105,7 +110,7 @@ function FreeeCallbackContent() {
             <h2 className="text-lg font-semibold mb-2">認証に失敗しました</h2>
             <p className="text-gray-600 mb-4">{message}</p>
             <button 
-              onClick={() => router.push('/freee')}
+              onClick={() => router.push(linkPath('/freee'))}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               freee設定画面に戻る

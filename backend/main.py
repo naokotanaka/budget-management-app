@@ -13,6 +13,11 @@ import csv
 import os
 from dotenv import load_dotenv
 
+# Load environment variables
+# 環境変数またはデフォルトで.envファイルを選択
+env_file = os.getenv('ENV_FILE', '.env')
+load_dotenv(env_file)
+
 # WAMサービスのimport
 try:
     from wam_service import WamService
@@ -52,31 +57,26 @@ def parse_amount(amount_string):
     except ValueError:
         return 0
 
-# 環境変数を読み込み
+# 開発環境用設定 - 環境変数から直接取得（.envファイルは使用しない）
 import os
-from dotenv import load_dotenv
 
-# 環境に応じて適切な.envファイルを読み込み（上書きを許可）
-env = os.getenv("ENVIRONMENT", "development")
-if env == "production":
-    # 本番環境の場合
-    if os.path.exists(".env.production"):
-        load_dotenv(".env.production", override=True)
-        print(f"✅ 本番環境設定を読み込みました (.env.production)")
-    else:
-        print(f"⚠️  .env.productionファイルが見つかりません。環境変数で設定してください。")
-else:
-    # 開発環境の場合
-    if os.path.exists(".env.development"):
-        load_dotenv(".env.development", override=True)  
-        print(f"✅ 開発環境設定を読み込みました (.env.development)")
-    else:
-        print(f"⚠️  .env.developmentファイルが見つかりません。環境変数で設定してください。")
-    
-# 共通設定があれば追加で読み込み（上書きしない）
-if os.path.exists(".env"):
-    load_dotenv()  # .envファイル（存在すれば）
-    print(f"✅ 共通設定ファイル (.env) を読み込みました")
+# 開発環境用の固定設定
+PORT = int(os.getenv("PORT", "8001"))
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://160.251.170.97:3001")
+ENVIRONMENT = "development"  # 強制的に開発環境に設定
+NODE_ENV = "development"
+
+# 開発環境設定を環境変数に強制設定
+os.environ["ENVIRONMENT"] = "development"
+os.environ["NODE_ENV"] = "development"
+os.environ["PORT"] = str(PORT)
+
+print(f"🚀 開発環境バックエンド起動設定:")
+print(f"   PORT: {PORT}")
+print(f"   FRONTEND_URL: {FRONTEND_URL}")
+print(f"   ENVIRONMENT: {ENVIRONMENT}")
+print(f"   NODE_ENV: {NODE_ENV}")
+print(f"🏭 開発環境モード: nagaiku_budget_dev データベースを使用")
 
 from database import get_db, create_tables, Transaction, Grant, BudgetItem, Allocation, FreeeToken, FreeeSync, Category
 from schemas import (
@@ -85,36 +85,22 @@ from schemas import (
     BudgetItemCreate, BudgetItem as BudgetItemSchema, BudgetItemWithGrant,
     AllocationCreate, Allocation as AllocationSchema,
     ImportResponse, PreviewResponse,
-    FreeeAuthResponse, FreeeTokenResponse, FreeeSyncResponse,
+    FreeeAuthResponse, FreeeTokenResponse, FreeeSyncRequest, FreeeSyncResponse,
     CategoryCreate, Category as CategorySchema
 )
 from freee_service import FreeeService
 
-app = FastAPI(title="NPO Budget Management System")
+app = FastAPI(title="NPO Budget Management System - Development")
 
-# CORS middleware - 環境別のセキュアな設定
-allowed_origins = [
-    "http://localhost:3001",  # 開発環境フロントエンド
-    "http://160.251.170.97:3001",  # 開発環境外部アクセス
-    "http://localhost:3000",  # 本番環境フロントエンド  
-    "http://160.251.170.97:3000",  # 本番環境外部アクセス
-    "http://160.251.170.97:3005",  # 追加アクセス用
-    "http://nagaiku.top",  # ドメイン名アクセス（ポートなし）
-    "http://nagaiku.top:3000",  # ドメイン名アクセス（本番フロントエンド）
-    "https://nagaiku.top",  # HTTPS経由のアクセス（ポートなし）
-    "https://nagaiku.top:3000"  # HTTPS経由のアクセス（本番フロントエンド）
-]
-
-# 開発環境でのみワイルドカードを許可
-if env == "development":
-    # 開発環境では利便性のためワイルドカードを許可（但し警告表示）
-    print("⚠️  開発環境: CORS設定でワイルドカード(*)を許可しています")
-    allowed_origins.append("*")
-
+# CORS設定 - 開発環境特化
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=False,  # ワイルドカード使用時はFalse必須
+    allow_origins=[
+        FRONTEND_URL,  # 環境変数から取得
+        "http://localhost:3001",  # 開発環境フロントエンド
+        "http://160.251.170.97:3001",  # 開発環境外部アクセス
+    ],
+    allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
@@ -123,6 +109,7 @@ app.add_middleware(
 @app.on_event("startup")
 def startup_event():
     create_tables()
+    print(f"✅ 開発環境データベーステーブル作成完了")
 
 # Debug endpoint for database connection
 @app.get("/api/debug/db-info")
@@ -130,16 +117,26 @@ def get_db_info():
     import os
     from database import get_database_url
     
-    env = os.getenv("ENVIRONMENT", "未設定")
-    port = os.getenv("PORT", "未設定")
     database_url = get_database_url()
     
     return {
-        "environment": env,
-        "port": port,
+        "environment": ENVIRONMENT,
+        "node_env": NODE_ENV,
+        "port": PORT,
+        "frontend_url": FRONTEND_URL,
         "database_url": database_url,
         "is_dev_db": "budget_dev" in database_url,
         "is_prod_db": "budget_dev" not in database_url and "nagaiku_budget" in database_url
+    }
+
+# Health check endpoint
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "environment": ENVIRONMENT,
+        "port": PORT,
+        "timestamp": datetime.now().isoformat()
     }
 
 # Transactions endpoints
@@ -650,58 +647,38 @@ def create_batch_allocations(allocations: List[AllocationCreate], db: Session = 
     return {"message": f"{len(allocations)}件の割り当てを作成しました"}
 
 # Reports endpoints
-@app.get("/api/reports/category-cross-table")
-def get_category_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db)):
-    try:
-        # カテゴリごとのクロス集計クエリ
-        query = """
-        SELECT 
-            COALESCE(bi.category, '未分類') as category,
-            TO_CHAR(t.date, 'YYYY-MM') as month,
-            SUM(a.amount) as total
-        FROM allocations a
-        JOIN transactions t ON a.transaction_id = t.id
-        JOIN budget_items bi ON a.budget_item_id = bi.id
-        JOIN grants g ON bi.grant_id = g.id
-        WHERE t.date BETWEEN :start_date AND :end_date
-        GROUP BY COALESCE(bi.category, '未分類'), TO_CHAR(t.date, 'YYYY-MM')
-        ORDER BY COALESCE(bi.category, '未分類'), month
-        """
-        
-        # Use text() for raw SQL with proper parameter binding
-        results = db.execute(text(query), {"start_date": start_date, "end_date": end_date})
-        
-        # Convert to pivot format
-        pivot_data = {}
-        for row in results:
-            category = row[0]     # category
-            month = row[1]        # month
-            total = row[2]        # total
-            
-            if category not in pivot_data:
-                pivot_data[category] = {}
-            pivot_data[category][month] = total
-        
-        return pivot_data
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"カテゴリ別クロス集計表の取得中にエラーが発生しました: {str(e)}")
-
 @app.get("/api/reports/cross-table")
 def get_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db)):
     try:
-        # PostgreSQL-compatible query for cross-tabulation with grant names
+        # PostgreSQL-compatible query for cross-tabulation with grant names (including unallocated)
         query = """
-        SELECT 
-            CONCAT(g.name, '-', bi.name) as budget_item,
-            TO_CHAR(t.date, 'YYYY-MM') as month,
-            SUM(a.amount) as total
-        FROM allocations a
-        JOIN transactions t ON a.transaction_id = t.id
-        JOIN budget_items bi ON a.budget_item_id = bi.id
-        JOIN grants g ON bi.grant_id = g.id
-        WHERE t.date BETWEEN :start_date AND :end_date
-        GROUP BY g.name, bi.name, TO_CHAR(t.date, 'YYYY-MM')
-        ORDER BY g.name, bi.name, month
+        WITH allocated_data AS (
+            SELECT 
+                CONCAT(g.name, '-', bi.name) as budget_item,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(a.amount) as total
+            FROM allocations a
+            JOIN transactions t ON a.transaction_id = t.id
+            JOIN budget_items bi ON a.budget_item_id = bi.id
+            JOIN grants g ON bi.grant_id = g.id
+            WHERE t.date BETWEEN :start_date AND :end_date
+            GROUP BY g.name, bi.name, TO_CHAR(t.date, 'YYYY-MM')
+        ),
+        unallocated_data AS (
+            SELECT 
+                '未割当' as budget_item,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(t.amount) as total
+            FROM transactions t
+            LEFT JOIN allocations a ON t.id = a.transaction_id
+            WHERE t.date BETWEEN :start_date AND :end_date
+              AND a.transaction_id IS NULL
+            GROUP BY TO_CHAR(t.date, 'YYYY-MM')
+        )
+        SELECT budget_item, month, total FROM allocated_data
+        UNION ALL
+        SELECT budget_item, month, total FROM unallocated_data
+        ORDER BY budget_item, month
         """
         
         # Use text() for raw SQL with proper parameter binding
@@ -721,6 +698,58 @@ def get_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db
         return pivot_data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"クロス集計表の取得中にエラーが発生しました: {str(e)}")
+
+@app.get("/api/reports/category-cross-table")
+def get_category_cross_table(start_date: str, end_date: str, db: Session = Depends(get_db)):
+    try:
+        # カテゴリごとのクロス集計クエリ (including unallocated)
+        query = """
+        WITH allocated_data AS (
+            SELECT 
+                COALESCE(bi.category, '未分類') as category,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(a.amount) as total
+            FROM allocations a
+            JOIN transactions t ON a.transaction_id = t.id
+            JOIN budget_items bi ON a.budget_item_id = bi.id
+            JOIN grants g ON bi.grant_id = g.id
+            WHERE t.date BETWEEN :start_date AND :end_date
+            GROUP BY COALESCE(bi.category, '未分類'), TO_CHAR(t.date, 'YYYY-MM')
+        ),
+        unallocated_data AS (
+            SELECT 
+                '未割当' as category,
+                TO_CHAR(t.date, 'YYYY-MM') as month,
+                SUM(t.amount) as total
+            FROM transactions t
+            LEFT JOIN allocations a ON t.id = a.transaction_id
+            WHERE t.date BETWEEN :start_date AND :end_date
+              AND a.transaction_id IS NULL
+            GROUP BY TO_CHAR(t.date, 'YYYY-MM')
+        )
+        SELECT category, month, total FROM allocated_data
+        UNION ALL
+        SELECT category, month, total FROM unallocated_data
+        ORDER BY category, month
+        """
+        
+        # Use text() for raw SQL with proper parameter binding
+        results = db.execute(text(query), {"start_date": start_date, "end_date": end_date})
+        
+        # Convert to pivot format
+        pivot_data = {}
+        for row in results:
+            category = row[0]     # category
+            month = row[1]        # month
+            total = row[2]        # total
+            
+            if category not in pivot_data:
+                pivot_data[category] = {}
+            pivot_data[category][month] = total
+        
+        return pivot_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"カテゴリ別クロス集計表の取得中にエラーが発生しました: {str(e)}")
 
 # CSV Export/Import endpoints
 @app.get("/api/export/grants-budget-allocations")
@@ -1849,20 +1878,24 @@ def get_freee_auth_url():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"認証URL生成エラー: {str(e)}")
 
+from pydantic import BaseModel
+
+class FreeeCallbackRequest(BaseModel):
+    code: str
+    state: Optional[str] = None
+
 @app.post("/api/freee/callback", response_model=FreeeTokenResponse)
-async def freee_callback(code: str, state: Optional[str] = None, db: Session = Depends(get_db)):
+async def freee_callback(request: FreeeCallbackRequest, db: Session = Depends(get_db)):
     """freee OAuth認証コールバック"""
     try:
-        print(f"Received callback with code: {code[:10]}... and state: {state[:10] if state else 'None'}...")
-        result = await freee_service.exchange_code_for_token(code, state, db)
-        print(f"Token exchange successful: {result}")
+        result = await freee_service.exchange_code_for_token(request.code, request.state, db)
         return FreeeTokenResponse(
             message=result["message"],
             company_id=result.get("company_id"),
             expires_at=result["expires_at"]
         )
     except Exception as e:
-        print(f"Token exchange error: {str(e)}")
+        print(f"FREEE CALLBACK ERROR: {str(e)}")
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=400, detail=f"認証エラー: {str(e)}")
@@ -1895,8 +1928,6 @@ def get_freee_status(db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"状況取得エラー: {str(e)}")
 
-from schemas import FreeeSyncRequest, FreeeSyncResponse, FreeeSyncPreviewResponse
-
 @app.post("/api/freee/sync")
 async def sync_freee_journals(
     request: FreeeSyncRequest,
@@ -1905,17 +1936,22 @@ async def sync_freee_journals(
     """freee仕訳データを同期またはプレビュー"""
     try:
         if request.preview:
-            # プレビューモード：データ取得のみ
+            # プレビューモード
             result = await freee_service.preview_journals(db, request.start_date, request.end_date)
-            return FreeeSyncPreviewResponse(
-                status="success",
-                message=f"{len(result['journal_entries'])}件の仕訳データを取得しました",
-                imported_count=len(result['journal_entries']),
-                journal_entries=result['journal_entries']
-            )
+            return {
+                "status": "preview",
+                "message": "プレビューデータを取得しました",
+                "imported_count": len(result.get("journal_entries", [])),
+                "journal_entries": result.get("journal_entries", []),
+                "journals_data": result.get("journals_data", []),
+                "csv_data": result.get("csv_data"),  # 仕訳帳CSVデータを追加
+                "csv_converted_transactions": result.get("csv_converted_transactions", []),  # CSV変換データを追加
+                "converted_transactions": result.get("converted_transactions", []),
+                "needs_reauth": result.get("needs_reauth", False)
+            }
         else:
-            # 通常の同期モード：データ取得と保存
-            result = await freee_service.sync_journals(db, request.start_date, request.end_date)
+            # 実際の同期（CSVデータを使用）
+            result = await freee_service.sync_journals_csv(db, request.start_date, request.end_date)
             return FreeeSyncResponse(
                 message=result["message"],
                 sync_id=result["sync_id"],
@@ -1971,6 +2007,52 @@ async def get_freee_receipts(deal_id: str, db: Session = Depends(get_db)):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"ファイルボックス取得エラー: {str(e)}")
+
+@app.get("/api/freee/receipts/")
+async def get_all_freee_receipts(db: Session = Depends(get_db)):  
+    """全ファイルボックス情報を取得"""
+    try:
+        from freee_service_receipts import FreeeReceiptsService
+        
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        receipts_service = FreeeReceiptsService()
+        receipts_data = await receipts_service.get_receipts(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            deal_id=None
+        )
+        
+        return receipts_data
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"ファイルボックス取得エラー: {str(e)}")
+
+@app.get("/api/freee/receipt/{receipt_id}")
+async def get_freee_receipt_detail(receipt_id: str, db: Session = Depends(get_db)):
+    """個別ファイルボックス詳細情報を取得"""
+    try:
+        from freee_service_receipts import FreeeReceiptsService
+        
+        # トークン取得
+        token = db.query(FreeeToken).filter(FreeeToken.is_active == True).first()
+        if not token:
+            raise HTTPException(status_code=401, detail="freee連携が設定されていません")
+        
+        receipts_service = FreeeReceiptsService()
+        receipt_detail = await receipts_service.get_receipt_detail(
+            access_token=token.access_token,
+            company_id=token.company_id,
+            receipt_id=receipt_id
+        )
+        
+        return receipt_detail
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"ファイル詳細取得エラー: {str(e)}")
 
 @app.get("/api/freee/deal/{deal_id}")
 async def get_freee_deal_detail(deal_id: str, db: Session = Depends(get_db)):
@@ -2667,8 +2749,38 @@ async def get_monthly_summary(
         
         results = query.all()
         
+        # 未割当の取引も月別で取得
+        unallocated_query = db.query(
+            extract('year', Transaction.date).label('year'),
+            extract('month', Transaction.date).label('month'),
+            func.sum(Transaction.amount).label('total_amount'),
+            func.count(Transaction.id).label('transaction_count')
+        ).select_from(Transaction)\
+         .outerjoin(Allocation, Transaction.id == Allocation.transaction_id)\
+         .filter(Allocation.id.is_(None))  # 割当がない取引のみ
+        
+        # 期間フィルター（未割当）
+        if start_date:
+            start_dt = datetime.strptime(start_date, '%Y-%m-%d').date()
+            unallocated_query = unallocated_query.filter(Transaction.date >= start_dt)
+        if end_date:
+            end_dt = datetime.strptime(end_date, '%Y-%m-%d').date()
+            unallocated_query = unallocated_query.filter(Transaction.date <= end_dt)
+        
+        unallocated_query = unallocated_query.group_by(
+            extract('year', Transaction.date), 
+            extract('month', Transaction.date)
+        ).order_by(
+            extract('year', Transaction.date), 
+            extract('month', Transaction.date)
+        )
+        
+        unallocated_results = unallocated_query.all()
+        
         # データ整形
         monthly_summary = []
+        
+        # 割当済みデータを追加
         for row in results:
             monthly_summary.append({
                 'grant_id': row.grant_id,
@@ -2679,6 +2791,19 @@ async def get_monthly_summary(
                 'total_amount': int(row.total_amount) if row.total_amount else 0,
                 'transaction_count': int(row.transaction_count)
             })
+        
+        # 未割当データを追加
+        for row in unallocated_results:
+            if row.total_amount and row.total_amount > 0:
+                monthly_summary.append({
+                    'grant_id': None,
+                    'grant_name': '未割当',
+                    'year': int(row.year),
+                    'month': int(row.month),
+                    'year_month': f"{int(row.year)}-{int(row.month):02d}",
+                    'total_amount': int(row.total_amount),
+                    'transaction_count': int(row.transaction_count)
+                })
         
         return {
             "summary": monthly_summary,
@@ -2714,8 +2839,9 @@ async def get_budget_vs_actual(
          .group_by(Grant.id, Grant.name, Grant.total_amount, Grant.start_date, Grant.end_date)\
          .order_by(Grant.name)
         
-        # 助成金ごとの実際の支出を取得（期間フィルター適用）
-        spent_query = db.query(
+        # 助成金ごとの実際の支出を取得（割当済み + 未割当を含む）
+        # 1. 割当済みの支出
+        allocated_spent_query = db.query(
             Grant.id.label('grant_id'),
             func.sum(Allocation.amount).label('total_spent')
         ).select_from(Grant)\
@@ -2723,27 +2849,45 @@ async def get_budget_vs_actual(
          .join(Allocation)\
          .join(Transaction, Allocation.transaction_id == Transaction.id)
         
-        # 期間フィルター
+        # 期間フィルター（割当済み）
         if start_date:
             start_dt = datetime.strptime(start_date, '%Y-%m-%d').date()
-            spent_query = spent_query.filter(Transaction.date >= start_dt)
+            allocated_spent_query = allocated_spent_query.filter(Transaction.date >= start_dt)
         if end_date:
             end_dt = datetime.strptime(end_date, '%Y-%m-%d').date()
-            spent_query = spent_query.filter(Transaction.date <= end_dt)
+            allocated_spent_query = allocated_spent_query.filter(Transaction.date <= end_dt)
         
-        spent_query = spent_query.group_by(Grant.id)
+        allocated_spent_query = allocated_spent_query.group_by(Grant.id)
+        
+        # 2. 未割当の取引の合計を取得
+        unallocated_query = db.query(
+            func.sum(Transaction.amount).label('total_unallocated')
+        ).select_from(Transaction)\
+         .outerjoin(Allocation, Transaction.id == Allocation.transaction_id)\
+         .filter(Allocation.id.is_(None))  # 割当がない取引のみ
+        
+        # 期間フィルター（未割当）
+        if start_date:
+            start_dt = datetime.strptime(start_date, '%Y-%m-%d').date()
+            unallocated_query = unallocated_query.filter(Transaction.date >= start_dt)
+        if end_date:
+            end_dt = datetime.strptime(end_date, '%Y-%m-%d').date()
+            unallocated_query = unallocated_query.filter(Transaction.date <= end_dt)
         
         # 予算データを取得
         budget_results = budget_query.all()
-        spent_results = {row.grant_id: row.total_spent for row in spent_query.all()}
+        allocated_spent_results = {row.grant_id: row.total_spent for row in allocated_spent_query.all()}
+        unallocated_total = unallocated_query.scalar() or 0
         
         # データを統合
         summary = []
         current_date = datetime.now().date()
+        total_grants = len(budget_results)
         
         for row in budget_results:
             budget = int(row.total_budget) if row.total_budget else 0
-            spent = int(spent_results.get(row.grant_id, 0)) if spent_results.get(row.grant_id) else 0
+            spent = int(allocated_spent_results.get(row.grant_id, 0)) if allocated_spent_results.get(row.grant_id) else 0
+            
             remaining = budget - spent
             usage_rate = (spent / budget * 100) if budget > 0 else 0
             
@@ -2773,9 +2917,25 @@ async def get_budget_vs_actual(
                 'period_progress': round(period_progress, 1)
             })
         
+        # 未割当の行を追加
+        if unallocated_total > 0:
+            summary.append({
+                'grant_id': None,
+                'grant_name': '未割当',
+                'grant_total_amount': 0,
+                'grant_start_date': None,
+                'grant_end_date': None,
+                'budget_total': 0,
+                'spent_total': int(unallocated_total),
+                'remaining': int(-unallocated_total),  # 予算がないので負の値
+                'usage_rate': 0,
+                'period_progress': 0
+            })
+        
         return {
             "summary": summary,
-            "total_grants": len(summary),
+            "total_grants": len(budget_results),  # 助成金の数（未割当を除く）
+            "total_unallocated": int(unallocated_total),
             "start_date": start_date,
             "end_date": end_date
         }
@@ -2783,17 +2943,21 @@ async def get_budget_vs_actual(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"予算vs実績データの取得に失敗しました: {str(e)}")
 
+@app.get("/api/system-info")
+async def get_system_info():
+    """システム情報を取得（データベース名を含む）"""
+    return {
+        "database_name": os.getenv("DATABASE_NAME", "not set"),
+        "environment": os.getenv("ENVIRONMENT", "not set"),
+        "port": os.getenv("PORT", "not set"),
+        "env_file": os.getenv("ENV_FILE", "not set")
+    }
+
 if __name__ == "__main__":
     import uvicorn
     import os
     
-    # 環境変数からポートを取得、デフォルトは本番環境用の8000
-    port = int(os.getenv("PORT", 8000))
-    environment = os.getenv("ENVIRONMENT", "production")
-    
-    # 本番環境起動ログ
-    print(f"🏭 本番環境バックエンド起動: http://0.0.0.0:{port}")
-    print(f"📊 環境: {environment}")
-    print(f"🗄️  ポート設定: {port}")
-    
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    # 開発環境用の固定ポート設定
+    port = int(os.getenv("PORT", 8001))
+    print(f"🚀 開発環境バックエンドを起動します (ポート: {port})")
+    uvicorn.run("main_dev_8001:app", host="0.0.0.0", port=port, reload=True)
