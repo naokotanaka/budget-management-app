@@ -1,5 +1,5 @@
 [Unit]
-Description=NPO Budget Management System - Frontend (Production)
+Description=NPO Budget Management System - Frontend (統一環境)
 After=network.target nagaiku-budget-backend.service
 Wants=nagaiku-budget-backend.service
 
@@ -8,14 +8,10 @@ Type=simple
 User=tanaka
 Group=tanaka
 WorkingDirectory=/home/tanaka/nagaiku-budget/frontend
-# 本番環境用環境変数設定 - IPアドレスを環境変数化
-Environment=NODE_ENV=production
-Environment=ENVIRONMENT=production
-Environment=SERVER_IP=160.251.170.97
-Environment=NEXT_PUBLIC_API_URL=http://160.251.170.97:8000
+# 統一環境用環境変数設定
 Environment=PORT=3000
-# ビルドは事前に完了済みを前提とし、高速起動
-# ExecStartPre=/bin/bash -c 'echo "✅ 事前ビルド済みのNext.jsアプリケーションを起動します"'
+# .nextディレクトリがない場合は自動ビルド
+ExecStartPre=/bin/bash -c 'if [ ! -d ".next" ]; then echo "🔨 Building Next.js app..." && npm run build; else echo "✅ Using existing build"; fi'
 ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=10

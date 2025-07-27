@@ -24,20 +24,9 @@ def get_database_url():
         DATABASE_HOST = os.getenv("DATABASE_HOST", "localhost")
         DATABASE_PORT = os.getenv("DATABASE_PORT", "5432")
 
-        # 環境に応じたデータベース名を強制設定
-        env = os.getenv("ENVIRONMENT", "development")
-        port = os.getenv("PORT", "8001")
-
-        # ポート番号で確実に判定
-        if port == "8000":
-            DATABASE_NAME = "nagaiku_budget"  # 本番環境
-            print("🏭 本番環境モード: nagaiku_budget データベースを使用")
-        else:
-            DATABASE_NAME = "nagaiku_budget_dev"  # 開発環境
-            print("📝 開発環境モード: nagaiku_budget_dev データベースを使用")
-
-        # 環境変数での上書きは無効化（確実な分離のため）
-        # DATABASE_NAME = os.getenv("DATABASE_NAME", default_db_name)
+        # 統一環境（データベース名のみ環境変数で制御）
+        DATABASE_NAME = os.getenv("DATABASE_NAME", "nagaiku_budget")
+        print(f"🏭 データベース: {DATABASE_NAME} を使用")
         SQLALCHEMY_DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
 
     # デバッグ情報を表示

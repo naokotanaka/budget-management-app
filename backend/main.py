@@ -13,10 +13,9 @@ import csv
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
-# 環境変数またはデフォルトで.envファイルを選択
-env_file = os.getenv('ENV_FILE', '.env')
-load_dotenv(env_file)
+# Load environment variables（統一環境）
+# 本番はsystemd環境変数、開発はコマンドライン環境変数を使用
+load_dotenv('.env', override=False)
 
 # WAMサービスのimport
 try:
@@ -60,23 +59,15 @@ def parse_amount(amount_string):
 # 開発環境用設定 - 環境変数から直接取得（.envファイルは使用しない）
 import os
 
-# 開発環境用の固定設定
-PORT = int(os.getenv("PORT", "8001"))
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://160.251.170.97:3001")
-ENVIRONMENT = "development"  # 強制的に開発環境に設定
-NODE_ENV = "development"
+# 統一環境設定（データベースのみ分離）
+PORT = int(os.getenv("PORT", "8000"))
+DATABASE_NAME = os.getenv("DATABASE_NAME", "nagaiku_budget")
+FRONTEND_URL = "https://nagaiku.top/budget"
 
-# 開発環境設定を環境変数に強制設定
-os.environ["ENVIRONMENT"] = "development"
-os.environ["NODE_ENV"] = "development"
-os.environ["PORT"] = str(PORT)
-
-print(f"🚀 開発環境バックエンド起動設定:")
+print(f"🚀 統一バックエンド起動:")
 print(f"   PORT: {PORT}")
+print(f"   DATABASE: {DATABASE_NAME}")
 print(f"   FRONTEND_URL: {FRONTEND_URL}")
-print(f"   ENVIRONMENT: {ENVIRONMENT}")
-print(f"   NODE_ENV: {NODE_ENV}")
-print(f"🏭 開発環境モード: nagaiku_budget_dev データベースを使用")
 
 from database import get_db, create_tables, Transaction, Grant, BudgetItem, Allocation, FreeeToken, FreeeSync, Category
 from schemas import (
@@ -90,16 +81,18 @@ from schemas import (
 )
 from freee_service import FreeeService
 
-app = FastAPI(title="NPO Budget Management System - Development")
+app = FastAPI(title="NPO Budget Management System - 統一環境")
 
-# CORS設定 - 開発環境特化
+# CORS設定（統一）
+allowed_origins = [
+    FRONTEND_URL,
+    "http://160.251.170.97:3000",
+    "http://localhost:3000"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        FRONTEND_URL,  # 環境変数から取得
-        "http://localhost:3001",  # 開発環境フロントエンド
-        "http://160.251.170.97:3001",  # 開発環境外部アクセス
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
@@ -2945,19 +2938,64 @@ async def get_budget_vs_actual(
 
 @app.get("/api/system-info")
 async def get_system_info():
-    """システム情報を取得（データベース名を含む）"""
+    """統一環境のシステム情報を取得"""
+    db_name = os.getenv("DATABASE_NAME", "nagaiku_budget")
+    port = os.getenv("PORT", "8000")
+    
+    # データベース種別を判定
+    db_type = "本番データベース" if db_name == "nagaiku_budget" else "開発データベース"
+    
     return {
-        "database_name": os.getenv("DATABASE_NAME", "not set"),
-        "environment": os.getenv("ENVIRONMENT", "not set"),
-        "port": os.getenv("PORT", "not set"),
-        "env_file": os.getenv("ENV_FILE", "not set")
+        "database_name": db_name,
+        "database_type": db_type,
+        "environment": "統一環境",
+        "port": port,
+        "mode": "本番DB" if db_name == "nagaiku_budget" else "開発DB"
     }
+
+@app.get("/api/version")
+async def get_version():
+    """バージョン情報を取得"""
+    try:
+        import subprocess
+        from datetime import datetime
+        
+        # Gitコミット情報を取得
+        try:
+            commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd='..').decode().strip()
+            commit_short = commit[:7]
+            commit_date = subprocess.check_output(['git', 'show', '-s', '--format=%ci', 'HEAD'], cwd='..').decode().strip()
+            commit_message = subprocess.check_output(['git', 'show', '-s', '--format=%s', 'HEAD'], cwd='..').decode().strip()
+            branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], cwd='..').decode().strip()
+        except:
+            commit = "unknown"
+            commit_short = "unknown"
+            commit_date = "unknown"
+            commit_message = "unknown"
+            branch = "unknown"
+        
+        return {
+            "commit": commit,
+            "commitShort": commit_short,
+            "commitDate": commit_date,
+            "commitMessage": commit_message,
+            "branch": branch,
+            "timestamp": datetime.now().isoformat(),
+        }
+    except Exception as e:
+        return {
+            "commit": "error",
+            "commitShort": "error",
+            "commitDate": "error",
+            "commitMessage": f"Error: {str(e)}",
+            "branch": "error",
+            "timestamp": datetime.now().isoformat(),
+        }
 
 if __name__ == "__main__":
     import uvicorn
     import os
     
-    # 開発環境用の固定ポート設定
-    port = int(os.getenv("PORT", 8001))
-    print(f"🚀 開発環境バックエンドを起動します (ポート: {port})")
-    uvicorn.run("main_dev_8001:app", host="0.0.0.0", port=port, reload=True)
+    port = int(os.getenv("PORT", 8000))
+    print(f"🚀 {ENVIRONMENT}環境バックエンドを起動します (ポート: {port})")
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=(ENVIRONMENT == "development"))

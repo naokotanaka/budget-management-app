@@ -179,9 +179,9 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       field: 'grant_period',
       width: 200,
       cellStyle: { fontSize: '11px', padding: '2px' },
-      cellRenderer: (params: any) => {
+      valueFormatter: (params: any) => {
         const grant = grants.find(g => g.id === params.data.grant_id);
-        if (!grant) return '';
+        if (!grant) return '期間未設定';
         
         const startDate = grant.start_date ? new Date(grant.start_date).toLocaleDateString('ja-JP', { 
           year: 'numeric', month: 'numeric', day: 'numeric' 
@@ -190,30 +190,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
           year: 'numeric', month: 'numeric', day: 'numeric' 
         }) : '';
         
-        const periodText = startDate && endDate ? `${startDate}〜${endDate}` : '期間未設定';
-        
-        return `
-          <div style="display: flex; align-items: center; gap: 4px; height: 100%;">
-            <span style="flex: 1; font-size: 10px;">${periodText}</span>
-            <button 
-              onclick="window.filterByGrantPeriod('${grant.start_date}', '${grant.end_date}', '${grant.name}')"
-              style="
-                padding: 1px 4px; 
-                font-size: 9px; 
-                background: #3b82f6; 
-                color: white; 
-                border: none; 
-                border-radius: 2px; 
-                cursor: pointer;
-                white-space: nowrap;
-              "
-              onmouseover="this.style.background='#2563eb'"
-              onmouseout="this.style.background='#3b82f6'"
-            >
-              期間で絞込
-            </button>
-          </div>
-        `;
+        return startDate && endDate ? `${startDate}〜${endDate}` : '期間未設定';
       }
     }
   ];

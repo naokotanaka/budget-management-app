@@ -1,0 +1,2576 @@
+INFO:     Started server process [35125]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0Warning: FREEE_CLIENT_ID and FREEE_CLIENT_SECRET environment variables are not set
+INFO:     127.0.0.1:37156 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:64981 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:64983 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:64980 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:64982 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65007 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65005 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65004 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65003 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65189 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65190 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65188 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65187 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65204 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65205 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65201 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65203 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65218 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65220 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65219 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65217 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65238 - "OPTIONS /api/admin/reset-all-data HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65238 - "DELETE /api/admin/reset-all-data HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65247 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65248 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65249 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65250 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65247 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65248 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65249 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65250 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48326 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53068 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53072 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51496 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51502 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51518 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65268 - "POST /api/transactions/import HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65277 - "POST /api/import/grants-budget HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65279 - "POST /api/import/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65293 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65294 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65295 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65292 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65310 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65311 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65313 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65309 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65318 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65316 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65317 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65319 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65328 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65327 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65329 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65330 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65344 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65342 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65343 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65340 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65399 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65401 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65400 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65402 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65421 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65420 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65419 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65418 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65432 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65435 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65437 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65434 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65439 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65441 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65440 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65438 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65452 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65454 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65453 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65451 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65491 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65493 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65492 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65494 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65502 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65501 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65504 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:65503 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49168 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49167 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49166 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49165 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49220 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49219 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49221 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49218 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49225 - "OPTIONS /api/grants/7 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49225 - "PUT /api/grants/7 HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49225 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49226 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49227 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49237 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49236 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49235 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49234 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49261 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49260 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49259 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49262 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49260 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49261 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49259 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49262 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     149.86.227.49:47342 - "GET / HTTP/1.1" 404 Not Found
+INFO:     60.102.51.25:49293 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49292 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49290 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49291 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49318 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49316 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49317 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49314 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49328 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49326 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49324 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49327 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49337 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49336 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49335 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49334 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49343 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49344 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49345 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49342 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     193.34.212.110:37888 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     60.102.51.25:49672 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49667 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49670 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49666 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49821 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49822 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49823 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:49819 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     206.168.34.67:59976 - "GET / HTTP/1.1" 404 Not Found
+INFO:     206.168.34.67:57630 - "GET / HTTP/1.1" 404 Not Found
+INFO:     206.168.34.67:57644 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     206.168.34.67:57676 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     206.168.34.67:59060 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     206.168.34.67:59148 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     60.102.51.25:50056 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50058 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50057 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50055 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50167 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50166 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50165 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50164 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50200 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50198 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50199 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50197 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50214 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50211 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50212 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50213 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50227 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50224 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50225 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50226 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50309 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50308 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50310 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50307 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50323 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50324 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50325 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50322 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50334 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50335 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50336 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50337 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50348 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50346 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50347 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     60.102.51.25:50345 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     149.86.227.49:33962 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:38007 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21628 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33916 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38012 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29820 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21628 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29821 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25725 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13437 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17533 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38448 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38458 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33918 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38014 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29822 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25726 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58495 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54399 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50303 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46207 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54384 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50288 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58480 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42111 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13425 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58481 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9329 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62577 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38001 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50289 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54385 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46193 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62578 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17522 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25714 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33906 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21618 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21619 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17523 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13426 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25715 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13427 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     193.34.212.110:34246 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:29813 - "GET /api/reports/cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29813 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9333 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13429 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5237 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29815 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17527 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21623 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13431 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29815 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17527 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21623 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13431 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25720 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13432 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21624 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17528 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38000 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33904 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42096 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38000 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33904 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42096 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38000 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50288 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42096 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38000 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29808 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38000 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13428 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21620 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5236 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13428 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21620 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17524 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54389 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58485 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50293 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54389 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58485 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25716 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33909 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5237 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38005 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50294 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46198 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42102 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50294 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46198 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33910 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     147.185.132.24:64266 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:50295 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50295 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54391 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50295 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58487 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54391 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(57) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(57) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040305_1', 'budget_item_id': 18, 'amount': 4788, 'created_at': datetime.datetime(2025, 7, 9, 2, 34, 55, 661391)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:50295 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(56) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(56) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040113_1', 'budget_item_id': 18, 'amount': 2184, 'created_at': datetime.datetime(2025, 7, 9, 2, 34, 55, 661609)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:58487 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(55) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(55) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040108_1', 'budget_item_id': 18, 'amount': 160, 'created_at': datetime.datetime(2025, 7, 9, 2, 34, 55, 660878)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:46199 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42103 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21624 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29816 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33912 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21624 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42104 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25720 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17529 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13433 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5241 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17529 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13433 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9337 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25721 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54393 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46202 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42106 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50302 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42110 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46206 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50302 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42110 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33918 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     193.34.212.110:41166 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:42100 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38004 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46196 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33908 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17524 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13428 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17524 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9332 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17524 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13428 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9332 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33909 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29813 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33909 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21621 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29813 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13429 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29814 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29814 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25718 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29814 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(58) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(58) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040102_1', 'budget_item_id': 18, 'amount': 16500, 'created_at': datetime.datetime(2025, 7, 9, 3, 27, 31, 778029)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:25718 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(59) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(59) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040104_1', 'budget_item_id': 18, 'amount': 160, 'created_at': datetime.datetime(2025, 7, 9, 3, 27, 31, 795232)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     127.0.0.1:41060 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:40766 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50108 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(60) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(60) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': 'test', 'budget_item_id': 1, 'amount': 1000, 'created_at': datetime.datetime(2025, 7, 9, 3, 28, 10, 231455)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     160.251.170.97:53632 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     160.251.170.97:54934 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(61) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(61) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': 'test_tx', 'budget_item_id': 30, 'amount': 1000, 'created_at': datetime.datetime(2025, 7, 9, 3, 34, 10, 9109)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     160.251.170.97:56662 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     160.251.170.97:37540 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13437 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62589 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58493 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13437 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62589 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9341 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21629 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21629 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25725 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21629 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29821 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25725 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(62) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(62) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040102_1', 'budget_item_id': 18, 'amount': 16500, 'created_at': datetime.datetime(2025, 7, 9, 3, 50, 30, 192356)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:29821 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(64) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(64) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040106_1', 'budget_item_id': 18, 'amount': 160, 'created_at': datetime.datetime(2025, 7, 9, 3, 50, 30, 201020)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:21629 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(63) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(63) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040104_1', 'budget_item_id': 18, 'amount': 160, 'created_at': datetime.datetime(2025, 7, 9, 3, 50, 30, 200498)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:9334 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62582 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58486 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9334 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62582 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13430 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21622 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21622 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25718 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21622 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(65) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(65) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040102_1', 'budget_item_id': 18, 'amount': 16500, 'created_at': datetime.datetime(2025, 7, 9, 4, 1, 9, 517516)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:25718 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58487 - "POST /api/allocations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(66) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/starlette/concurrency.py", line 41, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/main.py", line 554, in create_allocation
+    db.commit()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/tanaka/nagaiku-budget/backend/new_venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "allocations_pkey"
+DETAIL:  Key (id)=(66) already exists.
+
+[SQL: INSERT INTO allocations (transaction_id, budget_item_id, amount, created_at) VALUES (%(transaction_id)s, %(budget_item_id)s, %(amount)s, %(created_at)s) RETURNING allocations.id]
+[parameters: {'transaction_id': '5040104_1', 'budget_item_id': 18, 'amount': 160, 'created_at': datetime.datetime(2025, 7, 9, 4, 1, 9, 550203)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     133.207.47.128:25718 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9337 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58489 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62585 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9337 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17529 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13433 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33913 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33913 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33913 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33913 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33913 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58490 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62586 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9338 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58490 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62586 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5242 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/69 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/69 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/68 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/68 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/67 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/67 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/70 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/70 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/71 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/71 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/72 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/72 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/73 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/73 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/74 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/74 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/75 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/75 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/76 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/76 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/77 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/77 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/78 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/78 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/79 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/79 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/80 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/80 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/81 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/81 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/82 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/82 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/83 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/83 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/84 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/84 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/85 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/85 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/86 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/86 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/87 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/87 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/88 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/88 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/89 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/89 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/90 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/90 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/91 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/91 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/92 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/92 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/93 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/93 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/94 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/94 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/95 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/95 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/96 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/96 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/97 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/97 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/98 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/98 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/99 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/99 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/100 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/100 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/101 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/101 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/102 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/102 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/103 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/103 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/104 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/104 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/105 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/105 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/106 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/106 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/107 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/107 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/108 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/108 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/109 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/109 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/110 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/110 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/111 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/111 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/112 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/112 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/113 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/113 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/114 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/114 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/115 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/115 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/116 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/116 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/117 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/117 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/118 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/118 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/119 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/119 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/120 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/120 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/121 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/121 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/122 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/122 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/123 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/123 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/124 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/124 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/125 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/125 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/126 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/126 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/127 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/127 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/128 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/128 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/129 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/129 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/130 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/130 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/131 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/131 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/132 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/132 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/133 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/133 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/134 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/134 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/135 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/135 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/136 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/136 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/137 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/137 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/138 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/138 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/139 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/139 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/140 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/140 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/141 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/141 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/142 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/142 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/143 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/143 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/144 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/144 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/145 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/145 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/146 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/146 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/147 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/147 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/148 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/148 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/149 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/149 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/150 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/150 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/151 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/151 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/152 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/152 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/153 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/153 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/154 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/154 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/155 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/155 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/156 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/156 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/157 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/157 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/158 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/158 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/159 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/159 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/160 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/160 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/161 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/161 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/162 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/162 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/163 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/163 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/164 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/164 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/165 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/165 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "OPTIONS /api/allocations/166 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29809 - "PUT /api/allocations/166 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13425 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62577 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5233 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13425 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62577 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58481 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46195 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50291 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58483 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46195 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50291 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54387 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/69 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/68 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/67 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/70 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/71 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/72 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/73 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/74 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/75 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/76 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "PUT /api/allocations/77 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17525 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21621 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     193.34.212.110:48876 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:17526 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/90 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/90 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/69 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/69 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/68 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/68 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/67 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/67 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/70 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/70 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/71 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/71 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/72 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/72 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/73 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/73 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/74 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/74 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/75 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/75 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/76 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/76 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/77 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/77 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/78 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/78 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/79 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/79 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/80 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/80 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/81 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/81 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/82 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/82 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/83 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/83 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/84 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/84 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/85 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/85 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/86 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/86 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/87 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/87 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/88 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/88 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "OPTIONS /api/allocations/89 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "DELETE /api/allocations/89 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29814 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21622 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25718 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17526 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/91 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/91 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/92 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/92 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/93 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/93 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/94 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/94 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/95 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/95 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/96 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/96 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/97 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/97 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/98 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/98 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/99 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/99 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/100 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/100 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/101 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/101 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/102 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/102 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/103 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/103 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/104 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/104 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/105 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/105 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/106 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/106 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/107 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/107 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/108 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/108 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/109 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/109 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/110 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/110 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/111 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/111 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/112 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/112 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/113 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/113 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/114 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/114 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/115 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/115 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/116 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/116 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/117 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/117 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/118 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/118 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/119 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/119 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/120 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/120 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/121 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/121 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/122 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/122 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/123 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/123 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/124 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/124 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/125 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/125 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/126 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/126 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/127 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/127 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/128 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/128 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/129 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/129 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/130 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/130 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/131 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/131 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/132 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/132 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/133 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/133 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/134 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/134 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/135 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/135 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/136 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/136 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/137 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/137 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/138 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/138 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/139 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/139 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/140 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/140 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/141 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/141 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/142 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/142 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/143 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/143 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/144 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/144 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/145 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/145 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/146 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/146 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/147 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/147 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/148 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/148 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/149 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/149 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/150 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/150 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/151 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/151 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/152 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/152 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/153 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/153 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/154 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/154 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/155 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/155 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/156 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/156 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/157 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/157 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/158 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/158 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/159 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/159 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/160 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/160 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/161 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/161 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/162 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/162 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/163 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/163 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/164 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/164 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/165 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/165 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "OPTIONS /api/allocations/166 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "DELETE /api/allocations/166 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54391 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58487 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50295 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46199 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50295 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54391 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13430 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13430 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25718 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25718 - "OPTIONS /api/allocations/167 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25718 - "DELETE /api/allocations/167 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33910 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29814 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38006 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25718 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46193 - "OPTIONS /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46193 - "POST /api/allocations HTTP/1.1" 200 OK
+INFO:     193.34.212.110:48722 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:17531 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13435 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29819 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17531 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33915 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21627 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42107 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42107 - "OPTIONS /api/allocations/168 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42107 - "DELETE /api/allocations/168 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54395 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50299 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46203 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42107 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5244 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62588 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17532 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13436 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38003 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46195 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33907 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42099 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42099 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33907 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38003 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46195 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38003 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42099 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46195 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33907 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58484 - "OPTIONS /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58484 - "PUT /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58484 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5236 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62580 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54388 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42100 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50292 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54388 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42100 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46196 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9338 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29819 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     160.251.170.97:44134 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     134.122.45.250:57490 - "GET / HTTP/1.1" 404 Not Found
+INFO:     134.122.45.250:57492 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     193.34.212.110:55556 - "GET / HTTP/1.1" 404 Not Found
+INFO:     147.185.132.39:63188 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.92:17110 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.97:58471 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.96:58099 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     64.62.197.96:34387 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:25723 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     3.137.73.221:58860 - "GET / HTTP/1.1" 404 Not Found
+INFO:     3.137.73.221:58928 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:62578 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     160.251.170.97:41728 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17523 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42101 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62585 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5242 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25723 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33915 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38011 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29819 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17532 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17533 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5245 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62589 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9341 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50301 - "OPTIONS /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50301 - "PUT /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50301 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50301 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54397 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58493 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58494 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5246 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62590 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5246 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58493 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62590 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5246 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58493 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58494 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17534 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38014 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42110 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33918 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13438 - "OPTIONS /api/budget-items/18 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13438 - "PUT /api/budget-items/18 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50303 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33906 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5234 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13426 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9330 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17522 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17523 - "OPTIONS /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17523 - "PUT /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17523 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25715 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21619 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58483 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54387 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9331 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5235 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42100 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58485 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9333 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5237 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:17527 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29815 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33911 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21623 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     193.34.212.110:55968 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:17527 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29816 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33912 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21623 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62585 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54386 - "GET /api/dashboard/stats HTTP/1.1" 200 OK
+INFO:     133.207.47.128:50291 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:54387 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5235 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:58483 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:46196 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:29812 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38004 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42100 - "GET /api/transactions HTTP/1.1" 200 OK
+INFO:     133.207.47.128:9333 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:62581 - "GET /api/categories HTTP/1.1" 200 OK
+INFO:     133.207.47.128:13429 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5237 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "OPTIONS /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "PUT /api/grants/1 HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "GET /api/grants HTTP/1.1" 200 OK
+INFO:     133.207.47.128:25717 - "GET /api/allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:33909 - "GET /api/budget-items HTTP/1.1" 200 OK
+INFO:     133.207.47.128:38005 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:5238 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:42102 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     133.207.47.128:21622 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     160.251.170.97:56938 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     160.251.170.97:53554 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     160.251.170.97:60110 - "POST /api/grants HTTP/1.1" 200 OK
+INFO:     160.251.170.97:60202 - "GET /api/export/grants-budget-allocations HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [35068]

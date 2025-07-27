@@ -46,9 +46,7 @@ export default function FreeePage() {
 
   const fetchStatus = async () => {
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://nagaiku.top/budget/api/freee/status'
-        : 'http://160.251.170.97:8001/api/freee/status'
+      const apiUrl = 'https://nagaiku.top/budget/api/freee/status'
       const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json()
@@ -67,7 +65,7 @@ export default function FreeePage() {
     try {
       const apiUrl = process.env.NODE_ENV === 'production' 
         ? 'https://nagaiku.top/budget/api/freee/auth'
-        : 'http://160.251.170.97:8001/api/freee/auth'
+        : 'https://nagaiku.top/budget/api/freee/auth'
       const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json()
@@ -93,7 +91,7 @@ export default function FreeePage() {
     try {
       const apiUrl = process.env.NODE_ENV === 'production' 
         ? 'https://nagaiku.top/budget/api/freee/sync'
-        : 'http://160.251.170.97:8001/api/freee/sync'
+        : 'https://nagaiku.top/budget/api/freee/sync'
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -144,7 +142,7 @@ export default function FreeePage() {
     try {
       const apiUrl = process.env.NODE_ENV === 'production' 
         ? 'https://nagaiku.top/budget/api/freee/sync'
-        : 'http://160.251.170.97:8001/api/freee/sync'
+        : 'https://nagaiku.top/budget/api/freee/sync'
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {

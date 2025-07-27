@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { api, FreeeSync, GitHubCommit, GitHubRelease } from '@/lib/api';
-import { CONFIG } from '@/lib/config';
+import { CONFIG, API_CONFIG } from '@/lib/config';
 
 const SettingsPage: React.FC = () => {
   const [resetting, setResetting] = useState(false);
@@ -66,8 +66,12 @@ const SettingsPage: React.FC = () => {
 
   const fetchCurrentVersion = async () => {
     try {
-      const version = await api.getCurrentCommit();
-      setCurrentVersion(version);
+      // バックエンドAPIから取得
+      const response = await fetch(`${API_CONFIG.BASE_URL}/api/version`);
+      if (response.ok) {
+        const version = await response.json();
+        setCurrentVersion(version);
+      }
     } catch (err) {
       console.error('Failed to fetch current version:', err);
     }
@@ -75,7 +79,8 @@ const SettingsPage: React.FC = () => {
 
   const fetchSystemInfo = async () => {
     try {
-      const response = await fetch('/api/system-info');
+      // バックエンドAPIから取得
+      const response = await fetch(`${API_CONFIG.BASE_URL}/api/system-info`);
       if (response.ok) {
         const info = await response.json();
         setSystemInfo(info);
@@ -452,20 +457,22 @@ const SettingsPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-4 mb-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-medium text-gray-900">データベース</h4>
-                    <p className="text-sm text-blue-800 font-mono">{systemInfo.database_name}</p>
+                    <h4 className="font-medium text-gray-900">現在のデータベース</h4>
+                    <p className="text-sm text-blue-800 font-mono font-bold">{systemInfo.database_name}</p>
+                    <p className="text-xs text-blue-600">{systemInfo.database_type}</p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900">環境</h4>
-                    <p className="text-sm text-gray-600">{systemInfo.environment}</p>
+                    <h4 className="font-medium text-gray-900">動作モード</h4>
+                    <p className="text-sm text-gray-600">{systemInfo.mode}</p>
+                    <p className="text-xs text-gray-500">{systemInfo.environment}</p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900">ポート</h4>
+                    <h4 className="font-medium text-gray-900">APIポート</h4>
                     <p className="text-sm text-gray-600">{systemInfo.port}</p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900">設定ファイル</h4>
-                    <p className="text-sm text-gray-600 font-mono">{systemInfo.env_file || 'デフォルト'}</p>
+                    <h4 className="font-medium text-gray-900">アクセスURL</h4>
+                    <p className="text-sm text-gray-600">https://nagaiku.top/budget/</p>
                   </div>
                 </div>
               </div>

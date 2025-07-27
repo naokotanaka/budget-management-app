@@ -3,7 +3,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { api } from '@/lib/api';
-import { linkPath } from '@/lib/basePath';
 
 const ImportPage: React.FC = () => {
   const [previewData, setPreviewData] = useState<any>(null);
@@ -232,7 +231,7 @@ const ImportPage: React.FC = () => {
               </p>
               <div className="mt-3">
                 <a
-                  href={linkPath("/transactions")}
+                  href="/transactions"
                   className="text-sm text-green-600 hover:text-green-500 font-medium"
                 >
                   取引一覧を確認する →

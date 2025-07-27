@@ -31,63 +31,22 @@ export const getCurrentFiscalYear = () => {
   };
 };
 
-// API URL設定を動的に決定
+// 統一されたAPI URL設定（Mixed Content強制対応版）
 const getApiUrl = (): string => {
-  // デバッグ情報を詳細に出力
-  console.log('🔍 API URL Detection Debug:', {
-    'process.env.NEXT_PUBLIC_API_URL': process.env.NEXT_PUBLIC_API_URL,
-    'process.env.NODE_ENV': process.env.NODE_ENV,
-    'process.env.NEXT_PUBLIC_ENVIRONMENT': process.env.NEXT_PUBLIC_ENVIRONMENT,
-    'window.location.hostname': typeof window !== 'undefined' ? window.location.hostname : 'server-side',
-    'window.location.port': typeof window !== 'undefined' ? window.location.port : 'server-side',
-    'window.location.href': typeof window !== 'undefined' ? window.location.href : 'server-side'
-  });
-
+  console.log('🔍 getApiUrl called');
+  console.log('🔍 NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+  console.log('🔍 window:', typeof window);
+  
   // 環境変数が明示的に設定されている場合はそれを使用
   if (process.env.NEXT_PUBLIC_API_URL) {
-    console.log('🔧 Using explicit API URL from env:', process.env.NEXT_PUBLIC_API_URL);
+    console.log('🔍 Using env var:', process.env.NEXT_PUBLIC_API_URL);
     return process.env.NEXT_PUBLIC_API_URL;
   }
 
-  // 本番環境判定（複数の条件でチェック）
-  const isProduction = 
-    process.env.NODE_ENV === 'production' ||
-    process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ||
-    (typeof window !== 'undefined' && window.location.hostname === '160.251.170.97');
-
-  // フロントエンドのポートから環境を判定
-  const isDevFrontend = typeof window !== 'undefined' && 
-    (window.location.port === '3001' || window.location.port === '3002' || window.location.port === '3003');
-
-  // 開発環境判定を強化
-  const isDevelopment = !isProduction || isDevFrontend;
-
-  // APIホストを取得（環境変数またはデフォルト値）
-  const apiHost = process.env.NEXT_PUBLIC_API_HOST || 'nagaiku.top';
-  
-  // 本番環境: nginxプロキシ経由、開発環境: 8001ポート
-  const apiUrl = (isProduction && !isDevFrontend)
-    ? (typeof window !== 'undefined' && window.location.protocol === 'https:' 
-        ? `https://${apiHost}` 
-        : `http://${apiHost}:8000`)
-    : `http://${apiHost}:8001`;
-
-  // デバッグ情報をコンソールに出力
-  console.log('🌐 Environment detection result:', {
-    NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
-    NEXT_PUBLIC_API_HOST: process.env.NEXT_PUBLIC_API_HOST,
-    apiHost,
-    hostname: typeof window !== 'undefined' ? window.location.hostname : 'server',
-    port: typeof window !== 'undefined' ? window.location.port : 'server',
-    isProduction,
-    isDevFrontend,
-    isDevelopment,
-    selectedApiUrl: apiUrl,
-    timestamp: new Date().toISOString()
-  });
-
-  return apiUrl;
+  // 本番環境では常にHTTPS APIを使用（Mixed Content完全回避）
+  const url = 'https://nagaiku.top/budget';
+  console.log('🔍 Using default HTTPS URL:', url);
+  return url;
 };
 
 export const API_CONFIG = {

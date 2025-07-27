@@ -1,6 +1,14 @@
 // basePathヘルパー関数
-// 本番環境ではNext.jsが自動的にbasePathを処理するので、ここでは追加しない
+// 本番環境では/budgetのbasePathを使用
 export const getBasePath = () => {
+  // NODE_ENVがproductionで、かつブラウザ環境の場合はbasePathを判定
+  if (typeof window !== 'undefined') {
+    // ドメインベースでbasePath判定
+    if (window.location.hostname === 'nagaiku.top') {
+      return '/budget';
+    }
+  }
+  // サーバーサイドまたは開発環境では空文字
   return '';
 };
 

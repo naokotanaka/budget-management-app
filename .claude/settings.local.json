@@ -141,7 +141,12 @@
       "Bash(tmux kill-window:*)",
       "Bash(crontab:*)",
       "Bash(/home/tanaka/nagaiku-budget/scripts/daily_backup.sh:*)",
-      "Bash(/home/tanaka/nagaiku-budget/scripts/weekly_git_cleanup.sh:*)"
+      "Bash(/home/tanaka/nagaiku-budget/scripts/weekly_git_cleanup.sh:*)",
+      "Bash(PORT=3000 npm start)",
+      "Bash(tree:*)",
+      "Bash(./install_systemd_services.sh:*)",
+      "Bash(env)",
+      "Bash(./scripts/tag_stable.sh:*)"
     ],
     "deny": []
   }

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { api } from '@/lib/api';
-import { linkPath } from '@/lib/basePath';
 
 export default function Home() {
   const [stats, setStats] = useState({
@@ -155,7 +154,7 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {quickActions.map((action, index) => (
-            <Link key={index} href={linkPath(action.href)}>
+            <Link key={index} href={action.href}>
               <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow cursor-pointer">
                 <div className="flex items-center mb-3">
                   <div className="text-2xl mr-3">{action.icon}</div>

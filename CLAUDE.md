@@ -30,9 +30,18 @@
 ## 重要なスクリプト
 
 ### 基本操作
-- `./start.sh [production|development]` - サービス起動（デフォルト: development）
+- `./start.sh [production|development|systemd]` - サービス起動（デフォルト: development）
+  - **production**: tmux + 本番データベース
+  - **development**: tmux + 開発データベース  
+  - **systemd**: systemdサービス + 本番データベース（本番運用推奨）
 - `./stop.sh` - サービス停止
 - `./switch_mode.sh [production|development]` - モード切り替え（自動バックアップ付き）
+
+### 本番環境の運用について
+- **重要**: 本番環境を維持するには`./start.sh systemd`を使用してください
+- tmuxモード（production/development）は開発モード（`npm run dev`）で動作します
+- systemdモードは本番ビルド（`npm start`）で動作し、安定した本番環境を提供します
+- systemdモードを使用する場合は、事前に`cd frontend && npm run build`でビルドが必要です
 
 ### systemdサービス
 - `./install_services.sh` - systemdサービスファイルのインストール（要sudo）
@@ -71,6 +80,29 @@
 ### ポート使用
 - ポート3000/8000は固定
 - 環境による切り替えは行わない
+
+## バックアップシステム
+
+### 自動バックアップ（cronで実行）
+1. **データベースバックアップ** - 毎日2:00
+   - 本番データベース（nagaiku_budget）を自動バックアップ
+   - 保存先: `/home/tanaka/nagaiku-budget/backups/daily/`
+   - 30日より古いファイルは自動削除
+
+2. **コード変更バックアップ** - 毎週月曜3:00
+   - 未コミットの変更を自動的にGitコミット
+   - コミットメッセージに変更ファイル数を記録
+   - **start.sh実行時にも自動実行**
+
+3. **週次Gitクリーンアップ** - 毎週日曜3:00
+   - Gitリポジトリの最適化
+
+### 手動安定版タグ作成
+- **スクリプト**: `./scripts/tag_stable.sh`
+- **タイミング**: 正常動作を確認した時点で実行
+- **用途**: 不具合発生時に確実に動作していた状態に戻すため
+- **戻し方**: `git checkout stable-タグ名`
+- **最新に戻す**: `git checkout main`
 
 ## トラブルシューティング
 

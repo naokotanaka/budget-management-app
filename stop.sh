@@ -21,9 +21,13 @@ if systemctl is-active --quiet nagaiku-budget-backend || systemctl is-active --q
     sudo systemctl stop nagaiku-budget-frontend 2>/dev/null || true
 fi
 
-# tmuxセッションの停止
-if tmux has-session -t nagaiku-dev 2>/dev/null; then
+# tmuxセッションの停止（統一環境）
+if tmux has-session -t nagaiku-budget 2>/dev/null; then
     echo -e "${YELLOW}Stopping tmux session...${NC}"
+    tmux kill-session -t nagaiku-budget
+fi
+# 旧セッション名も念のため停止
+if tmux has-session -t nagaiku-dev 2>/dev/null; then
     tmux kill-session -t nagaiku-dev
 fi
 
@@ -58,6 +62,25 @@ if [ ! -z "$NEXT_PIDS" ]; then
     echo "$NEXT_PIDS" | xargs kill -9 2>/dev/null || true
 fi
 
+# npmプロセスの確認・停止（nagaiku-budget関連）
+NPM_PIDS=$(pgrep -f "npm.*start\|npm.*dev" 2>/dev/null)
+if [ ! -z "$NPM_PIDS" ]; then
+    # プロセスの詳細を確認して、nagaiku-budget関連かチェック
+    for pid in $NPM_PIDS; do
+        if ps -p $pid -o args= | grep -q "nagaiku-budget\|budget"; then
+            echo -e "${YELLOW}Killing npm process (PID: $pid)${NC}"
+            kill -9 $pid 2>/dev/null || true
+        fi
+    done
+fi
+
+# Python main.pyプロセスの確認・停止
+PYTHON_PIDS=$(pgrep -f "python.*main.py" 2>/dev/null)
+if [ ! -z "$PYTHON_PIDS" ]; then
+    echo -e "${YELLOW}Killing Python main.py processes...${NC}"
+    echo "$PYTHON_PIDS" | xargs kill -9 2>/dev/null || true
+fi
+
 # PIDファイルのクリーンアップ
 if [ -f logs/backend_dev.pid ]; then
     rm logs/backend_dev.pid
@@ -67,6 +90,20 @@ if [ -f logs/frontend_dev.pid ]; then
 fi
 
 echo -e "${GREEN}All nagaiku-budget services stopped${NC}"
+
+# 最終的なポートクリーンアップ（強制）
+sleep 1
+FINAL_3000_PID=$(lsof -ti:3000 2>/dev/null)
+if [ ! -z "$FINAL_3000_PID" ]; then
+    echo -e "${YELLOW}Force killing remaining process on port 3000 (PID: $FINAL_3000_PID)${NC}"
+    kill -9 $FINAL_3000_PID 2>/dev/null || true
+fi
+
+FINAL_8000_PID=$(lsof -ti:8000 2>/dev/null)
+if [ ! -z "$FINAL_8000_PID" ]; then
+    echo -e "${YELLOW}Force killing remaining process on port 8000 (PID: $FINAL_8000_PID)${NC}"
+    kill -9 $FINAL_8000_PID 2>/dev/null || true
+fi
 
 # 最終確認
 sleep 1
