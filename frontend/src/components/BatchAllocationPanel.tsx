@@ -228,15 +228,15 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         setTimeout(ensureVisible, 300);
       }
 
-      // 選択された予算項目に紐づく助成金の期間を取得
-      const grant = grants.find(g => g.id === budgetItem.grant_id);
-      if (grant && onBudgetItemSelected) {
-        const dateFilter = {
-          start_date: grant.start_date,
-          end_date: grant.end_date
-        };
-        onBudgetItemSelected(dateFilter);
-      }
+      // 自動絞り込みを停止（手動フィルターボタンで代替）
+      // const grant = grants.find(g => g.id === budgetItem.grant_id);
+      // if (grant && onBudgetItemSelected) {
+      //   const dateFilter = {
+      //     start_date: grant.start_date,
+      //     end_date: grant.end_date
+      //   };
+      //   onBudgetItemSelected(dateFilter);
+      // }
     }
     // 選択解除時はフィルターをクリアしない（予算項目の選択状態を保持）
   };
@@ -441,9 +441,10 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
                   if (budgetGridRef.current?.api) {
                     budgetGridRef.current.api.deselectAll();
                   }
-                  if (onBudgetItemSelected) {
-                    onBudgetItemSelected(null);
-                  }
+                  // 自動絞り込みを停止
+                  // if (onBudgetItemSelected) {
+                  //   onBudgetItemSelected(null);
+                  // }
                   if (onSelectedBudgetItemChange) {
                     onSelectedBudgetItemChange(null);
                   }

@@ -1302,6 +1302,49 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         );
       })()}
 
+      {/* 助成期間フィルターボタン */}
+      {selectedBudgetItem && (() => {
+        const grant = grants.find(g => g.id === selectedBudgetItem.grant_id);
+        if (grant?.start_date && grant?.end_date) {
+          const today = new Date();
+          const end = new Date(grant.end_date);
+          const diffTime = end.getTime() - today.getTime();
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          
+          return (
+            <div className="mb-2 flex items-center gap-2">
+              <span className="text-sm text-gray-600">
+                終了日: {grant.end_date} ({diffDays}日)
+              </span>
+              <button
+                onClick={() => {
+                  // 現在のフィルター状態を取得
+                  const currentFilter = gridRef.current?.api?.getFilterModel() || {};
+                  
+                  // 日付フィルターを追加（他のフィルターは保持）
+                  const startDate = new Date(grant.start_date);
+                  startDate.setDate(startDate.getDate() - 1);
+                  const endDate = new Date(grant.end_date);
+                  endDate.setDate(endDate.getDate() + 1);
+                  
+                  currentFilter['date'] = {
+                    type: 'inRange',
+                    dateFrom: startDate.toISOString().split('T')[0],
+                    dateTo: endDate.toISOString().split('T')[0]
+                  };
+                  
+                  gridRef.current?.api?.setFilterModel(currentFilter);
+                }}
+                className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+              >
+                助成期間でフィルター
+              </button>
+            </div>
+          );
+        }
+        return null;
+      })()}
+
       {/* グリッド */}
       <div style={{ height: 'calc(100vh - 200px)', width: '100%' }}>
         <style>{`
