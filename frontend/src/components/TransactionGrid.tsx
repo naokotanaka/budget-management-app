@@ -1284,19 +1284,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
                   <span className="font-mono">¥{grantRemaining.toLocaleString()}</span>
                 </div>
               )}
-              {grant?.end_date && (() => {
-                const today = new Date();
-                const end = new Date(grant.end_date);
-                const diffTime = end.getTime() - today.getTime();
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                
-                return (
-                  <div className="flex items-center gap-1 text-gray-600">
-                    <span>終了日:</span>
-                    <span className="font-mono">{grant.end_date} ({diffDays}日)</span>
-                  </div>
-                );
-              })()}
             </div>
           </div>
         );
