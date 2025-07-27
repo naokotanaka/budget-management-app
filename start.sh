@@ -88,6 +88,36 @@ if [ "$USE_SYSTEMD" = true ]; then
     # systemd起動（本番運用）
     echo -e "${GREEN}systemdでサービス起動中...${NC}"
     
+    # フロントエンドの本番ビルドチェック・実行
+    echo -e "${YELLOW}フロントエンドの本番ビルドを確認中...${NC}"
+    cd "$SCRIPT_DIR/frontend"
+    
+    # ビルドディレクトリの存在確認
+    if [ ! -d ".next" ] || [ ! -f ".next/BUILD_ID" ]; then
+        echo -e "${YELLOW}本番ビルドが存在しません。ビルドを実行します...${NC}"
+        npm run build
+        if [ $? -ne 0 ]; then
+            echo -e "${RED}エラー: フロントエンドのビルドに失敗しました${NC}"
+            exit 1
+        fi
+        echo -e "${GREEN}フロントエンドビルド完了${NC}"
+    else
+        # ビルドが古いかチェック（package.jsonより新しいかどうか）
+        if [ "package.json" -nt ".next/BUILD_ID" ]; then
+            echo -e "${YELLOW}依存関係が更新されています。再ビルドします...${NC}"
+            npm run build
+            if [ $? -ne 0 ]; then
+                echo -e "${RED}エラー: フロントエンドの再ビルドに失敗しました${NC}"
+                exit 1
+            fi
+            echo -e "${GREEN}フロントエンド再ビルド完了${NC}"
+        else
+            echo -e "${GREEN}既存の本番ビルドを使用します${NC}"
+        fi
+    fi
+    
+    cd "$SCRIPT_DIR"
+    
     # systemdサービスファイルにDATABASE_NAME環境変数を設定
     echo "DATABASE_NAME=$DB_NAME" | sudo tee /etc/systemd/system/nagaiku-budget-backend.service.d/override.conf > /dev/null 2>&1 || true
     

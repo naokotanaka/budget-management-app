@@ -10150,3 +10150,184 @@ Error: listen EADDRINUSE: address already in use :::3000
   address: '::',
   port: 3000
 }
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:151:19)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36)
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Error: ENOENT: no such file or directory, open '/home/tanaka/nagaiku-budget/frontend/.next/prerender-manifest.json'
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.readFile (node:internal/fs/promises:1243:14)
+    at async setupFsCheck (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-utils/filesystem.js:188:40)
+    at async initialize (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/router-server.js:64:23)
+    at async Server.<anonymous> (/home/tanaka/nagaiku-budget/frontend/node_modules/next/dist/server/lib/start-server.js:249:36) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/tanaka/nagaiku-budget/frontend/.next/prerender-manifest.json'
+}
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 372ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 399ms
