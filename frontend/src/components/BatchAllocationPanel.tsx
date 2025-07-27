@@ -179,7 +179,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
       field: 'grant_period',
       width: 200,
       cellStyle: { fontSize: '11px', padding: '2px' },
-      valueFormatter: (params: any) => {
+      valueGetter: (params: any) => {
         const grant = grants.find(g => g.id === params.data.grant_id);
         if (!grant) return '期間未設定';
         
