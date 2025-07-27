@@ -53,6 +53,33 @@ esac
 echo -e "${YELLOW}Stopping existing processes...${NC}"
 ./stop.sh
 
+# ポートが本当に空いているか確認
+sleep 1
+if lsof -i:3000 >/dev/null 2>&1 || lsof -i:8000 >/dev/null 2>&1; then
+    echo -e "${RED}エラー: ポート3000または8000がまだ使用中です${NC}"
+    echo -e "${YELLOW}権限が必要なプロセスが残っている可能性があります${NC}"
+    echo -e "${YELLOW}sudo権限でプロセスを終了しますか？ [y/N]: ${NC}"
+    read -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo -e "${YELLOW}sudo権限でポートクリーンアップ中...${NC}"
+        sudo lsof -ti:3000 | xargs -r sudo kill -9 2>/dev/null || true
+        sudo lsof -ti:8000 | xargs -r sudo kill -9 2>/dev/null || true
+        sleep 1
+        if lsof -i:3000 >/dev/null 2>&1 || lsof -i:8000 >/dev/null 2>&1; then
+            echo -e "${RED}エラー: ポートクリーンアップに失敗しました${NC}"
+            exit 1
+        fi
+        echo -e "${GREEN}ポートクリーンアップ完了${NC}"
+    else
+        echo -e "${RED}エラー: ポートが使用中のため起動できません${NC}"
+        echo -e "${YELLOW}手動でプロセスを終了してください: sudo lsof -i:3000 -i:8000${NC}"
+        exit 1
+    fi
+else
+    echo -e "${GREEN}Ports 3000 and 8000 are free${NC}"
+fi
+
 # 統一環境でサービス起動（ポート3000/8000固定）
 FRONTEND_PORT=3000
 BACKEND_PORT=8000

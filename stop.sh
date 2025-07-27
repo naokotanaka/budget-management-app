@@ -34,18 +34,31 @@ fi
 # ポート3000/8000を使用しているプロセスを停止
 echo -e "${YELLOW}Checking for processes on ports 3000 and 8000...${NC}"
 
-# ポート3000のプロセスを確認・停止
+# 権限なしでlsofを試行
 PORT_3000_PID=$(lsof -ti:3000 2>/dev/null)
-if [ ! -z "$PORT_3000_PID" ]; then
-    echo -e "${YELLOW}Killing process on port 3000 (PID: $PORT_3000_PID)${NC}"
-    kill -9 $PORT_3000_PID 2>/dev/null || true
-fi
-
-# ポート8000のプロセスを確認・停止
 PORT_8000_PID=$(lsof -ti:8000 2>/dev/null)
-if [ ! -z "$PORT_8000_PID" ]; then
-    echo -e "${YELLOW}Killing process on port 8000 (PID: $PORT_8000_PID)${NC}"
-    kill -9 $PORT_8000_PID 2>/dev/null || true
+
+# 権限なしで見つからない場合、sudo権限でチェック
+if [ -z "$PORT_3000_PID" ] && [ -z "$PORT_8000_PID" ]; then
+    # 権限が必要か確認（lsofでエラーが出る場合）
+    if ! lsof -i:3000 >/dev/null 2>&1 && ! lsof -i:8000 >/dev/null 2>&1; then
+        echo -e "${YELLOW}ポート競合の完全解決にはsudo権限が必要です${NC}"
+        echo -e "${YELLOW}権限なしでの停止処理を続行します...${NC}"
+        # fuser で強制終了を試行
+        fuser -k 3000/tcp 2>/dev/null || true
+        fuser -k 8000/tcp 2>/dev/null || true
+    fi
+else
+    # 権限なしで見つかった場合は通常処理
+    if [ ! -z "$PORT_3000_PID" ]; then
+        echo -e "${YELLOW}Killing process on port 3000 (PID: $PORT_3000_PID)${NC}"
+        kill -9 $PORT_3000_PID 2>/dev/null || true
+    fi
+    
+    if [ ! -z "$PORT_8000_PID" ]; then
+        echo -e "${YELLOW}Killing process on port 8000 (PID: $PORT_8000_PID)${NC}"
+        kill -9 $PORT_8000_PID 2>/dev/null || true
+    fi
 fi
 
 # uvicornプロセスの確認・停止
@@ -91,25 +104,25 @@ fi
 
 echo -e "${GREEN}All nagaiku-budget services stopped${NC}"
 
-# 最終的なポートクリーンアップ（強制）
-sleep 1
+# 最終的なポートクリーンアップ（十分な待機時間）
+sleep 2
+
+# 最終確認（権限なしでチェック）
 FINAL_3000_PID=$(lsof -ti:3000 2>/dev/null)
-if [ ! -z "$FINAL_3000_PID" ]; then
-    echo -e "${YELLOW}Force killing remaining process on port 3000 (PID: $FINAL_3000_PID)${NC}"
-    kill -9 $FINAL_3000_PID 2>/dev/null || true
-fi
-
 FINAL_8000_PID=$(lsof -ti:8000 2>/dev/null)
-if [ ! -z "$FINAL_8000_PID" ]; then
-    echo -e "${YELLOW}Force killing remaining process on port 8000 (PID: $FINAL_8000_PID)${NC}"
-    kill -9 $FINAL_8000_PID 2>/dev/null || true
+
+if [ ! -z "$FINAL_3000_PID" ] || [ ! -z "$FINAL_8000_PID" ]; then
+    echo -e "${YELLOW}残存プロセスを最終クリーンアップ中...${NC}"
+    [ ! -z "$FINAL_3000_PID" ] && kill -9 $FINAL_3000_PID 2>/dev/null || true
+    [ ! -z "$FINAL_8000_PID" ] && kill -9 $FINAL_8000_PID 2>/dev/null || true
+    sleep 1
 fi
 
-# 最終確認
-sleep 1
+# 最終確認（詳細版）
 if lsof -i:3000 >/dev/null 2>&1 || lsof -i:8000 >/dev/null 2>&1; then
-    echo -e "${RED}Warning: Some processes may still be running on ports 3000 or 8000${NC}"
-    echo "Check with: lsof -i:3000 -i:8000"
+    echo -e "${RED}警告: ポート3000または8000で動作中のプロセスが残っています${NC}"
+    echo -e "${YELLOW}手動確認: lsof -i:3000 -i:8000${NC}"
+    echo -e "${YELLOW}sudo権限が必要な場合があります${NC}"
 else
     echo -e "${GREEN}Ports 3000 and 8000 are free${NC}"
 fi
