@@ -17,6 +17,7 @@ export interface Transaction {
   remark: string;
   department: string;
   management_number: string;
+  freee_deal_id?: number | null;
   created_at: string;
   budget_item?: BudgetItem | string;
   allocated_amount?: number;

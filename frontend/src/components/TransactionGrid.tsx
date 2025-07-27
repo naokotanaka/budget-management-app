@@ -784,6 +784,32 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellStyle: { fontSize: '12px' },
       width: 100,
       minWidth: 80
+    },
+    {
+      field: 'freee_connection',
+      headerName: 'レシート',
+      cellRenderer: (params: ICellRendererParams) => {
+        const freee_deal_id = params.data.freee_deal_id;
+        
+        if (freee_deal_id) {
+          return (
+            '<span style="color: #059669; font-size: 12px;">✓ 連携済み</span>'
+          );
+        } else {
+          return (
+            '<span style="color: #dc2626; font-size: 11px;">freee連携してね</span>'
+          );
+        }
+      },
+      filter: 'agTextColumnFilter',
+      filterParams: {
+        valueGetter: (params: any) => {
+          return params.data.freee_deal_id ? '連携済み' : '未連携';
+        }
+      },
+      cellStyle: { fontSize: '12px', textAlign: 'center' },
+      width: 120,
+      minWidth: 100
     }
   ], [availableBudgetItems, allocations, budgetItems, grants, enableBatchAllocation]);
 
