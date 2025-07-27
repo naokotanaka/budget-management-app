@@ -467,7 +467,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     return values;
   }, [budgetItems, grants, loading]);
 
-    const columnDefs: ColDef[] = useMemo(() => [
+    const columnDefs = useMemo(() => [
     {
       headerName: '',
       field: 'select',
@@ -596,7 +596,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellClass: 'text-right',
       width: 140,
       minWidth: 120,
-      cellStyle: { fontWeight: 'bold', fontSize: '12px' },
+      cellStyle: { fontWeight: 'bold', fontSize: '12px', textAlign: 'right' },
       pinned: 'left'
     },
     {
@@ -811,7 +811,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       width: 120,
       minWidth: 100
     }
-  ], [availableBudgetItems, allocations, budgetItems, grants, enableBatchAllocation]);
+  ] as ColDef[], [availableBudgetItems, allocations, budgetItems, grants, enableBatchAllocation]);
 
   // データ取得完了後にグリッドをリフレッシュ
   useEffect(() => {
