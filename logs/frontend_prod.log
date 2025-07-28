@@ -11508,3 +11508,7 @@ Error: listen EADDRINUSE: address already in use :::3000
  ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
  ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
  ✓ Ready in 432ms
+🔍 getApiUrl called
+🔍 NEXT_PUBLIC_API_URL: https://nagaiku.top/budget
+🔍 window: undefined
+🔍 Using env var: https://nagaiku.top/budget

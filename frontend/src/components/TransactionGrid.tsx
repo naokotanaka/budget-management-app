@@ -611,7 +611,8 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellStyle: { fontSize: '12px' },
       width: 100,
       minWidth: 100,
-      pinned: 'left'
+      pinned: 'left',
+      sort: 'desc'
     },
     {
       field: 'amount',
