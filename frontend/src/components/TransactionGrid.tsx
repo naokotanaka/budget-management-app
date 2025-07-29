@@ -35,7 +35,67 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
   // 親コンポーネントからのrefを設定
   React.useImperativeHandle(ref, () => ({
     api: gridRef.current?.api,
-    reloadData: loadData
+    reloadData: loadData,
+    clearSelection: () => {
+      if (gridRef.current?.api) {
+        gridRef.current.api.deselectAll();
+      }
+    },
+    refreshSelectedRows: (selectedTransactionIds: number[]) => {
+      if (!gridRef.current?.api) return;
+      
+      // 最新のAPIデータを取得して、選択された行のみを更新
+      const refreshRowsData = async () => {
+        try {
+          const [updatedAllocations] = await Promise.all([
+            api.getAllocations()
+          ]);
+          
+          // 選択された取引IDに対応するノードを見つけて更新
+          const nodesToUpdate: any[] = [];
+          gridRef.current?.api.forEachNode((node) => {
+            if (selectedTransactionIds.includes(node.data.id)) {
+              // 新しい割当データを適用
+              const transactionAllocations = updatedAllocations.filter(a => a.transaction_id === node.data.id);
+              if (transactionAllocations.length > 0) {
+                const firstAllocation = transactionAllocations[0];
+                const budgetItem = budgetItems.find(item => item.id === firstAllocation.budget_item_id);
+                if (budgetItem) {
+                  const displayName = budgetItem.display_name || `${budgetItem.grant_name || '不明'}-${budgetItem.name}`;
+                  node.data.budget_item = displayName;
+                  node.data.allocated_amount_edit = firstAllocation.amount;
+                  node.data.allocated_budget_item = budgetItem.display_name || budgetItem.name;
+                  node.data.allocated_amount = firstAllocation.amount;
+                }
+              } else {
+                // 割当が削除された場合
+                node.data.budget_item = '';
+                node.data.allocated_amount_edit = 0;
+                node.data.allocated_budget_item = '';
+                node.data.allocated_amount = 0;
+              }
+              nodesToUpdate.push(node);
+            }
+          });
+          
+          // 選択された行のみをリフレッシュ
+          if (nodesToUpdate.length > 0) {
+            gridRef.current?.api.refreshCells({
+              rowNodes: nodesToUpdate,
+              force: true
+            });
+            
+            // 統計を更新
+            setTimeout(updateDisplayedRowStats, 100);
+          }
+          
+        } catch (error) {
+          console.error('Failed to refresh selected rows:', error);
+        }
+      };
+      
+      refreshRowsData();
+    }
   }));
 
   // Register AG Grid modules and load data on mount
@@ -197,6 +257,17 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     }
 
     params.api.setFilterModel(filterModel);
+    
+    // デフォルトソートを設定（取引日降順）
+    params.api.applyColumnState({
+      state: [
+        {
+          colId: 'date',
+          sort: 'desc'
+        }
+      ],
+      defaultState: { sort: null }
+    });
     
     // 初期フィルターを適用（少し遅延させる）
     setTimeout(() => {
@@ -611,8 +682,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellStyle: { fontSize: '12px' },
       width: 100,
       minWidth: 100,
-      pinned: 'left',
-      sort: 'desc'
+      pinned: 'left'
     },
     {
       field: 'amount',
@@ -788,17 +858,30 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     },
     {
       field: 'freee_connection',
-      headerName: 'レシート',
+      headerName: 'Freee連携',
       cellRenderer: (params: ICellRendererParams) => {
         const freee_deal_id = params.data.freee_deal_id;
+        
+        // 開発環境の判定（localhost:3000またはprod URLでない場合）
+        const isDevEnvironment = typeof window !== 'undefined' && 
+          (window.location.hostname === 'localhost' || 
+           window.location.port === '3000' ||
+           !window.location.href.includes('nagaiku.top'));
         
         if (freee_deal_id) {
           return (
             '<span style="color: #059669; font-size: 12px;">✓ 連携済み</span>'
           );
+        } else if (isDevEnvironment) {
+          return (
+            `<div style="font-size: 11px; color: #dc2626; text-align: center;">
+              <div>📋 レシート未連携</div>
+              <a href="/budget/freee" style="color: #2563eb; text-decoration: underline;" onclick="event.stopPropagation();">Freee連携ページ</a>
+            </div>`
+          );
         } else {
           return (
-            '<span style="color: #dc2626; font-size: 11px;">freee連携してね</span>'
+            `<a href="/budget/freee" style="color: #2563eb; font-size: 12px; text-decoration: underline;" onclick="event.stopPropagation();">Freee連携</a>`
           );
         }
       },
@@ -809,8 +892,8 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
         }
       },
       cellStyle: { fontSize: '12px', textAlign: 'center' },
-      width: 120,
-      minWidth: 100
+      width: 130,
+      minWidth: 110
     }
   ] as ColDef[], [availableBudgetItems, allocations, budgetItems, grants, enableBatchAllocation]);
 

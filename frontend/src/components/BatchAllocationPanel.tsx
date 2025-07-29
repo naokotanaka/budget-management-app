@@ -380,7 +380,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
         // 成功メッセージを3秒後に自動消去
         setTimeout(() => setSuccessMessage(null), 3000);
 
-        setSelectedBudgetItem(null);
+        // 予算項目の選択は保持（setSelectedBudgetItem(null)を削除）
 
         // 表示を更新
         if (onAllocationComplete) {

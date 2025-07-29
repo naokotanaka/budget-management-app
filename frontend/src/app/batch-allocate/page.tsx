@@ -9,6 +9,7 @@ const BatchAllocatePage: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Transaction[]>([]);
   const [dateFilter, setDateFilter] = useState<{ start_date: string; end_date: string } | null>(null);
   const [selectedBudgetItem, setSelectedBudgetItem] = useState<any>(null);
+  const [lastProcessedTransactionIds, setLastProcessedTransactionIds] = useState<number[]>([]);
   const transactionGridRef = useRef<any>(null);
 
   console.log('BatchAllocatePage render, current dateFilter:', dateFilter);
@@ -18,12 +19,19 @@ const BatchAllocatePage: React.FC = () => {
   };
 
   const handleAllocationComplete = () => {
-    // 割当完了後にTransactionGridのデータを再読み込み
-    if (transactionGridRef.current?.reloadData) {
-      transactionGridRef.current.reloadData();
+    // 処理された取引IDを取得
+    const processedTransactionIds = selectedRows.map(row => row.id);
+    setLastProcessedTransactionIds(processedTransactionIds);
+    
+    // 全データ再読み込みの代わりに、処理された行のみを更新
+    if (transactionGridRef.current?.refreshSelectedRows) {
+      transactionGridRef.current.refreshSelectedRows(processedTransactionIds);
     }
 
-    // 選択をクリア
+    // 取引一覧の選択のみを解除（予算項目の選択は保持）
+    if (transactionGridRef.current?.clearSelection) {
+      transactionGridRef.current.clearSelection();
+    }
     setSelectedRows([]);
   };
 
