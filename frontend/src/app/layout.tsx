@@ -24,8 +24,9 @@ export default function RootLayout({
     <html lang="ja">
       <body className={inter.className}>
         <div className="min-h-screen bg-gray-50">
-          <EnvironmentBanner />
-          <nav className="bg-white shadow-sm border-b">
+          <div className="sticky top-0 z-50">
+            <EnvironmentBanner />
+            <nav className="bg-white shadow-sm border-b">
             <div className="w-[90%] mx-auto px-4">
               <div className="flex justify-between h-16">
                 <div className="flex items-center">
@@ -67,7 +68,8 @@ export default function RootLayout({
                 </div>
               </div>
             </div>
-          </nav>
+            </nav>
+          </div>
           <main className="w-[90%] mx-auto py-2">
             {children}
           </main>

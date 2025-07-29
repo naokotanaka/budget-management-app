@@ -47,9 +47,17 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       // 最新のAPIデータを取得して、選択された行のみを更新
       const refreshRowsData = async () => {
         try {
+          console.log('🔄 refreshSelectedRows: 開始');
+          console.log('🔄 処理対象の取引ID:', selectedTransactionIds);
+          
           const [updatedAllocations] = await Promise.all([
             api.getAllocations()
           ]);
+          
+          console.log('🔄 API取得後の割当数:', updatedAllocations.length);
+          
+          // APIから取得した最新データで状態を更新
+          setApiAllocations(updatedAllocations);
           
           // 選択された取引IDに対応するノードを見つけて更新
           const nodesToUpdate: any[] = [];
@@ -538,6 +546,46 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
     return values;
   }, [budgetItems, grants, loading]);
 
+  // 選択された予算項目の残額情報を計算（apiAllocationsの変更で再計算される）
+  const selectedBudgetItemInfo = useMemo(() => {
+    if (!enableBatchAllocation || !selectedBudgetItem) return null;
+    
+    console.log('💰 残額計算: 開始', selectedBudgetItem.display_name);
+    console.log('💰 apiAllocations数:', apiAllocations.length);
+    
+    // 選択された予算項目の残額を計算
+    const budgetItemAllocations = (propAllocations || apiAllocations).filter(a => a.budget_item_id === selectedBudgetItem.id);
+    const allocatedAmount = budgetItemAllocations.reduce((sum, a) => sum + a.amount, 0);
+    const budgetItemRemaining = selectedBudgetItem.budgeted_amount - allocatedAmount;
+    
+    console.log('💰 予算項目の割当数:', budgetItemAllocations.length);
+    console.log('💰 割当合計金額:', allocatedAmount);
+    console.log('💰 項目残額:', budgetItemRemaining);
+    
+    // 選択された予算項目が属する助成金の情報を取得
+    const grant = grants.find(g => g.id === selectedBudgetItem.grant_id);
+    let grantRemaining = 0;
+    
+    if (grant) {
+      // 助成金全体の予算項目を取得
+      const grantBudgetItems = budgetItems.filter(item => item.grant_id === grant.id);
+      const totalGrantBudget = grantBudgetItems.reduce((sum, item) => sum + item.budgeted_amount, 0);
+      
+      // 助成金全体の割当済み金額を計算
+      const grantAllocations = (propAllocations || apiAllocations).filter(a => 
+        grantBudgetItems.some(item => item.id === a.budget_item_id)
+      );
+      const totalGrantAllocated = grantAllocations.reduce((sum, a) => sum + a.amount, 0);
+      grantRemaining = totalGrantBudget - totalGrantAllocated;
+    }
+    
+    return {
+      budgetItemRemaining,
+      grantRemaining,
+      grant
+    };
+  }, [enableBatchAllocation, selectedBudgetItem, propAllocations, apiAllocations, grants, budgetItems]);
+
     const columnDefs = useMemo(() => [
     {
       headerName: '',
@@ -855,34 +903,6 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellStyle: { fontSize: '12px' },
       width: 100,
       minWidth: 80
-    },
-    {
-      field: 'freee_connection',
-      headerName: 'Freee連携',
-      cellRenderer: (params: ICellRendererParams) => {
-        const freee_deal_id = params.data.freee_deal_id;
-        
-        if (freee_deal_id) {
-          return (
-            '<span style="color: #059669; font-size: 12px;">✓ 連携済み</span>'
-          );
-        } else {
-          // 開発データベースかどうかは環境バナーと同じロジックで判定
-          // ここでは簡潔にするため、詳細な開発環境表示は行わない
-          return (
-            `<a href="/budget/freee" style="color: #2563eb; font-size: 12px; text-decoration: underline;" onclick="event.stopPropagation();">Freee連携</a>`
-          );
-        }
-      },
-      filter: 'agTextColumnFilter',
-      filterParams: {
-        valueGetter: (params: any) => {
-          return params.data.freee_deal_id ? '連携済み' : '未連携';
-        }
-      },
-      cellStyle: { fontSize: '12px', textAlign: 'center' },
-      width: 130,
-      minWidth: 110
     }
   ] as ColDef[], [availableBudgetItems, allocations, budgetItems, grants, enableBatchAllocation]);
 
@@ -1330,16 +1350,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       </div>
 
       {/* 選択された予算項目の表示 */}
-      {enableBatchAllocation && selectedBudgetItem && (() => {
-        // 選択された予算項目の残額を計算
-        const budgetItemAllocations = (propAllocations || apiAllocations).filter(a => a.budget_item_id === selectedBudgetItem.id);
-        const allocatedAmount = budgetItemAllocations.reduce((sum, a) => sum + a.amount, 0);
-        const budgetItemRemaining = selectedBudgetItem.budgeted_amount - allocatedAmount;
-        
-        // 選択された予算項目が属する助成金の情報を取得
-        const grant = grants.find(g => g.id === selectedBudgetItem.grant_id);
-        let grantRemaining = 0;
-        
+      {selectedBudgetItemInfo && (() => {
         // 残り日数を計算して色を決定する関数
         const getRemainingAmountColor = (remaining: number, endDate?: string) => {
           if (remaining <= 0) return 'text-gray-900';
@@ -1356,31 +1367,18 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
           return 'text-green-600 font-bold'; // それ以上
         };
         
-        if (grant) {
-          // 助成金全体の予算項目を取得
-          const grantBudgetItems = budgetItems.filter(item => item.grant_id === grant.id);
-          const totalGrantBudget = grantBudgetItems.reduce((sum, item) => sum + item.budgeted_amount, 0);
-          
-          // 助成金全体の割当済み金額を計算
-          const grantAllocations = (propAllocations || apiAllocations).filter(a => 
-            grantBudgetItems.some(item => item.id === a.budget_item_id)
-          );
-          const totalGrantAllocated = grantAllocations.reduce((sum, a) => sum + a.amount, 0);
-          grantRemaining = totalGrantBudget - totalGrantAllocated;
-        }
-        
         return (
           <div className="bg-blue-50 p-2 rounded flex-shrink-0 mb-2">
             <div className="flex items-center gap-6 text-sm">
               <div className="font-medium text-blue-700">{selectedBudgetItem.display_name}</div>
-              <div className={`flex items-center gap-1 ${getRemainingAmountColor(budgetItemRemaining, grant?.end_date)}`}>
+              <div className={`flex items-center gap-1 ${getRemainingAmountColor(selectedBudgetItemInfo.budgetItemRemaining, selectedBudgetItemInfo.grant?.end_date)}`}>
                 <span>項目残額:</span>
-                <span className="font-mono">¥{budgetItemRemaining.toLocaleString()}</span>
+                <span className="font-mono">¥{selectedBudgetItemInfo.budgetItemRemaining.toLocaleString()}</span>
               </div>
-              {grant && (
-                <div className={`flex items-center gap-1 ${getRemainingAmountColor(grantRemaining, grant.end_date)}`}>
+              {selectedBudgetItemInfo.grant && (
+                <div className={`flex items-center gap-1 ${getRemainingAmountColor(selectedBudgetItemInfo.grantRemaining, selectedBudgetItemInfo.grant.end_date)}`}>
                   <span>助成金残額:</span>
-                  <span className="font-mono">¥{grantRemaining.toLocaleString()}</span>
+                  <span className="font-mono">¥{selectedBudgetItemInfo.grantRemaining.toLocaleString()}</span>
                 </div>
               )}
             </div>
@@ -1432,7 +1430,7 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       })()}
 
       {/* グリッド */}
-      <div style={{ height: 'calc(100vh - 200px)', width: '100%' }}>
+      <div style={{ height: 'calc(100vh - 180px)', width: '100%' }}>
         <style>{`
           .ag-theme-alpine .ag-row .ag-cell {
             font-size: 11px !important;

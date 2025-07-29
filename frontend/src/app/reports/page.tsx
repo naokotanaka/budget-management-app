@@ -809,6 +809,334 @@ const ReportsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* カテゴリ別予算vs実績比較 */}
+      <div className="mt-6">
+        <div className="bg-white shadow rounded-lg">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h3 className="text-lg font-medium text-gray-900">カテゴリ別予算vs実績比較</h3>
+          </div>
+          
+          <div className="p-6">
+            {loading ? (
+              <div className="text-center py-8">
+                <div className="text-gray-500">読み込み中...</div>
+              </div>
+            ) : (() => {
+              // カテゴリ別にデータを集計
+              const categoryMap = new Map<string, {
+                budgeted: number;
+                allocated: number;
+                endDate?: string;
+              }>();
+
+              budgetItems.forEach(item => {
+                if (item.grant_status === 'applied') return; // 報告済みは除外
+                
+                const category = item.category || 'その他';
+                const itemAllocations = allocations.filter(a => a.budget_item_id === item.id);
+                const allocated = itemAllocations.reduce((sum, a) => sum + a.amount, 0);
+                
+                if (categoryMap.has(category)) {
+                  const existing = categoryMap.get(category)!;
+                  categoryMap.set(category, {
+                    budgeted: existing.budgeted + item.budgeted_amount,
+                    allocated: existing.allocated + allocated,
+                    endDate: existing.endDate // 最初のend_dateを保持
+                  });
+                } else {
+                  // カテゴリの助成金の終了日を取得（最初の助成金の終了日を使用）
+                  const grant = grants.find(g => g.id === item.grant_id);
+                  categoryMap.set(category, {
+                    budgeted: item.budgeted_amount,
+                    allocated: allocated,
+                    endDate: grant?.end_date
+                  });
+                }
+              });
+
+              const categoryData = Array.from(categoryMap.entries())
+                .map(([category, data]) => ({
+                  category,
+                  budgeted: data.budgeted,
+                  allocated: data.allocated,
+                  remaining: data.budgeted - data.allocated,
+                  usageRate: data.budgeted > 0 ? (data.allocated / data.budgeted) * 100 : 0,
+                  endDate: data.endDate
+                }))
+                .sort((a, b) => a.category.localeCompare(b.category));
+
+              // 残り日数を計算する関数
+              const getRemainingDays = (endDate?: string) => {
+                if (!endDate) return null;
+                const today = new Date();
+                const end = new Date(endDate);
+                const diffTime = end.getTime() - today.getTime();
+                return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              };
+
+              // 残額の色を決定する関数
+              const getRemainingColor = (remaining: number, endDate?: string) => {
+                if (remaining <= 0) return 'text-gray-900';
+                
+                const remainingDays = getRemainingDays(endDate);
+                if (remainingDays === null) return 'text-green-600 font-bold';
+                if (remainingDays < 0) return 'text-gray-400';
+                if (remainingDays <= 30) return 'text-red-600 font-bold';
+                if (remainingDays <= 60) return 'text-blue-600 font-bold';
+                return 'text-green-600 font-bold';
+              };
+
+              return (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          カテゴリ
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          予算合計
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          実績合計
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          残額
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          使用率
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {categoryData.map((item, index) => {
+                        return (
+                          <tr key={item.category} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {item.category}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono">
+                              ¥{item.budgeted.toLocaleString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono">
+                              ¥{item.allocated.toLocaleString()}
+                            </td>
+                            <td className={`px-6 py-4 whitespace-nowrap text-sm text-right font-mono ${getRemainingColor(item.remaining, item.endDate)}`}>
+                              ¥{item.remaining.toLocaleString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono">
+                              {item.usageRate.toFixed(1)}%
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {/* 合計行 */}
+                      <tr className="bg-blue-50 font-bold">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
+                          合計
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          ¥{categoryData.reduce((sum, item) => sum + item.budgeted, 0).toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          ¥{categoryData.reduce((sum, item) => sum + item.allocated, 0).toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          ¥{categoryData.reduce((sum, item) => sum + item.remaining, 0).toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          {(() => {
+                            const totalBudgeted = categoryData.reduce((sum, item) => sum + item.budgeted, 0);
+                            const totalAllocated = categoryData.reduce((sum, item) => sum + item.allocated, 0);
+                            return totalBudgeted > 0 ? ((totalAllocated / totalBudgeted) * 100).toFixed(1) + '%' : '0.0%';
+                          })()}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      </div>
+
+      {/* 予算項目別予算vs実績比較 */}
+      <div className="mt-6">
+        <div className="bg-white shadow rounded-lg">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h3 className="text-lg font-medium text-gray-900">予算項目別予算vs実績比較</h3>
+          </div>
+          
+          <div className="p-6">
+            {loading ? (
+              <div className="text-center py-8">
+                <div className="text-gray-500">読み込み中...</div>
+              </div>
+            ) : (() => {
+              // 予算項目別にデータを準備
+              const itemData = budgetItems
+                .filter(item => item.grant_status !== 'applied') // 報告済みは除外
+                .map(item => {
+                  const itemAllocations = allocations.filter(a => a.budget_item_id === item.id);
+                  const allocated = itemAllocations.reduce((sum, a) => sum + a.amount, 0);
+                  const remaining = item.budgeted_amount - allocated;
+                  const usageRate = item.budgeted_amount > 0 ? (allocated / item.budgeted_amount) * 100 : 0;
+                  
+                  // 助成金情報を取得
+                  const grant = grants.find(g => g.id === item.grant_id);
+                  
+                  return {
+                    id: item.id,
+                    name: item.display_name || `${item.grant_name || '不明'}-${item.name}`,
+                    category: item.category || 'その他',
+                    grantName: item.grant_name || '不明',
+                    budgeted: item.budgeted_amount,
+                    allocated,
+                    remaining,
+                    usageRate,
+                    endDate: grant?.end_date
+                  };
+                })
+                .sort((a, b) => {
+                  // 助成金名でソート、その後項目名でソート
+                  if (a.grantName !== b.grantName) {
+                    return a.grantName.localeCompare(b.grantName);
+                  }
+                  return a.name.localeCompare(b.name);
+                });
+
+              // 残り日数を計算する関数
+              const getRemainingDays = (endDate?: string) => {
+                if (!endDate) return null;
+                const today = new Date();
+                const end = new Date(endDate);
+                const diffTime = end.getTime() - today.getTime();
+                return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              };
+
+              // 残額の色を決定する関数
+              const getRemainingColor = (remaining: number, endDate?: string) => {
+                if (remaining <= 0) return 'text-gray-900';
+                
+                const remainingDays = getRemainingDays(endDate);
+                if (remainingDays === null) return 'text-green-600 font-bold';
+                if (remainingDays < 0) return 'text-gray-400';
+                if (remainingDays <= 30) return 'text-red-600 font-bold';
+                if (remainingDays <= 60) return 'text-blue-600 font-bold';
+                return 'text-green-600 font-bold';
+              };
+
+              return (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          予算項目
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          カテゴリ
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          助成金
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          予算金額
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          実績金額
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          残額
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          使用率
+                        </th>
+                        <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          残り日数
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {itemData.map((item, index) => {
+                        const remainingDays = getRemainingDays(item.endDate);
+                        
+                        return (
+                          <tr key={item.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-900" style={{ maxWidth: '200px', wordWrap: 'break-word' }}>
+                              {item.name}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              {item.category}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-900" style={{ maxWidth: '150px', wordWrap: 'break-word' }}>
+                              {item.grantName}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono">
+                              ¥{item.budgeted.toLocaleString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono">
+                              ¥{item.allocated.toLocaleString()}
+                            </td>
+                            <td className={`px-6 py-4 whitespace-nowrap text-sm text-right font-mono ${getRemainingColor(item.remaining, item.endDate)}`}>
+                              ¥{item.remaining.toLocaleString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono">
+                              {item.usageRate.toFixed(1)}%
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
+                              {remainingDays === null ? (
+                                <span className="text-gray-400">-</span>
+                              ) : remainingDays < 0 ? (
+                                <span className="text-gray-400">終了済み</span>
+                              ) : (
+                                <span className={
+                                  remainingDays <= 30 ? 'text-red-600 font-bold' :
+                                  remainingDays <= 60 ? 'text-blue-600 font-bold' :
+                                  'text-green-600 font-bold'
+                                }>
+                                  {remainingDays}日
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {/* 合計行 */}
+                      <tr className="bg-blue-50 font-bold">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900" colSpan={3}>
+                          合計
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          ¥{itemData.reduce((sum, item) => sum + item.budgeted, 0).toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          ¥{itemData.reduce((sum, item) => sum + item.allocated, 0).toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          ¥{itemData.reduce((sum, item) => sum + item.remaining, 0).toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-mono font-bold">
+                          {(() => {
+                            const totalBudgeted = itemData.reduce((sum, item) => sum + item.budgeted, 0);
+                            const totalAllocated = itemData.reduce((sum, item) => sum + item.allocated, 0);
+                            return totalBudgeted > 0 ? ((totalAllocated / totalBudgeted) * 100).toFixed(1) + '%' : '0.0%';
+                          })()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">
+                          -
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

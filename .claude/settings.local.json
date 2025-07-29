@@ -147,7 +147,8 @@
       "Bash(./install_systemd_services.sh:*)",
       "Bash(env)",
       "Bash(./scripts/tag_stable.sh:*)",
-      "Bash(git tag:*)"
+      "Bash(git tag:*)",
+      "Bash(./switch_mode.sh:*)"
     ],
     "deny": []
   }

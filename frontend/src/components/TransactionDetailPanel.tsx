@@ -23,6 +23,7 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [receipts, setReceipts] = useState<any[]>([]);
   const [loadingReceipts, setLoadingReceipts] = useState<boolean>(false);
+  const [freeeConnectionStatus, setFreeeConnectionStatus] = useState<{connected: boolean; message: string} | null>(null);
 
   // 初期データの読み込み
   useEffect(() => {
@@ -41,6 +42,22 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
       }
     };
     loadData();
+    
+    // Freee接続状態を取得
+    const loadFreeeStatus = async () => {
+      try {
+        const response = await fetch('/budget/api/freee/status');
+        if (response.ok) {
+          const status = await response.json();
+          setFreeeConnectionStatus(status);
+        }
+      } catch (error) {
+        console.error('Failed to load freee status:', error);
+        setFreeeConnectionStatus({ connected: false, message: 'Freee接続状態の取得に失敗しました' });
+      }
+    };
+    
+    loadFreeeStatus();
   }, []);
 
   // 選択された取引の割当情報を初期化
@@ -475,12 +492,29 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
           )}
           
           {/* ファイルボックス情報 */}
-          {transaction.freee_deal_id && (
-            <>
-              <hr className="my-3" />
-              <div>
-                <span className="text-gray-600">添付ファイル:</span>
-                {loadingReceipts ? (
+          <>
+            <hr className="my-3" />
+            <div>
+              <span className="text-gray-600">添付ファイル:</span>
+              {!freeeConnectionStatus?.connected ? (
+                // Freeeシステム未接続の場合
+                <div className="mt-2 bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-sm text-gray-600 mb-3">
+                    Freeeとの接続ができていないため、添付ファイルを表示できません。
+                  </p>
+                  <p className="text-xs text-gray-500 mb-3">
+                    {freeeConnectionStatus?.message || '接続状態を確認中...'}
+                  </p>
+                  <button
+                    onClick={() => window.open('/budget/freee', '_blank')}
+                    className="w-full px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors"
+                  >
+                    Freee接続ページを開く
+                  </button>
+                </div>
+              ) : transaction.freee_deal_id ? (
+                // Freee連携済みの場合
+                loadingReceipts ? (
                   <p className="mt-1 text-gray-500">読み込み中...</p>
                 ) : receipts.length > 0 ? (
                   <div className="mt-2 space-y-4">
@@ -531,10 +565,13 @@ const TransactionDetailPanel: React.FC<TransactionDetailPanelProps> = ({
                   </div>
                 ) : (
                   <p className="mt-1 text-gray-500">添付ファイルはありません</p>
-                )}
-              </div>
-            </>
-          )}
+                )
+              ) : (
+                // 取引がFreee未連携の場合
+                <p className="mt-1 text-gray-500">この取引はFreeeと連携されていません</p>
+              )}
+            </div>
+          </>
         </div>
       </div>
     </div>

@@ -455,7 +455,7 @@ const BatchAllocationPanel: React.FC<BatchAllocationPanelProps> = ({ selectedRow
               </button>
             )}
           </div>
-          <div style={{ height: '400px', width: '100%' }}>
+          <div style={{ height: 'calc(100vh - 400px)', width: '100%' }}>
             <AgGridReact
               ref={budgetGridRef}
               rowData={budgetItems.filter(item => {
