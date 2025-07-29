@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import "@/lib/ag-grid-setup";
+import EnvironmentBanner from "@/components/EnvironmentBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="ja">
       <body className={inter.className}>
         <div className="min-h-screen bg-gray-50">
+          <EnvironmentBanner />
           <nav className="bg-white shadow-sm border-b">
             <div className="w-[90%] mx-auto px-4">
               <div className="flex justify-between h-16">

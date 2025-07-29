@@ -862,24 +862,13 @@ const TransactionGrid = React.forwardRef<any, TransactionGridProps>(({ onSelecti
       cellRenderer: (params: ICellRendererParams) => {
         const freee_deal_id = params.data.freee_deal_id;
         
-        // 開発環境の判定（localhost:3000またはprod URLでない場合）
-        const isDevEnvironment = typeof window !== 'undefined' && 
-          (window.location.hostname === 'localhost' || 
-           window.location.port === '3000' ||
-           !window.location.href.includes('nagaiku.top'));
-        
         if (freee_deal_id) {
           return (
             '<span style="color: #059669; font-size: 12px;">✓ 連携済み</span>'
           );
-        } else if (isDevEnvironment) {
-          return (
-            `<div style="font-size: 11px; color: #dc2626; text-align: center;">
-              <div>📋 レシート未連携</div>
-              <a href="/budget/freee" style="color: #2563eb; text-decoration: underline;" onclick="event.stopPropagation();">Freee連携ページ</a>
-            </div>`
-          );
         } else {
+          // 開発データベースかどうかは環境バナーと同じロジックで判定
+          // ここでは簡潔にするため、詳細な開発環境表示は行わない
           return (
             `<a href="/budget/freee" style="color: #2563eb; font-size: 12px; text-decoration: underline;" onclick="event.stopPropagation();">Freee連携</a>`
           );
