@@ -23,7 +23,7 @@ const GrantsPage: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<any>(null);
   const [previewFile, setPreviewFile] = useState<File | null>(null);
-  const [gridKey, setGridKey] = useState(0); // AG-Grid強制再描画用
+  const [isEditing, setIsEditing] = useState(false); // 編集状態の管理
   const [editGrant, setEditGrant] = useState({
     name: '',
     total_amount: '',
@@ -69,7 +69,8 @@ const GrantsPage: React.FC = () => {
       headerName: 'ID',
       filter: 'agNumberColumnFilter',
       width: 70,
-      minWidth: 60
+      minWidth: 60,
+      sortable: false // IDカラムのソートを無効化
     },
     {
       field: 'grant_name',
@@ -258,8 +259,14 @@ const GrantsPage: React.FC = () => {
   };
 
   // データ更新専用の関数（AG-Grid対応）
-  const refreshData = async () => {
+  const refreshData = async (forceUpdate = false) => {
     try {
+      // 編集中の場合は更新をスキップ（強制更新でない限り）
+      if (isEditing && !forceUpdate) {
+        console.log('⚠️ 編集中のため、データリフレッシュをスキップ');
+        return;
+      }
+      
       console.log('🔄 データリフレッシュ開始...');
       const [grantsData, budgetItemsData, allocationsData] = await Promise.all([
         api.getGrants(),
@@ -270,34 +277,46 @@ const GrantsPage: React.FC = () => {
       console.log('📋 新しい予算項目データ:', budgetItemsData);
       console.log('📋 現在の予算項目データ:', budgetItems);
       
-      // Reactステートを更新
+      // Reactステートを更新（順序を保持）
       console.log('🔄 Reactステートを更新中...');
       setGrants(grantsData);
-      setBudgetItems(budgetItemsData);
-      setAllocations(allocationsData);
-      console.log('✅ Reactステート更新完了');
       
-      // AG-Gridの更新処理
-      setTimeout(() => {
-        console.log('🔄 AG-Grid更新処理開始...');
-        
-        // 方法1: API経由での更新
-        if (budgetGridRef.current?.api) {
-          try {
-            budgetGridRef.current.api.refreshCells({ force: true });
-            budgetGridRef.current.api.redrawRows();
-            console.log('✅ AG-Grid API更新完了');
-          } catch (apiError) {
-            console.warn('AG-Grid API更新失敗:', apiError);
-          }
+      // 既存の新規行（負のID）を保持
+      const existingNewRows = budgetItems.filter(item => item.id < 0);
+      const updatedBudgetItems = [...budgetItemsData];
+      
+      // 新規行を末尾に追加
+      existingNewRows.forEach(newRow => {
+        if (!updatedBudgetItems.find(item => item.id === newRow.id)) {
+          updatedBudgetItems.push(newRow);
         }
-        
-        // 方法2: 完全再描画（フォールバック）
-        console.log('🔄 グリッド完全再描画実行...');
-        setGridKey(prev => prev + 1);
-        console.log('✅ 全更新処理完了');
-        
-      }, 100); // React stateの更新を待つ
+      });
+      
+      setBudgetItems(updatedBudgetItems);
+      setAllocations(allocationsData);
+      console.log('✅ Reactステート更新完了（新規行保持）');
+      
+      // 編集中でない場合のみAG-Gridを更新
+      if (!isEditing) {
+        setTimeout(() => {
+          console.log('🔄 AG-Grid更新処理開始...');
+          
+          // 軽量更新のみ実行（完全再描画は行わない）
+          if (budgetGridRef.current?.api) {
+            try {
+              // セルの内容のみを更新（グリッド構造は維持）
+              budgetGridRef.current.api.refreshCells({ 
+                force: true,
+                suppressFlash: true // フラッシュエフェクトを抑制
+              });
+              console.log('✅ AG-Grid軽量更新完了');
+            } catch (apiError) {
+              console.warn('AG-Grid更新失敗:', apiError);
+            }
+          }
+          
+        }, 100); // React stateの更新を待つ
+      }
       
     } catch (error) {
       console.error('データリフレッシュエラー:', error);
@@ -456,6 +475,18 @@ const GrantsPage: React.FC = () => {
     setEditGrant({ name: '', total_amount: '', start_date: '', end_date: '', status: 'active', grant_code: '' });
   };
 
+  // 編集開始時のハンドラー
+  const onCellEditingStarted = (params: any) => {
+    console.log('📝 セル編集開始:', params.colDef.field);
+    setIsEditing(true);
+  };
+
+  // 編集終了時のハンドラー
+  const onCellEditingStopped = (params: any) => {
+    console.log('✅ セル編集終了:', params.colDef.field);
+    setIsEditing(false);
+  };
+
   const onBudgetCellValueChanged = async (params: any) => {
     try {
       console.log('🔄 予算項目セル値変更:', {
@@ -496,15 +527,27 @@ const GrantsPage: React.FC = () => {
       console.log('📤 API送信データ:', updatedData);
 
       // 新しい行（一時的なID）の場合は作成、既存の行は更新
-      const isNewRow = params.data.id > 1000000000000; // Date.now()で生成されたIDは13桁以上
+      const isNewRow = params.data.id < 0; // 負の値は新規行
 
       if (isNewRow) {
         // 新規作成
         console.log('📝 新規予算項目を作成中...');
         const newItem = await api.createBudgetItem(updatedData);
-        // 一時的なIDを実際のIDに更新
+        
+        // グリッド内の行データを実際のIDに更新（ソート順は維持）
+        const oldId = params.data.id;
         params.data.id = newItem.id;
-        console.log('✅ 予算項目作成完了:', newItem);
+        
+        // Reactステートも更新（新規行を既存行に変換）
+        setBudgetItems(prevItems => 
+          prevItems.map(item => 
+            item.id === oldId 
+              ? { ...item, ...newItem }
+              : item
+          )
+        );
+        
+        console.log('✅ 予算項目作成完了:', { oldId, newId: newItem.id, name: newItem.name });
       } else {
         // 既存の更新
         console.log('🔄 既存予算項目を更新中... ID:', params.data.id);
@@ -512,10 +555,14 @@ const GrantsPage: React.FC = () => {
         console.log('✅ 予算項目更新完了:', result);
       }
 
-      // データ更新後の処理を分離
+      // データ更新後の処理（編集完了を待つ）
       console.log('🔄 データを再読み込み中...');
-      await refreshData();
-      console.log('✅ データ再読み込み完了');
+      
+      // 編集完了後にデータを強制更新
+      setTimeout(async () => {
+        await refreshData(true); // 強制更新
+        console.log('✅ データ再読み込み完了');
+      }, 100);
 
       // 成功時の視覚的フィードバック
       const toast = document.createElement('div');
@@ -526,26 +573,41 @@ const GrantsPage: React.FC = () => {
 
     } catch (error) {
       console.error('Failed to update budget item:', error);
-      alert('予算項目の' + (params.data.id > 1000000000000 ? '作成' : '更新') + 'に失敗しました: ' + (error as Error).message);
+      alert('予算項目の' + (params.data.id < 0 ? '作成' : '更新') + 'に失敗しました: ' + (error as Error).message);
       // エラー時は元の値に戻す
       params.api.refreshCells({ rowNodes: [params.node], force: true });
     }
   };
 
   const addNewBudgetRow = () => {
+    // 選択された助成金を取得
+    const selectedGrant = grants.find(g => g.id === selectedGrantId) || grants[0];
+    
+    // 負の値を使って一時的なIDを生成（ソート順を維持）
+    const tempId = -(Date.now());
+    
     const newRow = {
-      id: Date.now(), // 一時的なID
+      id: tempId, // 負の値で一時的なID（既存IDより小さくなる）
       name: '',
       category: '',
       budgeted_amount: 0,
       grant_id: selectedGrantId || (grants.length > 0 ? grants[0].id : 1),
       remarks: '',
-      planned_start_date: null,
-      planned_end_date: null
+      // 助成金の期間をデフォルトとして設定
+      planned_start_date: selectedGrant?.start_date || null,
+      planned_end_date: selectedGrant?.end_date || null
     };
 
+    // 新規行を末尾に追加
     const updatedItems = [...budgetItems, newRow];
     setBudgetItems(updatedItems);
+    
+    console.log('📝 新規予算項目行を追加:', {
+      tempId,
+      grant: selectedGrant?.name,
+      planned_start_date: newRow.planned_start_date,
+      planned_end_date: newRow.planned_end_date
+    });
   };
 
   const handleDeleteSelected = async () => {
@@ -560,8 +622,8 @@ const GrantsPage: React.FC = () => {
     if (confirm(`${selectedRows.length}件の予算項目を削除しますか？`)) {
       try {
         // 新規作成された行（一時的なID）と既存の行を分離
-        const existingRows = selectedRows.filter(row => row.id < 1000000000000);
-        const newRows = selectedRows.filter(row => row.id >= 1000000000000);
+        const existingRows = selectedRows.filter(row => row.id > 0);
+        const newRows = selectedRows.filter(row => row.id < 0);
 
         // 既存の行はAPIで削除
         for (const row of existingRows) {
@@ -1340,7 +1402,6 @@ const GrantsPage: React.FC = () => {
         {/* 予算項目グリッド */}
         <div style={{ height: '400px', width: '100%' }}>
           <AgGridReact
-            key={gridKey} // 強制再描画用キー
             ref={budgetGridRef}
             rowData={(() => {
               const filteredData = budgetItems.filter(item => {
@@ -1349,18 +1410,29 @@ const GrantsPage: React.FC = () => {
                 const result = (!selectedGrantId || item.grant_id === selectedGrantId) && (showReportedBudgetItems || !isReported);
                 return result;
               });
-              console.log('🔍 AG-Grid表示データ:', filteredData.length, '件');
-              console.log('🔍 表示データ詳細 (最初の3件):', filteredData.slice(0, 3));
-              return filteredData;
+              
+              // ソート順をログ出力
+              const sortedData = [...filteredData].sort((a, b) => {
+                // 新規行（負のID）を末尾に配置
+                if (a.id < 0 && b.id >= 0) return 1;
+                if (a.id >= 0 && b.id < 0) return -1;
+                if (a.id < 0 && b.id < 0) return b.id - a.id; // 新規行同士は作成順
+                return a.id - b.id; // 既存行はID順
+              });
+              
+              console.log('🔍 AG-Grid表示データ:', sortedData.length, '件');
+              console.log('🔍 表示データID順:', sortedData.map(item => ({ id: item.id, name: item.name })));
+              return sortedData;
             })()}
             columnDefs={budgetColumnDefs}
             className="ag-theme-alpine"
             defaultColDef={{
-              sortable: true,
+              sortable: false, // 全カラムのソートを無効化
               filter: true,
               resizable: true,
               floatingFilter: true,
-              minWidth: 100
+              minWidth: 100,
+              suppressCellFlash: true // セル更新時のフラッシュを抑制
             }}
             rowHeight={28}
             suppressHorizontalScroll={false}
@@ -1370,9 +1442,15 @@ const GrantsPage: React.FC = () => {
               headerCheckbox: true
             }}
             onCellValueChanged={onBudgetCellValueChanged}
+            onCellEditingStarted={onCellEditingStarted}
+            onCellEditingStopped={onCellEditingStopped}
             getRowId={(params) => params.data.id.toString()} // 行IDを明示的に設定
             suppressClickEdit={false} // 編集を有効にする
             stopEditingWhenCellsLoseFocus={true} // フォーカスが外れたら編集を終了
+            suppressRowTransform={true} // 行の変形アニメーションを抑制
+            animateRows={false} // 行のアニメーションを無効化
+            maintainColumnOrder={true} // カラム順序を維持
+            suppressColumnMoveAnimation={true} // カラム移動アニメーションを抑制
             localeText={{
               filterOoo: 'フィルター...',
               equals: '等しい',

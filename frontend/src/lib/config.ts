@@ -31,10 +31,11 @@ export const getCurrentFiscalYear = () => {
   };
 };
 
-// 統一されたAPI URL設定（常にHTTPS版）
+// 統一されたAPI URL設定（開発環境対応版）
 const getApiUrl = (): string => {
   console.log('🔍 getApiUrl called');
   console.log('🔍 NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+  console.log('🔍 NODE_ENV:', process.env.NODE_ENV);
   
   // 環境変数が明示的に設定されている場合はそれを使用
   if (process.env.NEXT_PUBLIC_API_URL) {
@@ -42,9 +43,16 @@ const getApiUrl = (): string => {
     return process.env.NEXT_PUBLIC_API_URL;
   }
 
-  // 常にHTTPS APIを使用（バックエンドのみ開発/本番切り替え）
+  // 開発環境では開発サーバーを使用
+  if (process.env.NODE_ENV === 'development') {
+    const url = 'http://160.251.170.97:8000';
+    console.log('🔍 Using development API URL:', url);
+    return url;
+  }
+
+  // 本番環境では HTTPS APIを使用
   const url = 'https://nagaiku.top/budget';
-  console.log('🔍 Using HTTPS URL:', url);
+  console.log('🔍 Using production HTTPS URL:', url);
   return url;
 };
 

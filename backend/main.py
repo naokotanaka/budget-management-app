@@ -535,10 +535,16 @@ def delete_category(category_id: int, db: Session = Depends(get_db)):
 # Budget Items endpoints
 @app.get("/api/budget-items", response_model=List[BudgetItemWithGrant])
 def get_budget_items(db: Session = Depends(get_db)):
+    print(f"📥 予算項目一覧取得リクエスト")
     budget_items = db.query(BudgetItem).join(Grant).all()
+    print(f"📋 データベースから取得した項目数: {len(budget_items)}")
     
     result = []
     for budget_item in budget_items:
+        # ID=11の項目をデバッグ出力
+        if budget_item.id == 11:
+            print(f"🔍 ID=11項目の詳細: id={budget_item.id}, remarks='{budget_item.remarks}', name='{budget_item.name}'")
+        
         result.append({
             "id": budget_item.id,
             "name": budget_item.name,
@@ -546,7 +552,10 @@ def get_budget_items(db: Session = Depends(get_db)):
             "budgeted_amount": budget_item.budgeted_amount,
             "grant_id": budget_item.grant_id,
             "grant_name": budget_item.grant.name,
-            "display_name": f"{budget_item.grant.name}-{budget_item.name}"
+            "display_name": f"{budget_item.grant.name}-{budget_item.name}",
+            "remarks": budget_item.remarks,
+            "planned_start_date": budget_item.planned_start_date,
+            "planned_end_date": budget_item.planned_end_date
         })
     
     return result
