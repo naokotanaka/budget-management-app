@@ -73,28 +73,20 @@ interface AllocationCrossTableResponse {
 }
 
 const ReportsPage: React.FC = () => {
-  const [crossTableData, setCrossTableData] = useState<any>({});
-  const [categoryCrossTableData, setCategoryCrossTableData] = useState<any>({});
   const [monthlySummary, setMonthlySummary] = useState<MonthlySummaryItem[]>([]);
   const [budgetVsActual, setBudgetVsActual] = useState<BudgetVsActualItem[]>([]);
   const [allocationCrossTable, setAllocationCrossTable] = useState<AllocationCrossTableResponse | null>(null);
   const [budgetItems, setBudgetItems] = useState<any[]>([]);
   const [grants, setGrants] = useState<any[]>([]);
   const [allocations, setAllocations] = useState<any[]>([]);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(CONFIG.DEFAULT_DATE_RANGE.START);
+  const [endDate, setEndDate] = useState(CONFIG.DEFAULT_DATE_RANGE.END);
   const [loading, setLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [monthlyLoading, setMonthlyLoading] = useState(false);
   const [budgetLoading, setBudgetLoading] = useState(false);
   const [allocationCrossLoading, setAllocationCrossLoading] = useState(false);
   const [sortBudgetByCategory, setSortBudgetByCategory] = useState(false);
-
-  // 初期値設定（デフォルト期間）
-  useEffect(() => {
-    setStartDate(CONFIG.DEFAULT_DATE_RANGE.START);
-    setEndDate(CONFIG.DEFAULT_DATE_RANGE.END);
-  }, []);
 
   // 初期データを取得
   useEffect(() => {
@@ -117,45 +109,19 @@ const ReportsPage: React.FC = () => {
 
   // 日付が設定されたら自動でデータを取得
   useEffect(() => {
+    console.log('🔍 日付変更useEffect:', { startDate, endDate, hasStartDate: !!startDate, hasEndDate: !!endDate });
     if (startDate && endDate) {
-      loadCrossTableData();
-      loadCategoryCrossTableData();
+      console.log('🔍 期間設定あり - 全API呼び出し');
       loadMonthlySummary();
       loadBudgetVsActual();
+      loadAllocationCrossTable();
+    } else {
+      console.log('🔍 期間設定なし - 期間配分クロス集計表のみ');
+      // 期間が未設定の場合は期間配分クロス集計表のみ読み込み
+      loadAllocationCrossTable();
     }
-    // 期間配分クロス集計表は日付に関係なく表示
-    loadAllocationCrossTable();
   }, [startDate, endDate]);
 
-  const loadCrossTableData = async () => {
-    if (!startDate || !endDate) return;
-
-    try {
-      setLoading(true);
-      const data = await api.getCrossTable(startDate, endDate);
-      setCrossTableData(data);
-    } catch (error) {
-      console.error('Failed to load cross table data:', error);
-      alert('レポートデータの読み込みに失敗しました');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadCategoryCrossTableData = async () => {
-    if (!startDate || !endDate) return;
-
-    try {
-      setCategoryLoading(true);
-      const data = await api.getCategoryCrossTable(startDate, endDate);
-      setCategoryCrossTableData(data);
-    } catch (error) {
-      console.error('Failed to load category cross table data:', error);
-      alert('カテゴリ別レポートデータの読み込みに失敗しました');
-    } finally {
-      setCategoryLoading(false);
-    }
-  };
 
   const loadMonthlySummary = async () => {
     if (!startDate || !endDate) return;
@@ -209,15 +175,28 @@ const ReportsPage: React.FC = () => {
     try {
       setAllocationCrossLoading(true);
       
-      const response = await fetch(
-        `${API_CONFIG.BASE_URL}/api/reports/monthly-allocation-cross-table`
-      );
+      // 表示期間が設定されている場合はそれを利用、未設定の場合はすべての期間
+      let url = `${API_CONFIG.BASE_URL}/api/reports/monthly-allocation-cross-table`;
+      if (startDate && endDate) {
+        url += `?start_date=${startDate}&end_date=${endDate}`;
+        console.log('🔍 期間配分クロス集計表API呼び出し（期間指定あり）:', url);
+      } else {
+        console.log('🔍 期間配分クロス集計表API呼び出し（期間指定なし）:', url);
+      }
+      
+      const response = await fetch(url);
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       
       const result = await response.json();
+      console.log('🔍 期間配分クロス集計表レスポンス:', {
+        months: result.months,
+        monthsCount: result.months?.length,
+        startDate,
+        endDate
+      });
       setAllocationCrossTable(result);
     } catch (error) {
       console.error('Failed to load allocation cross table:', error);
@@ -248,25 +227,6 @@ const ReportsPage: React.FC = () => {
 
   const months = generateMonths();
 
-  // 予算項目ごとの合計を計算
-  const getBudgetItemTotal = (budgetItem: string) => {
-    const amounts = crossTableData[budgetItem] || {};
-    return Object.values(amounts).reduce((total: number, amount: any) => total + (amount || 0), 0);
-  };
-
-  // 月ごとの合計を計算
-  const getMonthTotal = (month: string) => {
-    return Object.values(crossTableData).reduce((total: number, amounts: any) => {
-      return total + (amounts[month] || 0);
-    }, 0);
-  };
-
-  // 総合計を計算
-  const getGrandTotal = () => {
-    return Object.values(crossTableData).reduce((total: number, amounts: any) => {
-      return total + Object.values(amounts).reduce((subtotal: number, amount: any) => subtotal + (amount || 0), 0);
-    }, 0);
-  };
 
   // 予算項目名から予算項目データを取得
   const getBudgetItemByDisplayName = (displayName: string) => {
@@ -297,29 +257,6 @@ const ReportsPage: React.FC = () => {
     return monthDate > grantEndDate;
   };
 
-  // 予算項目をソートする関数
-  const getSortedCrossTableEntries = () => {
-    const entries = Object.entries(crossTableData);
-    
-    if (!sortBudgetByCategory) {
-      return entries; // 元の順序のまま
-    }
-    
-    // カテゴリでソート
-    return entries.sort(([budgetItemNameA], [budgetItemNameB]) => {
-      const budgetItemA = getBudgetItemByDisplayName(budgetItemNameA);
-      const budgetItemB = getBudgetItemByDisplayName(budgetItemNameB);
-      
-      const categoryA = budgetItemA?.category || '未分類';
-      const categoryB = budgetItemB?.category || '未分類';
-      
-      // カテゴリで比較、同じカテゴリなら予算項目名で比較
-      if (categoryA !== categoryB) {
-        return categoryA.localeCompare(categoryB, 'ja');
-      }
-      return budgetItemNameA.localeCompare(budgetItemNameB, 'ja');
-    });
-  };
 
   // 残額の色を決定する関数（他のページと同じルール）
   const getRemainingAmountColor = (remaining: number, endDate?: string) => {
@@ -342,7 +279,7 @@ const ReportsPage: React.FC = () => {
       <div className="border-b border-gray-200 pb-4 mb-6">
         <h1 className="text-2xl font-bold text-gray-900">レポート</h1>
         <p className="mt-2 text-sm text-gray-600">
-          予算項目×月のクロス集計表
+          期間配分版クロス集計表
         </p>
       </div>
 
@@ -375,8 +312,6 @@ const ReportsPage: React.FC = () => {
           <div>
             <button
               onClick={() => {
-                loadCrossTableData();
-                loadCategoryCrossTableData();
                 loadMonthlySummary();
                 loadBudgetVsActual();
                 loadAllocationCrossTable();
@@ -390,255 +325,6 @@ const ReportsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* クロス集計表 */}
-      {loading ? (
-        <div className="text-center py-8">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-2 text-sm text-gray-600">データを読み込み中...</p>
-        </div>
-      ) : (
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="text-lg font-medium text-gray-900">
-                  予算項目×月 クロス集計表
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {startDate} ～ {endDate}
-                </p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <label className="flex items-center text-sm">
-                  <input
-                    type="checkbox"
-                    checked={sortBudgetByCategory}
-                    onChange={(e) => setSortBudgetByCategory(e.target.checked)}
-                    className="mr-2"
-                  />
-                  カテゴリ順で表示
-                </label>
-              </div>
-            </div>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
-                    予算項目
-                  </th>
-                  <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[80px] bg-gray-50">
-                    カテゴリ
-                  </th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px] bg-gray-50">
-                    残額
-                  </th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px] bg-gray-50">
-                    期間終了日
-                  </th>
-                  {months.map(month => (
-                    <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
-                      {month}
-                    </th>
-                  ))}
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
-                    合計
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {Object.keys(crossTableData).length === 0 ? (
-                  <tr>
-                    <td colSpan={months.length + 5} className="px-6 py-8 text-center text-gray-500">
-                      データがありません
-                    </td>
-                  </tr>
-                ) : (
-                  getSortedCrossTableEntries().map(([budgetItemName, amounts]: [string, any], index) => {
-                    const budgetItem = getBudgetItemByDisplayName(budgetItemName);
-                    const remaining = getRemainingAmount(budgetItem);
-                    const endDate = getGrantEndDate(budgetItem);
-                    const category = budgetItem?.category || '未分類';
-                    
-                    // 前の項目とカテゴリが異なる場合、太い境界線を表示
-                    const prevEntry = index > 0 ? getSortedCrossTableEntries()[index - 1] : null;
-                    const prevBudgetItem = prevEntry ? getBudgetItemByDisplayName(prevEntry[0]) : null;
-                    const prevCategory = prevBudgetItem?.category || '未分類';
-                    const isNewCategory = sortBudgetByCategory && index > 0 && category !== prevCategory;
-                    
-                    return (
-                      <tr key={budgetItemName} className={`hover:bg-gray-50 ${isNewCategory ? 'border-t-2 border-gray-700' : ''}`}>
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
-                          {budgetItemName}
-                        </td>
-                        <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-600 bg-gray-50">
-                          {category}
-                        </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm text-right bg-gray-50">
-                          <span className={getRemainingAmountColor(remaining, endDate)}>
-                            ¥{remaining.toLocaleString()}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm text-center bg-gray-50">
-                          {endDate ? endDate : '-'}
-                        </td>
-                        {months.map(month => {
-                          const isAfterEnd = isMonthAfterGrantEnd(month, endDate);
-                          return (
-                            <td 
-                              key={month} 
-                              className={`px-4 py-2 whitespace-nowrap text-sm text-right ${
-                                isAfterEnd ? 'bg-red-50' : ''
-                              }`}
-                            >
-                              <span className={isAfterEnd ? 'text-red-600 font-bold' : 'text-gray-900'}>
-                                {isAfterEnd ? '-' : (amounts[month] ? amounts[month].toLocaleString() : '-')}
-                              </span>
-                            </td>
-                          );
-                        })}
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-50">
-                          {getBudgetItemTotal(budgetItemName).toLocaleString()}
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-                
-                {/* 合計行 */}
-                {Object.keys(crossTableData).length > 0 && (
-                  <tr className="bg-blue-50 font-bold">
-                    <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
-                      合計
-                    </td>
-                    <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-900 bg-blue-50">
-                      -
-                    </td>
-                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-blue-50">
-                      -
-                    </td>
-                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-center bg-blue-50">
-                      -
-                    </td>
-                    {months.map(month => (
-                      <td key={month} className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right">
-                        {getMonthTotal(month).toLocaleString()}
-                      </td>
-                    ))}
-                    <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-100">
-                      {getGrandTotal().toLocaleString()}
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* カテゴリ別クロス集計表 */}
-      {categoryLoading ? (
-        <div className="text-center py-8">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-2 text-sm text-gray-600">カテゴリ別データを読み込み中...</p>
-        </div>
-      ) : (
-        <div className="bg-white rounded-lg shadow overflow-hidden mt-6">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
-              カテゴリ×月 クロス集計表
-            </h3>
-            <p className="text-sm text-gray-600 mt-1">
-              {startDate} ～ {endDate}
-            </p>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
-                    カテゴリ
-                  </th>
-                  {months.map(month => (
-                    <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
-                      {month}
-                    </th>
-                  ))}
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
-                    合計
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {Object.keys(categoryCrossTableData).length === 0 ? (
-                  <tr>
-                    <td colSpan={months.length + 2} className="px-6 py-8 text-center text-gray-500">
-                      データがありません
-                    </td>
-                  </tr>
-                ) : (
-                  Object.entries(categoryCrossTableData).map(([category, amounts]: [string, any]) => (() => {
-                    // カテゴリごとの合計を計算
-                    const categoryTotal = Object.values(amounts).reduce((total: number, amount: any) => total + (amount || 0), 0);
-                    
-                    return (
-                      <tr key={category} className="hover:bg-gray-50">
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
-                          {category}
-                        </td>
-                        {months.map(month => (
-                          <td key={month} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
-                            {amounts[month] ? amounts[month].toLocaleString() : '-'}
-                          </td>
-                        ))}
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-50">
-                          {categoryTotal.toLocaleString()}
-                        </td>
-                      </tr>
-                    );
-                  })())
-                )}
-                
-                {/* 合計行 */}
-                {Object.keys(categoryCrossTableData).length > 0 && (() => {
-                  // 月ごとの合計を計算
-                  const getCategoryMonthTotal = (month: string) => {
-                    return Object.values(categoryCrossTableData).reduce((total: number, amounts: any) => {
-                      return total + (amounts[month] || 0);
-                    }, 0);
-                  };
-                  
-                  // 総合計を計算
-                  const getCategoryGrandTotal = () => {
-                    return Object.values(categoryCrossTableData).reduce((total: number, amounts: any) => {
-                      return total + Object.values(amounts).reduce((subtotal: number, amount: any) => subtotal + (amount || 0), 0);
-                    }, 0);
-                  };
-                  
-                  return (
-                    <tr className="bg-blue-50 font-bold">
-                      <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
-                        合計
-                      </td>
-                      {months.map(month => (
-                        <td key={month} className="px-4 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right">
-                          {getCategoryMonthTotal(month).toLocaleString()}
-                        </td>
-                      ))}
-                      <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 text-right bg-yellow-100">
-                        {getCategoryGrandTotal().toLocaleString()}
-                      </td>
-                    </tr>
-                  );
-                })()}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
 
       {/* 予算vs実績比較テーブル */}
       <div className="mt-6">
@@ -1255,11 +941,11 @@ const ReportsPage: React.FC = () => {
                 </div>
               </div>
               
-              <div className="overflow-x-auto">
+              <div className="overflow-auto max-h-[80vh]">
                 <table className="min-w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gray-50 sticky top-0 z-20">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-30">
                         予算項目
                       </th>
                       {allocationCrossTable.months.map(month => (
@@ -1267,15 +953,19 @@ const ReportsPage: React.FC = () => {
                           {month}
                         </th>
                       ))}
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50 sticky right-[100px] z-30">
                         合計
+                      </th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50 sticky right-0 z-30 min-w-[100px]">
+                        <div>残額</div>
+                        <div>日数</div>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {Object.keys(allocationCrossTable.budget_cross_table).length === 0 ? (
                       <tr>
-                        <td colSpan={allocationCrossTable.months.length + 2} className="px-6 py-8 text-center text-gray-500">
+                        <td colSpan={allocationCrossTable.months.length + 3} className="px-6 py-8 text-center text-gray-500">
                           期間が設定された助成金がありません
                         </td>
                       </tr>
@@ -1316,7 +1006,7 @@ const ReportsPage: React.FC = () => {
                                 </td>
                               );
                             })}
-                            <td className="px-6 py-2 text-right text-xs bg-yellow-50">
+                            <td className="px-6 py-2 text-right text-xs bg-yellow-50 sticky right-[100px] z-10">
                               <div className="text-green-600 font-medium">
                                 ¥{itemTotal.planned.toLocaleString()}
                               </div>
@@ -1327,6 +1017,52 @@ const ReportsPage: React.FC = () => {
                                 {itemTotal.difference >= 0 ? '+' : ''}¥{itemTotal.difference.toLocaleString()}
                               </div>
                             </td>
+                            {(() => {
+                              const budgetInfo = amounts._budget_info || {};
+                              const remainingAmount = budgetInfo.remaining_amount || 0;
+                              const remainingDays = budgetInfo.remaining_days;
+
+                              // 残額の色を決定
+                              let remainingColor = 'text-gray-900';
+                              if (remainingAmount <= 0) {
+                                remainingColor = 'text-gray-400';
+                              } else if (remainingDays !== null) {
+                                if (remainingDays < 0) remainingColor = 'text-gray-400';
+                                else if (remainingDays <= 30) remainingColor = 'text-red-600 font-bold';
+                                else if (remainingDays <= 60) remainingColor = 'text-blue-600 font-bold';
+                                else remainingColor = 'text-green-600 font-bold';
+                              }
+
+                              // 残り日数の色とメッセージを決定
+                              let daysColor = 'text-gray-900';
+                              let daysText = '-';
+                              if (remainingDays !== null) {
+                                if (remainingDays < 0) {
+                                  daysColor = 'text-gray-400';
+                                  daysText = '終了済み';
+                                } else if (remainingDays <= 30) {
+                                  daysColor = 'text-red-600 font-bold';
+                                  daysText = `${remainingDays}日`;
+                                } else if (remainingDays <= 60) {
+                                  daysColor = 'text-blue-600 font-bold';
+                                  daysText = `${remainingDays}日`;
+                                } else {
+                                  daysColor = 'text-green-600 font-bold';
+                                  daysText = `${remainingDays}日`;
+                                }
+                              }
+
+                              return (
+                                <td className="px-4 py-2 text-center text-xs bg-orange-50 sticky right-0 z-10">
+                                  <div className={remainingColor}>
+                                    ¥{Math.abs(remainingAmount).toLocaleString()}
+                                  </div>
+                                  <div className={daysColor}>
+                                    {daysText}
+                                  </div>
+                                </td>
+                              );
+                            })()}
                           </tr>
                         );
                       })
@@ -1334,8 +1070,8 @@ const ReportsPage: React.FC = () => {
                     
                     {/* 合計行 */}
                     {Object.keys(allocationCrossTable.budget_cross_table).length > 0 && (
-                      <tr className="bg-blue-50 font-bold">
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
+                      <tr className="bg-blue-50 font-bold sticky bottom-0 z-20">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50 z-30">
                           合計
                         </td>
                         {allocationCrossTable.months.map(month => {
@@ -1363,7 +1099,7 @@ const ReportsPage: React.FC = () => {
                             </td>
                           );
                         })}
-                        <td className="px-6 py-2 text-right text-xs bg-yellow-100">
+                        <td className="px-6 py-2 text-right text-xs bg-yellow-100 sticky right-[100px] z-30">
                           {(() => {
                             const grandTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
                               Object.values(amounts).forEach((monthData: any) => {
@@ -1390,6 +1126,14 @@ const ReportsPage: React.FC = () => {
                               </>
                             );
                           })()}
+                        </td>
+                        <td className="px-4 py-2 text-center text-xs bg-orange-100 sticky right-0 z-30">
+                          <div className="text-gray-500">
+                            -
+                          </div>
+                          <div className="text-gray-500">
+                            -
+                          </div>
                         </td>
                       </tr>
                     )}
@@ -1431,11 +1175,11 @@ const ReportsPage: React.FC = () => {
                 </div>
               </div>
               
-              <div className="overflow-x-auto">
+              <div className="overflow-auto max-h-[80vh]">
                 <table className="min-w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gray-50 sticky top-0 z-20">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-30">
                         カテゴリ
                       </th>
                       {allocationCrossTable.months.map(month => (
@@ -1443,7 +1187,7 @@ const ReportsPage: React.FC = () => {
                           {month}
                         </th>
                       ))}
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50 sticky right-0 z-30">
                         合計
                       </th>
                     </tr>
@@ -1492,7 +1236,7 @@ const ReportsPage: React.FC = () => {
                                 </td>
                               );
                             })}
-                            <td className="px-6 py-2 text-right text-xs bg-yellow-50">
+                            <td className="px-6 py-2 text-right text-xs bg-yellow-50 sticky right-0 z-10">
                               <div className="text-green-600 font-medium">
                                 ¥{categoryTotal.planned.toLocaleString()}
                               </div>
@@ -1510,8 +1254,8 @@ const ReportsPage: React.FC = () => {
                     
                     {/* 合計行 */}
                     {Object.keys(allocationCrossTable.category_cross_table).length > 0 && (
-                      <tr className="bg-blue-50 font-bold">
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
+                      <tr className="bg-blue-50 font-bold sticky bottom-0 z-20">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50 z-30">
                           合計
                         </td>
                         {allocationCrossTable.months.map(month => {
@@ -1539,7 +1283,7 @@ const ReportsPage: React.FC = () => {
                             </td>
                           );
                         })}
-                        <td className="px-6 py-2 text-right text-xs bg-yellow-100">
+                        <td className="px-6 py-2 text-right text-xs bg-yellow-100 sticky right-0 z-30">
                           {(() => {
                             const grandTotal = Object.values(allocationCrossTable.category_cross_table).reduce((totals: any, amounts: any) => {
                               Object.values(amounts).forEach((monthData: any) => {
@@ -1566,6 +1310,245 @@ const ReportsPage: React.FC = () => {
                               </>
                             );
                           })()}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            {/* 期間配分版 助成金×月 クロス集計表 */}
+            <div className="bg-white rounded-lg shadow overflow-hidden mt-6">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                      助成金×月 クロス集計表（期間配分版）
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      助成金の期間に基づいて日割り計算で配分した月ごとの助成金別予算額
+                    </p>
+                  </div>
+                  <div className="flex flex-col space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-600 rounded"></div>
+                      <span>期間配分予算</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-gray-800 rounded"></div>
+                      <span>実割当額</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                      <span>差額（正）</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-red-600 rounded"></div>
+                      <span>差額（負）</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="overflow-auto max-h-[80vh]">
+                <table className="min-w-full">
+                  <thead className="bg-gray-50 sticky top-0 z-20">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-30">
+                        助成金
+                      </th>
+                      {allocationCrossTable.months.map(month => (
+                        <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                          {month}
+                        </th>
+                      ))}
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50 sticky right-[100px] z-30">
+                        合計
+                      </th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50 sticky right-0 z-30 min-w-[100px]">
+                        <div>残額</div>
+                        <div>日数</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {Object.keys(allocationCrossTable.grant_cross_table || {}).length === 0 ? (
+                      <tr>
+                        <td colSpan={allocationCrossTable.months.length + 3} className="px-6 py-8 text-center text-gray-500">
+                          期間が設定された助成金がありません
+                        </td>
+                      </tr>
+                    ) : (
+                      Object.entries(allocationCrossTable.grant_cross_table).map(([grantName, amounts], index) => {
+                        // 助成金別合計を計算
+                        const grantTotal = allocationCrossTable.months.reduce((total, month) => {
+                          const monthData = amounts[month];
+                          if (monthData) {
+                            total.planned += monthData.planned || 0;
+                            total.actual += monthData.actual || 0;
+                            total.difference += monthData.difference || 0;
+                          }
+                          return total;
+                        }, { planned: 0, actual: 0, difference: 0 });
+
+                        return (
+                          <tr key={grantName} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-inherit z-10">
+                              {grantName}
+                            </td>
+                            {allocationCrossTable.months.map(month => {
+                              const monthData = amounts[month];
+                              if (!monthData || (monthData.planned === 0 && monthData.actual === 0)) {
+                                return (
+                                  <td key={month} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
+                                    -
+                                  </td>
+                                );
+                              }
+                              
+                              return (
+                                <td key={month} className="px-4 py-2 text-right text-xs">
+                                  <div className="text-green-600 font-medium">
+                                    ¥{monthData.planned.toLocaleString()}
+                                  </div>
+                                  <div className="text-gray-800">
+                                    ¥{monthData.actual.toLocaleString()}
+                                  </div>
+                                  <div className={monthData.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
+                                    {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
+                                  </div>
+                                </td>
+                              );
+                            })}
+                            <td className="px-6 py-2 text-right text-xs bg-yellow-50 sticky right-[100px] z-10">
+                              <div className="text-green-600 font-medium">
+                                ¥{grantTotal.planned.toLocaleString()}
+                              </div>
+                              <div className="text-gray-800">
+                                ¥{grantTotal.actual.toLocaleString()}
+                              </div>
+                              <div className={grantTotal.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
+                                {grantTotal.difference >= 0 ? '+' : ''}¥{grantTotal.difference.toLocaleString()}
+                              </div>
+                            </td>
+                            {(() => {
+                              const grantInfo = amounts._grant_info || {};
+                              const remainingAmount = grantInfo.remaining_amount || 0;
+                              const remainingDays = grantInfo.remaining_days;
+
+                              // 残額の色を決定
+                              let remainingColor = 'text-gray-900';
+                              if (remainingAmount <= 0) {
+                                remainingColor = 'text-gray-400';
+                              } else if (remainingDays !== null) {
+                                if (remainingDays < 0) remainingColor = 'text-gray-400';
+                                else if (remainingDays <= 30) remainingColor = 'text-red-600 font-bold';
+                                else if (remainingDays <= 60) remainingColor = 'text-blue-600 font-bold';
+                                else remainingColor = 'text-green-600 font-bold';
+                              }
+
+                              // 残り日数の色とメッセージを決定
+                              let daysColor = 'text-gray-900';
+                              let daysText = '-';
+                              if (remainingDays !== null) {
+                                if (remainingDays < 0) {
+                                  daysColor = 'text-gray-400';
+                                  daysText = '終了済み';
+                                } else if (remainingDays <= 30) {
+                                  daysColor = 'text-red-600 font-bold';
+                                  daysText = `${remainingDays}日`;
+                                } else if (remainingDays <= 60) {
+                                  daysColor = 'text-blue-600 font-bold';
+                                  daysText = `${remainingDays}日`;
+                                } else {
+                                  daysColor = 'text-green-600 font-bold';
+                                  daysText = `${remainingDays}日`;
+                                }
+                              }
+
+                              return (
+                                <td className="px-4 py-2 text-center text-xs bg-orange-50 sticky right-0 z-10">
+                                  <div className={remainingColor}>
+                                    ¥{remainingAmount.toLocaleString()}
+                                  </div>
+                                  <div className={daysColor}>
+                                    {daysText}
+                                  </div>
+                                </td>
+                              );
+                            })()}
+                          </tr>
+                        );
+                      })
+                    )}
+                    
+                    {/* 総合計行 */}
+                    {Object.keys(allocationCrossTable.grant_cross_table || {}).length > 0 && (
+                      <tr className="bg-blue-50 border-t-2 border-blue-200 font-bold sticky bottom-0 z-20">
+                        <td className="px-6 py-3 text-sm text-gray-900 sticky left-0 bg-blue-50 z-30">
+                          総合計
+                        </td>
+                        {allocationCrossTable.months.map(month => {
+                          const monthTotal = Object.values(allocationCrossTable.grant_cross_table).reduce((total, amounts) => {
+                            const monthData = amounts[month];
+                            if (monthData) {
+                              total.planned += monthData.planned || 0;
+                              total.actual += monthData.actual || 0;
+                              total.difference += monthData.difference || 0;
+                            }
+                            return total;
+                          }, { planned: 0, actual: 0, difference: 0 });
+
+                          return (
+                            <td key={month} className="px-4 py-3 text-right text-xs">
+                              <div className="text-green-600 font-bold">
+                                ¥{monthTotal.planned.toLocaleString()}
+                              </div>
+                              <div className="text-gray-800 font-bold">
+                                ¥{monthTotal.actual.toLocaleString()}
+                              </div>
+                              <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
+                              </div>
+                            </td>
+                          );
+                        })}
+                        <td className="px-6 py-3 text-right text-xs bg-yellow-100 sticky right-[100px] z-30">
+                          {(() => {
+                            const grandTotal = Object.values(allocationCrossTable.grant_cross_table).reduce((total, amounts) => {
+                              Object.values(amounts).forEach(monthData => {
+                                if (monthData) {
+                                  total.planned += monthData.planned || 0;
+                                  total.actual += monthData.actual || 0;
+                                  total.difference += monthData.difference || 0;
+                                }
+                              });
+                              return total;
+                            }, { planned: 0, actual: 0, difference: 0 });
+
+                            return (
+                              <>
+                                <div className="text-green-600 font-bold">
+                                  ¥{grandTotal.planned.toLocaleString()}
+                                </div>
+                                <div className="text-gray-800 font-bold">
+                                  ¥{grandTotal.actual.toLocaleString()}
+                                </div>
+                                <div className={grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                  {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
+                                </div>
+                              </>
+                            );
+                          })()}
+                        </td>
+                        <td className="px-4 py-3 text-center text-xs bg-orange-100 sticky right-0 z-30">
+                          <div className="text-gray-500">
+                            -
+                          </div>
+                          <div className="text-gray-500">
+                            -
+                          </div>
                         </td>
                       </tr>
                     )}

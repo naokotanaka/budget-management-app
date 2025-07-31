@@ -3118,7 +3118,11 @@ async def generate_monthly_allocation_report(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"月ごと配分レポートの生成に失敗しました: {str(e)}")
 
 @app.get("/api/reports/monthly-allocation-cross-table")
-async def generate_allocation_cross_table(db: Session = Depends(get_db)):
+async def generate_allocation_cross_table(
+    filter_start_date: Optional[str] = Query(None, alias="start_date", description="表示期間開始日 (YYYY-MM-DD)"),
+    filter_end_date: Optional[str] = Query(None, alias="end_date", description="表示期間終了日 (YYYY-MM-DD)"),
+    db: Session = Depends(get_db)
+):
     """助成金期間配分による予算項目×月・カテゴリ×月のクロス集計表を生成（期間配分予算・実割当・差額含む）"""
     try:
         from datetime import datetime, timedelta
@@ -3136,10 +3140,15 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
         budget_cross_table = defaultdict(lambda: defaultdict(float))
         # カテゴリ×月のクロス集計データ（期間配分予算）
         category_cross_table = defaultdict(lambda: defaultdict(float))
+        # 助成金×月のクロス集計データ（期間配分予算）
+        grant_cross_table = defaultdict(lambda: defaultdict(float))
         
         # 予算項目IDとdisplay_nameのマッピングを作成
         budget_item_mapping = {}
         category_mapping = {}
+        grant_mapping = {}
+        # 助成金の詳細情報（残額・残り日数計算用）
+        grant_details = {}
         
         # 全ての月を収集（範囲決定のため）
         all_months = set()
@@ -3167,6 +3176,15 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
                 budget_item_mapping[budget_item.id] = budget_item_display_name
                 category = budget_item.category or "その他"
                 category_mapping[budget_item.id] = category
+                grant_mapping[budget_item.id] = grant.name
+                
+                # 助成金の詳細情報を保存
+                if grant.name not in grant_details:
+                    grant_details[grant.name] = {
+                        'end_date': grant.end_date,
+                        'total_budget': 0
+                    }
+                grant_details[grant.name]['total_budget'] += budget_item.budgeted_amount
                 
                 # 予定使用期間の総日数を計算
                 total_days = (end_date - start_date).days + 1
@@ -3197,6 +3215,9 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
                         
                         # カテゴリ×月の集計
                         category_cross_table[category][year_month] += month_allocation
+                        
+                        # 助成金×月の集計
+                        grant_cross_table[grant.name][year_month] += month_allocation
                     
                     # 次の月へ
                     if month == 12:
@@ -3207,6 +3228,7 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
         # 実際の割当額を取得
         actual_budget_cross_table = defaultdict(lambda: defaultdict(float))
         actual_category_cross_table = defaultdict(lambda: defaultdict(float))
+        actual_grant_cross_table = defaultdict(lambda: defaultdict(float))
         
         # 取引 -> 割当 -> 予算項目 -> 助成金のクエリで実績を取得
         allocation_query = db.query(
@@ -3237,14 +3259,74 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
                 
                 category = category_mapping[budget_item_id]
                 actual_category_cross_table[category][year_month] += amount
+                
+                grant_name = grant_mapping[budget_item_id]
+                actual_grant_cross_table[grant_name][year_month] += amount
         
         # 月をソート
         sorted_months = sorted(all_months)
+        
+        # 期間が指定されている場合は、その期間内の月のみを表示
+        if filter_start_date and filter_end_date:
+            try:
+                filter_start = datetime.strptime(filter_start_date, '%Y-%m-%d').date()
+                filter_end = datetime.strptime(filter_end_date, '%Y-%m-%d').date()
+                
+                filtered_months = []
+                for month_str in sorted_months:
+                    year, month = map(int, month_str.split('-'))
+                    month_start = datetime(year, month, 1).date()
+                    month_end = datetime(year, month, monthrange(year, month)[1]).date()
+                    
+                    # 月と指定期間が重複している場合のみ含める
+                    if month_start <= filter_end and month_end >= filter_start:
+                        filtered_months.append(month_str)
+                
+                sorted_months = filtered_months
+            except ValueError:
+                pass  # 日付パースエラーの場合は全ての月を表示
         
         # データを整形（期間配分予算・実割当・差額を含む）
         budget_cross_result = {}
         for budget_item in budget_cross_table.keys():
             budget_cross_result[budget_item] = {}
+            
+            # 予算項目の詳細情報を取得（助成金情報含む）
+            budget_item_id = None
+            for bid, display_name in budget_item_mapping.items():
+                if display_name == budget_item:
+                    budget_item_id = bid
+                    break
+            
+            # 予算項目の実際の支出額合計と助成金情報を取得
+            total_actual_spent = sum(actual_budget_cross_table[budget_item].values())
+            budget_item_info = {}
+            
+            if budget_item_id:
+                # 対応する予算項目を取得
+                db_budget_item = db.query(BudgetItem).filter(BudgetItem.id == budget_item_id).first()
+                if db_budget_item:
+                    remaining_amount = db_budget_item.budgeted_amount - total_actual_spent
+                    
+                    # 助成金の終了日を取得
+                    grant = db.query(Grant).filter(Grant.id == db_budget_item.grant_id).first()
+                    end_date = grant.end_date if grant else None
+                    
+                    # 残り日数を計算
+                    remaining_days = None
+                    if end_date:
+                        from datetime import date
+                        today = date.today()
+                        remaining_days = (end_date - today).days
+                    
+                    budget_item_info = {
+                        'total_budget': db_budget_item.budgeted_amount,
+                        'total_actual': total_actual_spent,
+                        'remaining_amount': remaining_amount,
+                        'remaining_days': remaining_days,
+                        'end_date': end_date.isoformat() if end_date else None
+                    }
+            
             for month in sorted_months:
                 planned_amount = round(budget_cross_table[budget_item].get(month, 0), 0)
                 actual_amount = round(actual_budget_cross_table[budget_item].get(month, 0), 0)
@@ -3255,6 +3337,10 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
                     'actual': actual_amount,
                     'difference': difference
                 }
+            
+            # 予算項目レベルの情報を追加
+            if budget_item_info:
+                budget_cross_result[budget_item]['_budget_info'] = budget_item_info
         
         category_cross_result = {}
         for category in category_cross_table.keys():
@@ -3270,9 +3356,50 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
                     'difference': difference
                 }
         
+        grant_cross_result = {}
+        for grant_name in grant_cross_table.keys():
+            grant_cross_result[grant_name] = {}
+            
+            # 助成金全体の実際の支出額を計算
+            total_actual_spent = sum(actual_grant_cross_table[grant_name].values())
+            
+            # 残額と残り日数を計算
+            grant_info = grant_details.get(grant_name, {})
+            total_budget = grant_info.get('total_budget', 0)
+            remaining_amount = total_budget - total_actual_spent
+            
+            # 残り日数を計算
+            end_date = grant_info.get('end_date')
+            remaining_days = None
+            if end_date:
+                from datetime import date
+                today = date.today()
+                remaining_days = (end_date - today).days
+            
+            for month in sorted_months:
+                planned_amount = round(grant_cross_table[grant_name].get(month, 0), 0)
+                actual_amount = round(actual_grant_cross_table[grant_name].get(month, 0), 0)
+                difference = planned_amount - actual_amount
+                
+                grant_cross_result[grant_name][month] = {
+                    'planned': planned_amount,
+                    'actual': actual_amount,
+                    'difference': difference
+                }
+            
+            # 助成金レベルの情報を追加
+            grant_cross_result[grant_name]['_grant_info'] = {
+                'total_budget': total_budget,
+                'total_actual': total_actual_spent,
+                'remaining_amount': remaining_amount,
+                'remaining_days': remaining_days,
+                'end_date': end_date.isoformat() if end_date else None
+            }
+        
         return {
             'budget_cross_table': budget_cross_result,
             'category_cross_table': category_cross_result,
+            'grant_cross_table': grant_cross_result,
             'months': sorted_months,
             'generated_at': datetime.now().isoformat()
         }
