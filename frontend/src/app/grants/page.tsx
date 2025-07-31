@@ -23,6 +23,7 @@ const GrantsPage: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<any>(null);
   const [previewFile, setPreviewFile] = useState<File | null>(null);
+  const [gridKey, setGridKey] = useState(0); // AG-Grid強制再描画用
   const [editGrant, setEditGrant] = useState({
     name: '',
     total_amount: '',
@@ -229,6 +230,7 @@ const GrantsPage: React.FC = () => {
   const loadData = async () => {
     try {
       setLoading(true);
+      console.log('📥 API からデータを取得中...');
       const [grantsData, budgetItemsData, allocationsData] = await Promise.all([
         api.getGrants(),
         api.getBudgetItems(),
@@ -242,14 +244,63 @@ const GrantsPage: React.FC = () => {
         })
       ]);
 
+      console.log('📋 取得した予算項目データ:', budgetItemsData);
       setGrants(grantsData);
       setBudgetItems(budgetItemsData);
       setAllocations(allocationsData);
+      console.log('✅ Reactステートを更新完了');
     } catch (error) {
       console.error('Failed to load data:', error);
       alert('データの読み込みに失敗しました');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // データ更新専用の関数（AG-Grid対応）
+  const refreshData = async () => {
+    try {
+      console.log('🔄 データリフレッシュ開始...');
+      const [grantsData, budgetItemsData, allocationsData] = await Promise.all([
+        api.getGrants(),
+        api.getBudgetItems(),
+        api.getAllocations().catch(() => [])
+      ]);
+
+      console.log('📋 新しい予算項目データ:', budgetItemsData);
+      console.log('📋 現在の予算項目データ:', budgetItems);
+      
+      // Reactステートを更新
+      console.log('🔄 Reactステートを更新中...');
+      setGrants(grantsData);
+      setBudgetItems(budgetItemsData);
+      setAllocations(allocationsData);
+      console.log('✅ Reactステート更新完了');
+      
+      // AG-Gridの更新処理
+      setTimeout(() => {
+        console.log('🔄 AG-Grid更新処理開始...');
+        
+        // 方法1: API経由での更新
+        if (budgetGridRef.current?.api) {
+          try {
+            budgetGridRef.current.api.refreshCells({ force: true });
+            budgetGridRef.current.api.redrawRows();
+            console.log('✅ AG-Grid API更新完了');
+          } catch (apiError) {
+            console.warn('AG-Grid API更新失敗:', apiError);
+          }
+        }
+        
+        // 方法2: 完全再描画（フォールバック）
+        console.log('🔄 グリッド完全再描画実行...');
+        setGridKey(prev => prev + 1);
+        console.log('✅ 全更新処理完了');
+        
+      }, 100); // React stateの更新を待つ
+      
+    } catch (error) {
+      console.error('データリフレッシュエラー:', error);
     }
   };
 
@@ -411,8 +462,26 @@ const GrantsPage: React.FC = () => {
         field: params.colDef.field,
         oldValue: params.oldValue,
         newValue: params.newValue,
-        rowData: params.data
+        itemId: params.data.id,
+        itemName: params.data.name,
+        fullRowData: params.data
       });
+
+      // 日付データをYYYY-MM-DD形式に変換
+      const formatDateForAPI = (dateValue: any) => {
+        if (!dateValue) return null;
+        if (typeof dateValue === 'string') {
+          // ISO形式の文字列の場合は日付部分のみ抽出
+          if (dateValue.includes('T')) {
+            return dateValue.split('T')[0];
+          }
+          return dateValue;
+        }
+        if (dateValue instanceof Date) {
+          return dateValue.toISOString().split('T')[0];
+        }
+        return null;
+      };
 
       const updatedData = {
         name: params.data.name,
@@ -420,8 +489,8 @@ const GrantsPage: React.FC = () => {
         budgeted_amount: params.data.budgeted_amount,
         grant_id: params.data.grant_id,
         remarks: params.data.remarks,
-        planned_start_date: params.data.planned_start_date || null,
-        planned_end_date: params.data.planned_end_date || null
+        planned_start_date: formatDateForAPI(params.data.planned_start_date),
+        planned_end_date: formatDateForAPI(params.data.planned_end_date)
       };
 
       console.log('📤 API送信データ:', updatedData);
@@ -431,31 +500,29 @@ const GrantsPage: React.FC = () => {
 
       if (isNewRow) {
         // 新規作成
+        console.log('📝 新規予算項目を作成中...');
         const newItem = await api.createBudgetItem(updatedData);
         // 一時的なIDを実際のIDに更新
         params.data.id = newItem.id;
-        console.log('Budget item created:', newItem);
+        console.log('✅ 予算項目作成完了:', newItem);
       } else {
         // 既存の更新
-        await api.updateBudgetItem(params.data.id, updatedData);
-        console.log('Budget item updated:', updatedData);
+        console.log('🔄 既存予算項目を更新中... ID:', params.data.id);
+        const result = await api.updateBudgetItem(params.data.id, updatedData);
+        console.log('✅ 予算項目更新完了:', result);
       }
 
-      // 成功時の視覚的フィードバック
-      params.api.flashCells({ rowNodes: [params.node] });
+      // データ更新後の処理を分離
+      console.log('🔄 データを再読み込み中...');
+      await refreshData();
+      console.log('✅ データ再読み込み完了');
 
-      // データが正常に更新されたことを表示
+      // 成功時の視覚的フィードバック
       const toast = document.createElement('div');
       toast.style.cssText = 'position:fixed;top:20px;right:20px;background:#d4edda;color:#155724;padding:10px;border-radius:4px;z-index:1000;border:1px solid #c3e6cb;';
       toast.textContent = isNewRow ? '予算項目を作成しました' : '予算項目を更新しました';
       document.body.appendChild(toast);
       setTimeout(() => document.body.removeChild(toast), 3000);
-
-      // 新規作成の場合のみデータを再読み込み（グリッドの状態を保持）
-      if (isNewRow) {
-        // データを再読み込み
-        await loadData();
-      }
 
     } catch (error) {
       console.error('Failed to update budget item:', error);
@@ -1273,12 +1340,19 @@ const GrantsPage: React.FC = () => {
         {/* 予算項目グリッド */}
         <div style={{ height: '400px', width: '100%' }}>
           <AgGridReact
+            key={gridKey} // 強制再描画用キー
             ref={budgetGridRef}
-            rowData={budgetItems.filter(item => {
-              const grant = grants.find(g => g.id === item.grant_id);
-              const isReported = grant?.status === 'applied';
-              return (!selectedGrantId || item.grant_id === selectedGrantId) && (showReportedBudgetItems || !isReported);
-            })}
+            rowData={(() => {
+              const filteredData = budgetItems.filter(item => {
+                const grant = grants.find(g => g.id === item.grant_id);
+                const isReported = grant?.status === 'applied';
+                const result = (!selectedGrantId || item.grant_id === selectedGrantId) && (showReportedBudgetItems || !isReported);
+                return result;
+              });
+              console.log('🔍 AG-Grid表示データ:', filteredData.length, '件');
+              console.log('🔍 表示データ詳細 (最初の3件):', filteredData.slice(0, 3));
+              return filteredData;
+            })()}
             columnDefs={budgetColumnDefs}
             className="ag-theme-alpine"
             defaultColDef={{
@@ -1296,6 +1370,9 @@ const GrantsPage: React.FC = () => {
               headerCheckbox: true
             }}
             onCellValueChanged={onBudgetCellValueChanged}
+            getRowId={(params) => params.data.id.toString()} // 行IDを明示的に設定
+            suppressClickEdit={false} // 編集を有効にする
+            stopEditingWhenCellsLoseFocus={true} // フォーカスが外れたら編集を終了
             localeText={{
               filterOoo: 'フィルター...',
               equals: '等しい',

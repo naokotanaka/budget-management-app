@@ -207,20 +207,21 @@ export const api = {
 
   // Budget Items
   async getBudgetItems(): Promise<BudgetItem[]> {
-    console.log('Fetching budget items from:', `${API_BASE_URL}/api/budget-items`);
+    console.log('📥 予算項目データを取得中:', `${API_BASE_URL}/api/budget-items`);
     try {
       const response = await fetch(`${API_BASE_URL}/api/budget-items`);
-      console.log('Budget items response status:', response.status);
+      console.log('📡 予算項目レスポンス状態:', response.status);
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Budget items fetch failed:', response.status, response.statusText, errorText);
+        console.error('❌ 予算項目取得失敗:', response.status, response.statusText, errorText);
         throw new Error(`Failed to fetch budget items: ${response.status} ${response.statusText}`);
       }
       const data = await response.json();
-      console.log('Budget items response:', data);
+      console.log('📋 取得した予算項目数:', data.length);
+      console.log('📋 予算項目詳細 (最初の3件):', data.slice(0, 3));
       return data;
     } catch (error) {
-      console.error('Budget items fetch error:', error);
+      console.error('❌ 予算項目取得エラー:', error);
       if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
         throw new Error('Network error: Unable to connect to the server for budget items.');
       }

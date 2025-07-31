@@ -565,6 +565,8 @@ def create_budget_item(budget_item: BudgetItemCreate, db: Session = Depends(get_
 
 @app.put("/api/budget-items/{budget_item_id}", response_model=BudgetItemSchema)
 def update_budget_item(budget_item_id: int, budget_item_update: dict, db: Session = Depends(get_db)):
+    from datetime import datetime
+    
     print(f"🔄 予算項目更新リクエスト: ID={budget_item_id}, データ={budget_item_update}")
     
     db_item = db.query(BudgetItem).filter(BudgetItem.id == budget_item_id).first()
@@ -577,15 +579,38 @@ def update_budget_item(budget_item_id: int, budget_item_update: dict, db: Sessio
     for field, value in budget_item_update.items():
         if hasattr(db_item, field):
             old_value = getattr(db_item, field)
+            
+            # 日付フィールドの特別処理
+            if field in ['planned_start_date', 'planned_end_date'] and value:
+                if isinstance(value, str):
+                    # ISO形式の文字列の場合は日付部分のみ抽出
+                    if 'T' in value:
+                        value = value.split('T')[0]
+                    # YYYY-MM-DD形式の文字列をdateオブジェクトに変換
+                    try:
+                        value = datetime.strptime(value, '%Y-%m-%d').date()
+                    except ValueError:
+                        print(f"⚠️ 無効な日付形式: {value}")
+                        value = None
+            
             setattr(db_item, field, value)
             print(f"  {field}: {old_value} → {value}")
         else:
             print(f"⚠️  不明なフィールド: {field} = {value}")
     
-    db.commit()
-    db.refresh(db_item)
-    print(f"✅ 更新後データ: {db_item.__dict__}")
-    return db_item
+    try:
+        db.commit()
+        db.refresh(db_item)
+        print(f"✅ 更新後データ: {db_item.__dict__}")
+        
+        # データベースから改めて取得して保存を確認
+        verification_item = db.query(BudgetItem).filter(BudgetItem.id == budget_item_id).first()
+        print(f"🔍 確認用データ: {verification_item.__dict__}")
+        return db_item
+    except Exception as commit_error:
+        print(f"❌ コミットエラー: {commit_error}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database commit failed: {str(commit_error)}")
 
 @app.delete("/api/budget-items/{budget_item_id}")
 def delete_budget_item(budget_item_id: int, db: Session = Depends(get_db)):
