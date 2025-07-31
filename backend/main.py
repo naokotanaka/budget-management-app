@@ -553,24 +553,38 @@ def get_budget_items(db: Session = Depends(get_db)):
 
 @app.post("/api/budget-items", response_model=BudgetItemSchema)
 def create_budget_item(budget_item: BudgetItemCreate, db: Session = Depends(get_db)):
+    print(f"📝 予算項目作成リクエスト: {budget_item.dict()}")
+    
     db_item = BudgetItem(**budget_item.dict())
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
+    
+    print(f"✅ 作成された予算項目: ID={db_item.id}, データ={db_item.__dict__}")
     return db_item
 
 @app.put("/api/budget-items/{budget_item_id}", response_model=BudgetItemSchema)
 def update_budget_item(budget_item_id: int, budget_item_update: dict, db: Session = Depends(get_db)):
+    print(f"🔄 予算項目更新リクエスト: ID={budget_item_id}, データ={budget_item_update}")
+    
     db_item = db.query(BudgetItem).filter(BudgetItem.id == budget_item_id).first()
     if not db_item:
+        print(f"❌ 予算項目が見つかりません: ID={budget_item_id}")
         raise HTTPException(status_code=404, detail="Budget item not found")
+    
+    print(f"📝 更新前データ: {db_item.__dict__}")
     
     for field, value in budget_item_update.items():
         if hasattr(db_item, field):
+            old_value = getattr(db_item, field)
             setattr(db_item, field, value)
+            print(f"  {field}: {old_value} → {value}")
+        else:
+            print(f"⚠️  不明なフィールド: {field} = {value}")
     
     db.commit()
     db.refresh(db_item)
+    print(f"✅ 更新後データ: {db_item.__dict__}")
     return db_item
 
 @app.delete("/api/budget-items/{budget_item_id}")
