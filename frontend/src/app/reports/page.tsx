@@ -27,11 +27,57 @@ interface BudgetVsActualItem {
   period_progress: number;
 }
 
+interface MonthlyAllocationItem {
+  grant_id: number;
+  grant_name: string;
+  grant_code: string | null;
+  grant_start_date: string;
+  grant_end_date: string;
+  grant_total_days: number;
+  budget_item_id: number;
+  budget_item_name: string;
+  budget_item_category: string;
+  budget_item_total: number;
+  year: number;
+  month: number;
+  year_month: string;
+  days_in_allocation: number;
+  daily_amount: number;
+  monthly_allocation: number;
+  period_start: string;
+  period_end: string;
+}
+
+interface MonthlyAllocationSummary {
+  year_month: string;
+  year: number;
+  month: number;
+  total_amount: number;
+  grant_count: number;
+  budget_item_count: number;
+}
+
+interface AllocationCrossTableResponse {
+  budget_cross_table: Record<string, Record<string, {
+    planned: number;
+    actual: number;
+    difference: number;
+  }>>;
+  category_cross_table: Record<string, Record<string, {
+    planned: number;
+    actual: number;
+    difference: number;
+  }>>;
+  months: string[];
+  generated_at: string;
+}
+
 const ReportsPage: React.FC = () => {
   const [crossTableData, setCrossTableData] = useState<any>({});
   const [categoryCrossTableData, setCategoryCrossTableData] = useState<any>({});
   const [monthlySummary, setMonthlySummary] = useState<MonthlySummaryItem[]>([]);
   const [budgetVsActual, setBudgetVsActual] = useState<BudgetVsActualItem[]>([]);
+  const [allocationCrossTable, setAllocationCrossTable] = useState<AllocationCrossTableResponse | null>(null);
   const [budgetItems, setBudgetItems] = useState<any[]>([]);
   const [grants, setGrants] = useState<any[]>([]);
   const [allocations, setAllocations] = useState<any[]>([]);
@@ -41,6 +87,7 @@ const ReportsPage: React.FC = () => {
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [monthlyLoading, setMonthlyLoading] = useState(false);
   const [budgetLoading, setBudgetLoading] = useState(false);
+  const [allocationCrossLoading, setAllocationCrossLoading] = useState(false);
   const [sortBudgetByCategory, setSortBudgetByCategory] = useState(false);
 
   // 初期値設定（デフォルト期間）
@@ -76,6 +123,8 @@ const ReportsPage: React.FC = () => {
       loadMonthlySummary();
       loadBudgetVsActual();
     }
+    // 期間配分クロス集計表は日付に関係なく表示
+    loadAllocationCrossTable();
   }, [startDate, endDate]);
 
   const loadCrossTableData = async () => {
@@ -153,6 +202,28 @@ const ReportsPage: React.FC = () => {
       alert('予算vs実績データの読み込みに失敗しました');
     } finally {
       setBudgetLoading(false);
+    }
+  };
+
+  const loadAllocationCrossTable = async () => {
+    try {
+      setAllocationCrossLoading(true);
+      
+      const response = await fetch(
+        `${API_CONFIG.BASE_URL}/api/reports/monthly-allocation-cross-table`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      setAllocationCrossTable(result);
+    } catch (error) {
+      console.error('Failed to load allocation cross table:', error);
+      alert('期間配分クロス集計表の読み込みに失敗しました');
+    } finally {
+      setAllocationCrossLoading(false);
     }
   };
 
@@ -308,6 +379,7 @@ const ReportsPage: React.FC = () => {
                 loadCategoryCrossTableData();
                 loadMonthlySummary();
                 loadBudgetVsActual();
+                loadAllocationCrossTable();
               }}
               disabled={loading || categoryLoading || !startDate || !endDate}
               className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
@@ -1137,6 +1209,373 @@ const ReportsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* 期間配分版クロス集計表 */}
+      {allocationCrossLoading ? (
+        <div className="text-center py-8">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <p className="mt-2 text-sm text-gray-600">期間配分データを読み込み中...</p>
+        </div>
+      ) : (
+        allocationCrossTable && (
+          <div className="space-y-6">
+            {/* 期間配分版 予算項目×月 クロス集計表 */}
+            <div className="bg-white rounded-lg shadow overflow-hidden mt-6">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                      予算項目×月 クロス集計表（期間配分版）
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      助成金の期間に基づいて日割り計算で配分した月ごとの予算額
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      例：90万円の消耗品費、期間7/1-9/30（92日）→ 7月：¥{Math.round(900000/92*31).toLocaleString()}、8月：¥{Math.round(900000/92*31).toLocaleString()}、9月：¥{Math.round(900000/92*30).toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex flex-col space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-600 rounded"></div>
+                      <span>期間配分予算</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-gray-800 rounded"></div>
+                      <span>実割当額</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                      <span>差額（正）</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-red-600 rounded"></div>
+                      <span>差額（負）</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
+                        予算項目
+                      </th>
+                      {allocationCrossTable.months.map(month => (
+                        <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                          {month}
+                        </th>
+                      ))}
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
+                        合計
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {Object.keys(allocationCrossTable.budget_cross_table).length === 0 ? (
+                      <tr>
+                        <td colSpan={allocationCrossTable.months.length + 2} className="px-6 py-8 text-center text-gray-500">
+                          期間が設定された助成金がありません
+                        </td>
+                      </tr>
+                    ) : (
+                      Object.entries(allocationCrossTable.budget_cross_table).map(([budgetItemName, amounts]: [string, any]) => {
+                        const itemTotal = {
+                          planned: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.planned || 0), 0),
+                          actual: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.actual || 0), 0),
+                          difference: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.difference || 0), 0)
+                        };
+                        
+                        return (
+                          <tr key={budgetItemName} className="hover:bg-gray-50">
+                            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
+                              {budgetItemName}
+                            </td>
+                            {allocationCrossTable.months.map(month => {
+                              const monthData = amounts[month];
+                              if (!monthData || (monthData.planned === 0 && monthData.actual === 0)) {
+                                return (
+                                  <td key={month} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
+                                    -
+                                  </td>
+                                );
+                              }
+                              
+                              return (
+                                <td key={month} className="px-4 py-2 text-right text-xs">
+                                  <div className="text-green-600 font-medium">
+                                    ¥{monthData.planned.toLocaleString()}
+                                  </div>
+                                  <div className="text-gray-800">
+                                    ¥{monthData.actual.toLocaleString()}
+                                  </div>
+                                  <div className={monthData.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
+                                    {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
+                                  </div>
+                                </td>
+                              );
+                            })}
+                            <td className="px-6 py-2 text-right text-xs bg-yellow-50">
+                              <div className="text-green-600 font-medium">
+                                ¥{itemTotal.planned.toLocaleString()}
+                              </div>
+                              <div className="text-gray-800">
+                                ¥{itemTotal.actual.toLocaleString()}
+                              </div>
+                              <div className={itemTotal.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
+                                {itemTotal.difference >= 0 ? '+' : ''}¥{itemTotal.difference.toLocaleString()}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                    
+                    {/* 合計行 */}
+                    {Object.keys(allocationCrossTable.budget_cross_table).length > 0 && (
+                      <tr className="bg-blue-50 font-bold">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
+                          合計
+                        </td>
+                        {allocationCrossTable.months.map(month => {
+                          const monthTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
+                            const monthData = amounts[month];
+                            if (monthData) {
+                              totals.planned += monthData.planned || 0;
+                              totals.actual += monthData.actual || 0;
+                              totals.difference += monthData.difference || 0;
+                            }
+                            return totals;
+                          }, { planned: 0, actual: 0, difference: 0 });
+                          
+                          return (
+                            <td key={month} className="px-4 py-2 text-right text-xs">
+                              <div className="text-green-600 font-bold">
+                                ¥{monthTotal.planned.toLocaleString()}
+                              </div>
+                              <div className="text-gray-800 font-bold">
+                                ¥{monthTotal.actual.toLocaleString()}
+                              </div>
+                              <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
+                              </div>
+                            </td>
+                          );
+                        })}
+                        <td className="px-6 py-2 text-right text-xs bg-yellow-100">
+                          {(() => {
+                            const grandTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
+                              Object.values(amounts).forEach((monthData: any) => {
+                                if (monthData) {
+                                  totals.planned += monthData.planned || 0;
+                                  totals.actual += monthData.actual || 0;
+                                  totals.difference += monthData.difference || 0;
+                                }
+                              });
+                              return totals;
+                            }, { planned: 0, actual: 0, difference: 0 });
+                            
+                            return (
+                              <>
+                                <div className="text-green-600 font-bold">
+                                  ¥{grandTotal.planned.toLocaleString()}
+                                </div>
+                                <div className="text-gray-800 font-bold">
+                                  ¥{grandTotal.actual.toLocaleString()}
+                                </div>
+                                <div className={grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                  {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
+                                </div>
+                              </>
+                            );
+                          })()}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* 期間配分版 カテゴリ×月 クロス集計表 */}
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                      カテゴリ×月 クロス集計表（期間配分版）
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      助成金の期間に基づいて日割り計算で配分した月ごとのカテゴリ別予算額
+                    </p>
+                  </div>
+                  <div className="flex flex-col space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-600 rounded"></div>
+                      <span>期間配分予算</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-gray-800 rounded"></div>
+                      <span>実割当額</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                      <span>差額（正）</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-red-600 rounded"></div>
+                      <span>差額（負）</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
+                        カテゴリ
+                      </th>
+                      {allocationCrossTable.months.map(month => (
+                        <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                          {month}
+                        </th>
+                      ))}
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
+                        合計
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {Object.keys(allocationCrossTable.category_cross_table).length === 0 ? (
+                      <tr>
+                        <td colSpan={allocationCrossTable.months.length + 2} className="px-6 py-8 text-center text-gray-500">
+                          期間が設定された助成金がありません
+                        </td>
+                      </tr>
+                    ) : (
+                      Object.entries(allocationCrossTable.category_cross_table).map(([category, amounts]: [string, any]) => {
+                        const categoryTotal = {
+                          planned: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.planned || 0), 0),
+                          actual: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.actual || 0), 0),
+                          difference: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.difference || 0), 0)
+                        };
+                        
+                        return (
+                          <tr key={category} className="hover:bg-gray-50">
+                            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
+                              {category}
+                            </td>
+                            {allocationCrossTable.months.map(month => {
+                              const monthData = amounts[month];
+                              if (!monthData || (monthData.planned === 0 && monthData.actual === 0)) {
+                                return (
+                                  <td key={month} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
+                                    -
+                                  </td>
+                                );
+                              }
+                              
+                              return (
+                                <td key={month} className="px-4 py-2 text-right text-xs">
+                                  <div className="text-green-600 font-medium">
+                                    ¥{monthData.planned.toLocaleString()}
+                                  </div>
+                                  <div className="text-gray-800">
+                                    ¥{monthData.actual.toLocaleString()}
+                                  </div>
+                                  <div className={monthData.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
+                                    {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
+                                  </div>
+                                </td>
+                              );
+                            })}
+                            <td className="px-6 py-2 text-right text-xs bg-yellow-50">
+                              <div className="text-green-600 font-medium">
+                                ¥{categoryTotal.planned.toLocaleString()}
+                              </div>
+                              <div className="text-gray-800">
+                                ¥{categoryTotal.actual.toLocaleString()}
+                              </div>
+                              <div className={categoryTotal.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
+                                {categoryTotal.difference >= 0 ? '+' : ''}¥{categoryTotal.difference.toLocaleString()}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                    
+                    {/* 合計行 */}
+                    {Object.keys(allocationCrossTable.category_cross_table).length > 0 && (
+                      <tr className="bg-blue-50 font-bold">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50">
+                          合計
+                        </td>
+                        {allocationCrossTable.months.map(month => {
+                          const monthTotal = Object.values(allocationCrossTable.category_cross_table).reduce((totals: any, amounts: any) => {
+                            const monthData = amounts[month];
+                            if (monthData) {
+                              totals.planned += monthData.planned || 0;
+                              totals.actual += monthData.actual || 0;
+                              totals.difference += monthData.difference || 0;
+                            }
+                            return totals;
+                          }, { planned: 0, actual: 0, difference: 0 });
+                          
+                          return (
+                            <td key={month} className="px-4 py-2 text-right text-xs">
+                              <div className="text-green-600 font-bold">
+                                ¥{monthTotal.planned.toLocaleString()}
+                              </div>
+                              <div className="text-gray-800 font-bold">
+                                ¥{monthTotal.actual.toLocaleString()}
+                              </div>
+                              <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
+                              </div>
+                            </td>
+                          );
+                        })}
+                        <td className="px-6 py-2 text-right text-xs bg-yellow-100">
+                          {(() => {
+                            const grandTotal = Object.values(allocationCrossTable.category_cross_table).reduce((totals: any, amounts: any) => {
+                              Object.values(amounts).forEach((monthData: any) => {
+                                if (monthData) {
+                                  totals.planned += monthData.planned || 0;
+                                  totals.actual += monthData.actual || 0;
+                                  totals.difference += monthData.difference || 0;
+                                }
+                              });
+                              return totals;
+                            }, { planned: 0, actual: 0, difference: 0 });
+                            
+                            return (
+                              <>
+                                <div className="text-green-600 font-bold">
+                                  ¥{grandTotal.planned.toLocaleString()}
+                                </div>
+                                <div className="text-gray-800 font-bold">
+                                  ¥{grandTotal.actual.toLocaleString()}
+                                </div>
+                                <div className={grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                  {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
+                                </div>
+                              </>
+                            );
+                          })()}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )
+      )}
     </div>
   );
 };

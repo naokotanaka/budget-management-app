@@ -2936,6 +2936,302 @@ async def get_budget_vs_actual(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"予算vs実績データの取得に失敗しました: {str(e)}")
 
+@app.get("/api/reports/monthly-allocation")
+async def generate_monthly_allocation_report(db: Session = Depends(get_db)):
+    """助成金の期間に基づいて予算を月ごとに配分するレポートを生成"""
+    try:
+        from datetime import datetime, timedelta
+        from calendar import monthrange
+        
+        # 全ての助成金とその予算項目を取得
+        grants_with_budget = db.query(Grant)\
+            .filter(Grant.start_date.isnot(None))\
+            .filter(Grant.end_date.isnot(None))\
+            .all()
+        
+        monthly_allocations = []
+        
+        for grant in grants_with_budget:
+            # 助成金の期間を計算
+            start_date = grant.start_date
+            end_date = grant.end_date
+            
+            if not start_date or not end_date:
+                continue
+                
+            # 助成金の予算項目を取得
+            budget_items = db.query(BudgetItem)\
+                .filter(BudgetItem.grant_id == grant.id)\
+                .all()
+            
+            # 各予算項目の月ごと配分を計算
+            for budget_item in budget_items:
+                if not budget_item.budgeted_amount or budget_item.budgeted_amount <= 0:
+                    continue
+                
+                # 助成金期間の総日数を計算
+                total_days = (end_date - start_date).days + 1
+                daily_amount = budget_item.budgeted_amount / total_days
+                
+                # 月ごとの配分を計算
+                current_date = start_date
+                while current_date <= end_date:
+                    year = current_date.year
+                    month = current_date.month
+                    
+                    # 該当月の日数を計算（期間内のみ）
+                    month_start = datetime(year, month, 1).date()
+                    month_end = datetime(year, month, monthrange(year, month)[1]).date()
+                    
+                    # 実際の配分期間を計算
+                    period_start = max(start_date, month_start)
+                    period_end = min(end_date, month_end)
+                    
+                    if period_start <= period_end:
+                        days_in_month = (period_end - period_start).days + 1
+                        month_allocation = daily_amount * days_in_month
+                        
+                        monthly_allocations.append({
+                            'grant_id': grant.id,
+                            'grant_name': grant.name,
+                            'grant_code': grant.grant_code,
+                            'grant_start_date': start_date.isoformat(),
+                            'grant_end_date': end_date.isoformat(),
+                            'grant_total_days': total_days,
+                            'budget_item_id': budget_item.id,
+                            'budget_item_name': budget_item.name,
+                            'budget_item_category': budget_item.category,
+                            'budget_item_total': budget_item.budgeted_amount,
+                            'year': year,
+                            'month': month,
+                            'year_month': f"{year}-{month:02d}",
+                            'days_in_allocation': days_in_month,
+                            'daily_amount': round(daily_amount, 2),
+                            'monthly_allocation': round(month_allocation, 0),
+                            'period_start': period_start.isoformat(),
+                            'period_end': period_end.isoformat()
+                        })
+                    
+                    # 次の月へ
+                    if month == 12:
+                        current_date = datetime(year + 1, 1, 1).date()
+                    else:
+                        current_date = datetime(year, month + 1, 1).date()
+        
+        # 年月でソート
+        monthly_allocations.sort(key=lambda x: (x['year'], x['month'], x['grant_name'], x['budget_item_name']))
+        
+        # サマリー情報を計算
+        total_grants = len(set(item['grant_id'] for item in monthly_allocations))
+        total_budget_items = len(set(item['budget_item_id'] for item in monthly_allocations))
+        total_allocated = sum(item['monthly_allocation'] for item in monthly_allocations)
+        
+        # 月別サマリーを作成
+        monthly_summary = {}
+        for item in monthly_allocations:
+            key = item['year_month']
+            if key not in monthly_summary:
+                monthly_summary[key] = {
+                    'year_month': key,
+                    'year': item['year'],
+                    'month': item['month'],
+                    'total_amount': 0,
+                    'grant_count': set(),
+                    'budget_item_count': set()
+                }
+            monthly_summary[key]['total_amount'] += item['monthly_allocation']
+            monthly_summary[key]['grant_count'].add(item['grant_id'])
+            monthly_summary[key]['budget_item_count'].add(item['budget_item_id'])
+        
+        # setをcountに変換
+        monthly_summary_list = []
+        for key, data in monthly_summary.items():
+            monthly_summary_list.append({
+                'year_month': data['year_month'],
+                'year': data['year'],
+                'month': data['month'],
+                'total_amount': round(data['total_amount'], 0),
+                'grant_count': len(data['grant_count']),
+                'budget_item_count': len(data['budget_item_count'])
+            })
+        
+        monthly_summary_list.sort(key=lambda x: (x['year'], x['month']))
+        
+        return {
+            'allocations': monthly_allocations,
+            'monthly_summary': monthly_summary_list,
+            'total_grants': total_grants,
+            'total_budget_items': total_budget_items,
+            'total_allocated': round(total_allocated, 0),
+            'generated_at': datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"月ごと配分レポートの生成に失敗しました: {str(e)}")
+
+@app.get("/api/reports/monthly-allocation-cross-table")
+async def generate_allocation_cross_table(db: Session = Depends(get_db)):
+    """助成金期間配分による予算項目×月・カテゴリ×月のクロス集計表を生成（期間配分予算・実割当・差額含む）"""
+    try:
+        from datetime import datetime, timedelta
+        from calendar import monthrange
+        from collections import defaultdict
+        from sqlalchemy import func, extract
+        
+        # 全ての助成金とその予算項目を取得
+        grants_with_budget = db.query(Grant)\
+            .filter(Grant.start_date.isnot(None))\
+            .filter(Grant.end_date.isnot(None))\
+            .all()
+        
+        # 予算項目×月のクロス集計データ（期間配分予算）
+        budget_cross_table = defaultdict(lambda: defaultdict(float))
+        # カテゴリ×月のクロス集計データ（期間配分予算）
+        category_cross_table = defaultdict(lambda: defaultdict(float))
+        
+        # 予算項目IDとdisplay_nameのマッピングを作成
+        budget_item_mapping = {}
+        category_mapping = {}
+        
+        # 全ての月を収集（範囲決定のため）
+        all_months = set()
+        
+        # 期間配分予算を計算
+        for grant in grants_with_budget:
+            # 助成金の期間を計算
+            start_date = grant.start_date
+            end_date = grant.end_date
+            
+            if not start_date or not end_date:
+                continue
+                
+            # 助成金の予算項目を取得
+            budget_items = db.query(BudgetItem)\
+                .filter(BudgetItem.grant_id == grant.id)\
+                .all()
+            
+            # 各予算項目の月ごと配分を計算
+            for budget_item in budget_items:
+                if not budget_item.budgeted_amount or budget_item.budgeted_amount <= 0:
+                    continue
+                
+                budget_item_display_name = f"{grant.name}-{budget_item.name}"
+                budget_item_mapping[budget_item.id] = budget_item_display_name
+                category = budget_item.category or "その他"
+                category_mapping[budget_item.id] = category
+                
+                # 助成金期間の総日数を計算
+                total_days = (end_date - start_date).days + 1
+                daily_amount = budget_item.budgeted_amount / total_days
+                
+                # 月ごとの配分を計算
+                current_date = start_date
+                while current_date <= end_date:
+                    year = current_date.year
+                    month = current_date.month
+                    year_month = f"{year}-{month:02d}"
+                    all_months.add(year_month)
+                    
+                    # 該当月の日数を計算（期間内のみ）
+                    month_start = datetime(year, month, 1).date()
+                    month_end = datetime(year, month, monthrange(year, month)[1]).date()
+                    
+                    # 実際の配分期間を計算
+                    period_start = max(start_date, month_start)
+                    period_end = min(end_date, month_end)
+                    
+                    if period_start <= period_end:
+                        days_in_month = (period_end - period_start).days + 1
+                        month_allocation = daily_amount * days_in_month
+                        
+                        # 予算項目×月の集計
+                        budget_cross_table[budget_item_display_name][year_month] += month_allocation
+                        
+                        # カテゴリ×月の集計
+                        category_cross_table[category][year_month] += month_allocation
+                    
+                    # 次の月へ
+                    if month == 12:
+                        current_date = datetime(year + 1, 1, 1).date()
+                    else:
+                        current_date = datetime(year, month + 1, 1).date()
+        
+        # 実際の割当額を取得
+        actual_budget_cross_table = defaultdict(lambda: defaultdict(float))
+        actual_category_cross_table = defaultdict(lambda: defaultdict(float))
+        
+        # 取引 -> 割当 -> 予算項目 -> 助成金のクエリで実績を取得
+        allocation_query = db.query(
+            BudgetItem.id.label('budget_item_id'),
+            extract('year', Transaction.date).label('year'),
+            extract('month', Transaction.date).label('month'),
+            func.sum(Allocation.amount).label('total_amount')
+        ).select_from(Transaction)\
+         .join(Allocation, Transaction.id == Allocation.transaction_id)\
+         .join(BudgetItem, Allocation.budget_item_id == BudgetItem.id)\
+         .join(Grant, BudgetItem.grant_id == Grant.id)\
+         .filter(Grant.start_date.isnot(None))\
+         .filter(Grant.end_date.isnot(None))\
+         .group_by(
+            BudgetItem.id,
+            extract('year', Transaction.date), 
+            extract('month', Transaction.date)
+         ).all()
+        
+        for row in allocation_query:
+            budget_item_id = row.budget_item_id
+            year_month = f"{int(row.year)}-{int(row.month):02d}"
+            amount = int(row.total_amount) if row.total_amount else 0
+            
+            if budget_item_id in budget_item_mapping:
+                budget_item_display_name = budget_item_mapping[budget_item_id]
+                actual_budget_cross_table[budget_item_display_name][year_month] += amount
+                
+                category = category_mapping[budget_item_id]
+                actual_category_cross_table[category][year_month] += amount
+        
+        # 月をソート
+        sorted_months = sorted(all_months)
+        
+        # データを整形（期間配分予算・実割当・差額を含む）
+        budget_cross_result = {}
+        for budget_item in budget_cross_table.keys():
+            budget_cross_result[budget_item] = {}
+            for month in sorted_months:
+                planned_amount = round(budget_cross_table[budget_item].get(month, 0), 0)
+                actual_amount = round(actual_budget_cross_table[budget_item].get(month, 0), 0)
+                difference = planned_amount - actual_amount
+                
+                budget_cross_result[budget_item][month] = {
+                    'planned': planned_amount,
+                    'actual': actual_amount,
+                    'difference': difference
+                }
+        
+        category_cross_result = {}
+        for category in category_cross_table.keys():
+            category_cross_result[category] = {}
+            for month in sorted_months:
+                planned_amount = round(category_cross_table[category].get(month, 0), 0)
+                actual_amount = round(actual_category_cross_table[category].get(month, 0), 0)
+                difference = planned_amount - actual_amount
+                
+                category_cross_result[category][month] = {
+                    'planned': planned_amount,
+                    'actual': actual_amount,
+                    'difference': difference
+                }
+        
+        return {
+            'budget_cross_table': budget_cross_result,
+            'category_cross_table': category_cross_result,
+            'months': sorted_months,
+            'generated_at': datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"期間配分クロス集計表の生成に失敗しました: {str(e)}")
+
 @app.get("/api/system-info")
 async def get_system_info():
     """統一環境のシステム情報を取得"""
