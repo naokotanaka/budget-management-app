@@ -11512,3 +11512,320 @@ Error: listen EADDRINUSE: address already in use :::3000
 🔍 NEXT_PUBLIC_API_URL: https://nagaiku.top/budget
 🔍 window: undefined
 🔍 Using env var: https://nagaiku.top/budget
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 420ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 785ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 806ms
+Killed
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 413ms
+Killed
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 439ms
+Killed
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 394ms
+Killed
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 477ms
+Killed
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 457ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 887ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 559ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 414ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 383ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 712ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 400ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 415ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 848ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 802ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 853ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 401ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 400ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 1179ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 471ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 376ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 363ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 720ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 352ms
