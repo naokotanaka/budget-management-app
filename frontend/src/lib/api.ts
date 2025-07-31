@@ -35,6 +35,8 @@ export interface BudgetItem {
   display_name?: string;
   grant_status?: 'active' | 'completed' | 'applied';
   remarks?: string;
+  planned_start_date?: string | null;
+  planned_end_date?: string | null;
 }
 
 export interface Grant {
@@ -226,7 +228,7 @@ export const api = {
     }
   },
 
-  async createBudgetItem(data: { name: string; category: string; budgeted_amount: number; grant_id: number; remarks?: string }): Promise<BudgetItem> {
+  async createBudgetItem(data: { name: string; category: string; budgeted_amount: number; grant_id: number; remarks?: string; planned_start_date?: string | null; planned_end_date?: string | null }): Promise<BudgetItem> {
     const response = await fetch(`${API_BASE_URL}/api/budget-items`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -237,7 +239,7 @@ export const api = {
     return response.json();
   },
 
-  async updateBudgetItem(id: number, data: { name?: string; category?: string; budgeted_amount?: number; grant_id?: number; remarks?: string }): Promise<BudgetItem> {
+  async updateBudgetItem(id: number, data: { name?: string; category?: string; budgeted_amount?: number; grant_id?: number; remarks?: string; planned_start_date?: string | null; planned_end_date?: string | null }): Promise<BudgetItem> {
     try {
       const response = await fetch(`${API_BASE_URL}/api/budget-items/${id}`, {
         method: 'PUT',

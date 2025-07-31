@@ -148,7 +148,11 @@
       "Bash(env)",
       "Bash(./scripts/tag_stable.sh:*)",
       "Bash(git tag:*)",
-      "Bash(./switch_mode.sh:*)"
+      "Bash(./switch_mode.sh:*)",
+      "Bash(DATABASE_NAME=nagaiku_budget_dev python3 -c \"\nfrom database import create_tables\ncreate_tables()\nprint(''開発データベーステーブル更新完了'')\n\")",
+      "Bash(DATABASE_NAME=nagaiku_budget_dev python3 -c \"\nimport sys\nsys.path.append(''./backend'')\nfrom database import create_tables\ncreate_tables()\nprint(''開発データベーステーブル更新完了'')\n\")",
+      "Bash(DATABASE_NAME=nagaiku_budget_dev python3 -c \"\nimport sys\nsys.path.append(''./backend'')\nfrom database import get_session_local, BudgetItem, Grant\n\nSessionLocal = get_session_local()\ndb = SessionLocal()\n\ntry:\n    # 既存の予算項目で予定使用期間が未設定のものを取得\n    budget_items = db.query(BudgetItem).filter(\n        BudgetItem.planned_start_date.is_(None),\n        BudgetItem.planned_end_date.is_(None)\n    ).all()\n    \n    updated_count = 0\n    for item in budget_items:\n        # 関連する助成金の期間を取得\n        grant = db.query(Grant).filter(Grant.id == item.grant_id).first()\n        if grant and grant.start_date and grant.end_date:\n            item.planned_start_date = grant.start_date\n            item.planned_end_date = grant.end_date\n            updated_count += 1\n    \n    db.commit()\n    print(f''開発データベース: {updated_count}件の予算項目に予定使用期間を設定しました'')\n    \nexcept Exception as e:\n    db.rollback()\n    print(f''エラー: {e}'')\nfinally:\n    db.close()\n\")",
+      "Bash(DATABASE_NAME=nagaiku_budget_dev python3 -c \"\nimport sys\nsys.path.append(''./backend'')\nfrom database import get_session_local, BudgetItem, Grant\n\nSessionLocal = get_session_local()\ndb = SessionLocal()\n\ntry:\n    # 既存の予算項目で予定使用期間が未設定のものを取得\n    budget_items = db.query(BudgetItem).filter(\n        BudgetItem.planned_start_date.is_(None),\n        BudgetItem.planned_end_date.is_(None)\n    ).all()\n    \n    updated_count = 0\n    for item in budget_items:\n        # 関連する助成金の期間を取得\n        grant = db.query(Grant).filter(Grant.id == item.grant_id).first()\n        if grant and grant.start_date and grant.end_date:\n            item.planned_start_date = grant.start_date\n            item.planned_end_date = grant.end_date\n            updated_count += 1\n    \n    db.commit()\n    print(f''開発データベース: {updated_count}件の予算項目に予定使用期間を設定しました'')\n    \nexcept Exception as e:\n    db.rollback()\n    print(f''エラー: {e}'')\nfinally:\n    db.close()\n\")"
     ],
     "deny": []
   }

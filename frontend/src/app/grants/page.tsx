@@ -48,7 +48,9 @@ const GrantsPage: React.FC = () => {
     category: '',
     budgeted_amount: '',
     grant_id: '',
-    remarks: ''
+    remarks: '',
+    planned_start_date: '',
+    planned_end_date: ''
   });
 
   useEffect(() => {
@@ -120,6 +122,68 @@ const GrantsPage: React.FC = () => {
       width: 200,
       minWidth: 150,
       cellStyle: { backgroundColor: '#ffffff' }
+    },
+    {
+      field: 'planned_start_date',
+      headerName: '予定開始日',
+      filter: 'agDateColumnFilter',
+      editable: true,
+      width: 130,
+      minWidth: 120,
+      cellStyle: { backgroundColor: '#ffffff' },
+      cellEditor: 'agDateCellEditor',
+      valueFormatter: (params) => {
+        if (!params.value) return '';
+        const date = new Date(params.value);
+        return date.toLocaleDateString('ja-JP', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        });
+      },
+      valueParser: (params) => {
+        if (!params.newValue) return null;
+        // 日付文字列をそのまま返す（YYYY-MM-DD形式）
+        if (typeof params.newValue === 'string') {
+          return params.newValue;
+        }
+        // Date オブジェクトの場合は ISO 文字列に変換
+        if (params.newValue instanceof Date) {
+          return params.newValue.toISOString().split('T')[0];
+        }
+        return params.newValue;
+      }
+    },
+    {
+      field: 'planned_end_date',
+      headerName: '予定終了日',
+      filter: 'agDateColumnFilter',
+      editable: true,
+      width: 130,
+      minWidth: 120,
+      cellStyle: { backgroundColor: '#ffffff' },
+      cellEditor: 'agDateCellEditor',
+      valueFormatter: (params) => {
+        if (!params.value) return '';
+        const date = new Date(params.value);
+        return date.toLocaleDateString('ja-JP', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        });
+      },
+      valueParser: (params) => {
+        if (!params.newValue) return null;
+        // 日付文字列をそのまま返す（YYYY-MM-DD形式）
+        if (typeof params.newValue === 'string') {
+          return params.newValue;
+        }
+        // Date オブジェクトの場合は ISO 文字列に変換
+        if (params.newValue instanceof Date) {
+          return params.newValue.toISOString().split('T')[0];
+        }
+        return params.newValue;
+      }
     },
     {
       field: 'budgeted_amount',
@@ -231,10 +295,12 @@ const GrantsPage: React.FC = () => {
         category: newBudgetItem.category,
         budgeted_amount: parseInt(newBudgetItem.budgeted_amount),
         grant_id: parseInt(newBudgetItem.grant_id),
-        remarks: newBudgetItem.remarks
+        remarks: newBudgetItem.remarks,
+        planned_start_date: newBudgetItem.planned_start_date || null,
+        planned_end_date: newBudgetItem.planned_end_date || null
       });
 
-      setNewBudgetItem({ name: '', category: '', budgeted_amount: '', grant_id: '', remarks: '' });
+      setNewBudgetItem({ name: '', category: '', budgeted_amount: '', grant_id: '', remarks: '', planned_start_date: '', planned_end_date: '' });
       setShowNewBudgetItemForm(false);
       await loadData();
     } catch (error) {
@@ -346,7 +412,9 @@ const GrantsPage: React.FC = () => {
         category: params.data.category,
         budgeted_amount: params.data.budgeted_amount,
         grant_id: params.data.grant_id,
-        remarks: params.data.remarks
+        remarks: params.data.remarks,
+        planned_start_date: params.data.planned_start_date,
+        planned_end_date: params.data.planned_end_date
       };
 
       // 新しい行（一時的なID）の場合は作成、既存の行は更新
@@ -395,7 +463,9 @@ const GrantsPage: React.FC = () => {
       category: '',
       budgeted_amount: 0,
       grant_id: selectedGrantId || (grants.length > 0 ? grants[0].id : 1),
-      remarks: ''
+      remarks: '',
+      planned_start_date: null,
+      planned_end_date: null
     };
 
     const updatedItems = [...budgetItems, newRow];

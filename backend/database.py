@@ -108,6 +108,8 @@ class BudgetItem(Base):
     category = Column(String)
     budgeted_amount = Column(Integer)
     remarks = Column(String, nullable=True)  # 備考
+    planned_start_date = Column(Date, nullable=True)  # 予定使用開始日
+    planned_end_date = Column(Date, nullable=True)    # 予定使用終了日
     
     # Relationships
     grant = relationship("Grant", back_populates="budget_items")

@@ -49,6 +49,8 @@ class BudgetItemBase(BaseModel):
     category: Optional[str] = None
     budgeted_amount: Optional[int] = None
     remarks: Optional[str] = None
+    planned_start_date: Optional[date] = None
+    planned_end_date: Optional[date] = None
 
 class BudgetItemCreate(BudgetItemBase):
     grant_id: int

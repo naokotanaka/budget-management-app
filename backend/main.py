@@ -3098,13 +3098,6 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
         
         # 期間配分予算を計算
         for grant in grants_with_budget:
-            # 助成金の期間を計算
-            start_date = grant.start_date
-            end_date = grant.end_date
-            
-            if not start_date or not end_date:
-                continue
-                
             # 助成金の予算項目を取得
             budget_items = db.query(BudgetItem)\
                 .filter(BudgetItem.grant_id == grant.id)\
@@ -3115,12 +3108,19 @@ async def generate_allocation_cross_table(db: Session = Depends(get_db)):
                 if not budget_item.budgeted_amount or budget_item.budgeted_amount <= 0:
                     continue
                 
+                # 予算項目ごとの予定使用期間を取得（なければ助成金期間を使用）
+                start_date = budget_item.planned_start_date or grant.start_date
+                end_date = budget_item.planned_end_date or grant.end_date
+                
+                if not start_date or not end_date:
+                    continue
+                
                 budget_item_display_name = f"{grant.name}-{budget_item.name}"
                 budget_item_mapping[budget_item.id] = budget_item_display_name
                 category = budget_item.category or "その他"
                 category_mapping[budget_item.id] = category
                 
-                # 助成金期間の総日数を計算
+                # 予定使用期間の総日数を計算
                 total_days = (end_date - start_date).days + 1
                 daily_amount = budget_item.budgeted_amount / total_days
                 
