@@ -95,7 +95,6 @@ const ReportsPage: React.FC = () => {
 
   // 月が未来かどうかを判定するユーティリティ関数
   const isFutureMonth = (monthString: string) => {
-    console.log('🔍 isFutureMonth called with:', monthString);
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth() + 1; // 0ベースなので+1
@@ -114,10 +113,8 @@ const ReportsPage: React.FC = () => {
       return false;
     }
     
-    // 現在年月より後かどうかを判定
-    const isFuture = year > currentYear || (year === currentYear && month > currentMonth);
-    console.log(`🔍 ${monthString} -> Year: ${year}, Month: ${month}, Current: ${currentYear}/${currentMonth}, isFuture: ${isFuture}`);
-    return isFuture;
+    // 翌月以降を未来月として判定（当月は過去月として扱う）
+    return year > currentYear || (year === currentYear && month > currentMonth);
   };
 
   // 初期データを取得
@@ -1158,6 +1155,16 @@ const ReportsPage: React.FC = () => {
                             return totals;
                           }, { planned: 0, actual: 0, difference: 0 });
                           
+                          if (isFutureMonth(month)) {
+                            return (
+                              <td key={month} className="px-4 py-2 text-right text-xs">
+                                {showPlanned && <div className="text-green-600 font-bold">-</div>}
+                                {showActual && <div className="text-gray-800 font-bold">-</div>}
+                                {showDifference && <div className="text-gray-500 font-bold">-</div>}
+                              </td>
+                            );
+                          }
+                          
                           return (
                             <td key={month} className="px-4 py-2 text-right text-xs">
                               {showPlanned && (
@@ -1180,13 +1187,19 @@ const ReportsPage: React.FC = () => {
                         })}
                         <td className="px-1 py-1 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                           {(() => {
+                            // 表示されている差額のみを合計
                             const grandTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
                               allocationCrossTable.months.forEach(month => {
                                 const monthData = amounts[month];
-                                if (monthData && !isFutureMonth(month)) {
+                                if (monthData) {
+                                  // 計画値は常に含める
                                   totals.planned += monthData.planned || 0;
-                                  totals.actual += monthData.actual || 0;
-                                  totals.difference += monthData.difference || 0;
+                                  
+                                  // 実割当額と差額：未来月は"-"表示なので除外
+                                  if (!isFutureMonth(month)) {
+                                    totals.actual += monthData.actual || 0;
+                                    totals.difference += monthData.difference || 0;
+                                  }
                                 }
                               });
                               return totals;
@@ -1373,7 +1386,6 @@ const ReportsPage: React.FC = () => {
                                 </div>
                               </td>
                               {(() => {
-                                let cumulativeDifference = 0;
                                 return allocationCrossTable.months.map(month => {
                                   const monthData = amounts[month];
                                   if (!monthData || (monthData.planned === 0 && monthData.actual === 0)) {
@@ -1382,11 +1394,6 @@ const ReportsPage: React.FC = () => {
                                         -
                                       </td>
                                     );
-                                  }
-                                  
-                                  // 未来月でなければ累計に加算
-                                  if (!isFutureMonth(month)) {
-                                    cumulativeDifference += monthData.difference || 0;
                                   }
                                   
                                   return (
@@ -1497,6 +1504,16 @@ const ReportsPage: React.FC = () => {
                             return totals;
                           }, { planned: 0, actual: 0, difference: 0 });
                           
+                          if (isFutureMonth(month)) {
+                            return (
+                              <td key={month} className="px-4 py-2 text-right text-xs">
+                                {showPlanned && <div className="text-green-600 font-bold">-</div>}
+                                {showActual && <div className="text-gray-800 font-bold">-</div>}
+                                {showDifference && <div className="text-gray-500 font-bold">-</div>}
+                              </td>
+                            );
+                          }
+                          
                           return (
                             <td key={month} className="px-4 py-2 text-right text-xs">
                               {showPlanned && (
@@ -1519,13 +1536,19 @@ const ReportsPage: React.FC = () => {
                         })}
                         <td className="px-1 py-1 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                           {(() => {
+                            // 表示されている差額のみを合計
                             const grandTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
                               allocationCrossTable.months.forEach(month => {
                                 const monthData = amounts[month];
-                                if (monthData && !isFutureMonth(month)) {
+                                if (monthData) {
+                                  // 計画値は常に含める
                                   totals.planned += monthData.planned || 0;
-                                  totals.actual += monthData.actual || 0;
-                                  totals.difference += monthData.difference || 0;
+                                  
+                                  // 実割当額と差額：未来月は"-"表示なので除外
+                                  if (!isFutureMonth(month)) {
+                                    totals.actual += monthData.actual || 0;
+                                    totals.difference += monthData.difference || 0;
+                                  }
                                 }
                               });
                               return totals;
@@ -1791,6 +1814,16 @@ const ReportsPage: React.FC = () => {
                             return totals;
                           }, { planned: 0, actual: 0, difference: 0 });
                           
+                          if (isFutureMonth(month)) {
+                            return (
+                              <td key={month} className="px-4 py-2 text-right text-xs">
+                                {showPlanned && <div className="text-green-600 font-bold">-</div>}
+                                {showActual && <div className="text-gray-800 font-bold">-</div>}
+                                {showDifference && <div className="text-gray-500 font-bold">-</div>}
+                              </td>
+                            );
+                          }
+                          
                           return (
                             <td key={month} className="px-4 py-2 text-right text-xs">
                               {showPlanned && (
@@ -1813,15 +1846,22 @@ const ReportsPage: React.FC = () => {
                         })}
                         <td className="px-1 py-1 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                           {(() => {
-                            const grandTotal = Object.values(allocationCrossTable.category_cross_table).reduce((totals: any, amounts: any) => {
-                              allocationCrossTable.months.forEach(month => {
-                                const monthData = amounts[month];
-                                if (monthData && !isFutureMonth(month)) {
-                                  totals.planned += monthData.planned || 0;
-                                  totals.actual += monthData.actual || 0;
-                                  totals.difference += monthData.difference || 0;
-                                }
-                              });
+                            const grandTotal = allocationCrossTable.months.reduce((totals: any, month: string) => {
+                              if (!isFutureMonth(month)) {
+                                const monthTotal = Object.values(allocationCrossTable.category_cross_table).reduce((monthTotals: any, amounts: any) => {
+                                  const monthData = amounts[month];
+                                  if (monthData) {
+                                    monthTotals.planned += monthData.planned || 0;
+                                    monthTotals.actual += monthData.actual || 0;
+                                    monthTotals.difference += monthData.difference || 0;
+                                  }
+                                  return monthTotals;
+                                }, { planned: 0, actual: 0, difference: 0 });
+                                
+                                totals.planned += monthTotal.planned;
+                                totals.actual += monthTotal.actual;
+                                totals.difference += monthTotal.difference;
+                              }
                               return totals;
                             }, { planned: 0, actual: 0, difference: 0 });
                             
@@ -2095,6 +2135,16 @@ const ReportsPage: React.FC = () => {
                             return total;
                           }, { planned: 0, actual: 0, difference: 0 });
 
+                          if (isFutureMonth(month)) {
+                            return (
+                              <td key={month} className="px-4 py-3 text-right text-xs">
+                                {showPlanned && <div className="text-green-600 font-bold">-</div>}
+                                {showActual && <div className="text-gray-800 font-bold">-</div>}
+                                {showDifference && <div className="text-gray-500 font-bold">-</div>}
+                              </td>
+                            );
+                          }
+                          
                           return (
                             <td key={month} className="px-4 py-3 text-right text-xs">
                               {showPlanned && (
@@ -2117,16 +2167,23 @@ const ReportsPage: React.FC = () => {
                         })}
                         <td className="px-1 py-2 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                           {(() => {
-                            const grandTotal = Object.values(allocationCrossTable.grant_cross_table).reduce((total, amounts) => {
-                              allocationCrossTable.months.forEach(month => {
-                                const monthData = amounts[month];
-                                if (monthData && !isFutureMonth(month)) {
-                                  total.planned += monthData.planned || 0;
-                                  total.actual += monthData.actual || 0;
-                                  total.difference += monthData.difference || 0;
-                                }
-                              });
-                              return total;
+                            const grandTotal = allocationCrossTable.months.reduce((totals: any, month: string) => {
+                              if (!isFutureMonth(month)) {
+                                const monthTotal = Object.values(allocationCrossTable.grant_cross_table).reduce((monthTotals: any, amounts: any) => {
+                                  const monthData = amounts[month];
+                                  if (monthData) {
+                                    monthTotals.planned += monthData.planned || 0;
+                                    monthTotals.actual += monthData.actual || 0;
+                                    monthTotals.difference += monthData.difference || 0;
+                                  }
+                                  return monthTotals;
+                                }, { planned: 0, actual: 0, difference: 0 });
+                                
+                                totals.planned += monthTotal.planned;
+                                totals.actual += monthTotal.actual;
+                                totals.difference += monthTotal.difference;
+                              }
+                              return totals;
                             }, { planned: 0, actual: 0, difference: 0 });
 
                             return (
