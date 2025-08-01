@@ -87,6 +87,11 @@ const ReportsPage: React.FC = () => {
   const [budgetLoading, setBudgetLoading] = useState(false);
   const [allocationCrossLoading, setAllocationCrossLoading] = useState(false);
   const [sortBudgetByCategory, setSortBudgetByCategory] = useState(false);
+  
+  // 表示項目の制御
+  const [showPlanned, setShowPlanned] = useState(true);
+  const [showActual, setShowActual] = useState(true);
+  const [showDifference, setShowDifference] = useState(true);
 
   // 初期データを取得
   useEffect(() => {
@@ -327,7 +332,7 @@ const ReportsPage: React.FC = () => {
 
 
       {/* 予算vs実績比較テーブル */}
-      <div className="mt-6">
+      <div className="mt-6" style={{ display: 'none' }}>
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-medium text-gray-900">予算vs実績比較</h3>
@@ -444,7 +449,7 @@ const ReportsPage: React.FC = () => {
       </div>
 
       {/* 月別集計テーブル */}
-      <div className="mt-6">
+      <div className="mt-6" style={{ display: 'none' }}>
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-medium text-gray-900">助成金ごとの月別集計</h3>
@@ -569,7 +574,7 @@ const ReportsPage: React.FC = () => {
       </div>
 
       {/* カテゴリ別予算vs実績比較 */}
-      <div className="mt-6">
+      <div className="mt-6" style={{ display: 'none' }}>
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-medium text-gray-900">カテゴリ別予算vs実績比較</h3>
@@ -721,7 +726,7 @@ const ReportsPage: React.FC = () => {
       </div>
 
       {/* 予算項目別予算vs実績比較 */}
-      <div className="mt-6">
+      <div className="mt-6" style={{ display: 'none' }}>
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-medium text-gray-900">予算項目別予算vs実績比較</h3>
@@ -855,7 +860,7 @@ const ReportsPage: React.FC = () => {
                                   remainingDays <= 60 ? 'text-blue-600 font-bold' :
                                   'text-green-600 font-bold'
                                 }>
-                                  {remainingDays}日
+                                  {remainingDays}
                                 </span>
                               )}
                             </td>
@@ -922,30 +927,54 @@ const ReportsPage: React.FC = () => {
                   </div>
                   <div className="flex flex-col space-y-1 text-xs">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showPlanned} 
+                        onChange={(e) => setShowPlanned(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-green-100 rounded border"></div>
                       <span>期間配分予算</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-gray-800 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showActual} 
+                        onChange={(e) => setShowActual(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-gray-100 rounded border"></div>
                       <span>実割当額</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-blue-100 rounded border"></div>
                       <span>差額（正）</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-red-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-red-100 rounded border"></div>
                       <span>差額（負）</span>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="overflow-auto max-h-[80vh]">
-                <table className="min-w-full">
-                  <thead className="bg-gray-50 sticky top-0 z-20">
+              <div className="overflow-auto max-h-[80vh]" style={{ position: 'relative' }}>
+                <table className="min-w-full relative">
+                  <thead className="bg-gray-50 sticky top-0 z-40">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-30">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-15">
                         予算項目
                       </th>
                       {allocationCrossTable.months.map(month => (
@@ -953,12 +982,14 @@ const ReportsPage: React.FC = () => {
                           {month}
                         </th>
                       ))}
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50 sticky right-[100px] z-30">
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                         合計
                       </th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50 sticky right-0 z-30 min-w-[100px]">
-                        <div>残額</div>
-                        <div>日数</div>
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                        予算
+                      </th>
+                      <th className="px-1 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                        残額(日)
                       </th>
                     </tr>
                   </thead>
@@ -994,28 +1025,52 @@ const ReportsPage: React.FC = () => {
                               
                               return (
                                 <td key={month} className="px-4 py-2 text-right text-xs">
-                                  <div className="text-green-600 font-medium">
-                                    ¥{monthData.planned.toLocaleString()}
-                                  </div>
-                                  <div className="text-gray-800">
-                                    ¥{monthData.actual.toLocaleString()}
-                                  </div>
-                                  <div className={monthData.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
-                                    {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
-                                  </div>
+                                  {showPlanned && (
+                                    <div className="text-black font-medium bg-green-100 rounded px-1">
+                                      ¥{monthData.planned.toLocaleString()}
+                                    </div>
+                                  )}
+                                  {showActual && (
+                                    <div className="text-black bg-gray-100 rounded px-1">
+                                      ¥{monthData.actual.toLocaleString()}
+                                    </div>
+                                  )}
+                                  {showDifference && (
+                                    <div className={`text-black rounded px-1 whitespace-nowrap ${monthData.difference >= 0 ? 'bg-blue-100' : 'bg-red-100'}`}>
+                                      {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
+                                    </div>
+                                  )}
                                 </td>
                               );
                             })}
-                            <td className="px-6 py-2 text-right text-xs bg-yellow-50 sticky right-[100px] z-10">
-                              <div className="text-green-600 font-medium">
-                                ¥{itemTotal.planned.toLocaleString()}
-                              </div>
-                              <div className="text-gray-800">
-                                ¥{itemTotal.actual.toLocaleString()}
-                              </div>
-                              <div className={itemTotal.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
-                                {itemTotal.difference >= 0 ? '+' : ''}¥{itemTotal.difference.toLocaleString()}
-                              </div>
+                            <td className="px-1 py-1 text-right text-xs bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
+                              {showPlanned && (
+                                <div className="text-black font-medium bg-green-200 rounded px-1">
+                                  ¥{itemTotal.planned.toLocaleString()}
+                                </div>
+                              )}
+                              {showActual && (
+                                <div className="text-black bg-gray-200 rounded px-1">
+                                  ¥{itemTotal.actual.toLocaleString()}
+                                </div>
+                              )}
+                              {showDifference && (
+                                <div className={`text-black rounded px-1 whitespace-nowrap ${itemTotal.difference >= 0 ? 'bg-blue-200' : 'bg-red-200'}`}>
+                                  {itemTotal.difference >= 0 ? '+' : ''}¥{itemTotal.difference.toLocaleString()}
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-1 py-1 text-right text-xs bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                              {(() => {
+                                // 予算項目名から予算項目情報を取得
+                                const budgetItem = budgetItems.find(item => (item.display_name || `${item.grant_name || '不明'}-${item.name}`) === budgetItemName);
+                                const itemBudget = budgetItem?.budgeted_amount || amounts._budget_info?.budgeted_amount || itemTotal.planned || 0;
+                                return (
+                                  <div className="text-black text-xs">
+                                    ¥{itemBudget.toLocaleString()}
+                                  </div>
+                                );
+                              })()}
                             </td>
                             {(() => {
                               const budgetInfo = amounts._budget_info || {};
@@ -1032,34 +1087,21 @@ const ReportsPage: React.FC = () => {
                                 else if (remainingDays <= 60) remainingColor = 'text-blue-600 font-bold';
                                 else remainingColor = 'text-green-600 font-bold';
                               }
-
-                              // 残り日数の色とメッセージを決定
-                              let daysColor = 'text-gray-900';
+                              
                               let daysText = '-';
-                              if (remainingDays !== null) {
+                              if (remainingDays !== null && remainingDays !== undefined) {
                                 if (remainingDays < 0) {
-                                  daysColor = 'text-gray-400';
                                   daysText = '終了済み';
-                                } else if (remainingDays <= 30) {
-                                  daysColor = 'text-red-600 font-bold';
-                                  daysText = `${remainingDays}日`;
-                                } else if (remainingDays <= 60) {
-                                  daysColor = 'text-blue-600 font-bold';
-                                  daysText = `${remainingDays}日`;
                                 } else {
-                                  daysColor = 'text-green-600 font-bold';
-                                  daysText = `${remainingDays}日`;
+                                  daysText = `${remainingDays}`;
                                 }
                               }
 
                               return (
-                                <td className="px-4 py-2 text-center text-xs bg-orange-50 sticky right-0 z-10">
-                                  <div className={remainingColor}>
-                                    ¥{Math.abs(remainingAmount).toLocaleString()}
-                                  </div>
-                                  <div className={daysColor}>
-                                    {daysText}
-                                  </div>
+                                <td className="px-1 py-1 text-center text-xs bg-orange-50 whitespace-nowrap" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                                  <span className={remainingColor}>
+                                    ¥{Math.abs(remainingAmount).toLocaleString()}（{daysText}）
+                                  </span>
                                 </td>
                               );
                             })()}
@@ -1070,8 +1112,8 @@ const ReportsPage: React.FC = () => {
                     
                     {/* 合計行 */}
                     {Object.keys(allocationCrossTable.budget_cross_table).length > 0 && (
-                      <tr className="bg-blue-50 font-bold sticky bottom-0 z-20">
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50 z-30">
+                      <tr className="bg-blue-50 font-bold sticky bottom-0 z-40">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50 z-15">
                           合計
                         </td>
                         {allocationCrossTable.months.map(month => {
@@ -1087,19 +1129,25 @@ const ReportsPage: React.FC = () => {
                           
                           return (
                             <td key={month} className="px-4 py-2 text-right text-xs">
-                              <div className="text-green-600 font-bold">
-                                ¥{monthTotal.planned.toLocaleString()}
-                              </div>
-                              <div className="text-gray-800 font-bold">
-                                ¥{monthTotal.actual.toLocaleString()}
-                              </div>
-                              <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
-                                {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
-                              </div>
+                              {showPlanned && (
+                                <div className="text-green-600 font-bold">
+                                  ¥{monthTotal.planned.toLocaleString()}
+                                </div>
+                              )}
+                              {showActual && (
+                                <div className="text-gray-800 font-bold">
+                                  ¥{monthTotal.actual.toLocaleString()}
+                                </div>
+                              )}
+                              {showDifference && (
+                                <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                  {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
+                                </div>
+                              )}
                             </td>
                           );
                         })}
-                        <td className="px-6 py-2 text-right text-xs bg-yellow-100 sticky right-[100px] z-30">
+                        <td className="px-1 py-1 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                           {(() => {
                             const grandTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
                               Object.values(amounts).forEach((monthData: any) => {
@@ -1114,23 +1162,364 @@ const ReportsPage: React.FC = () => {
                             
                             return (
                               <>
-                                <div className="text-green-600 font-bold">
-                                  ¥{grandTotal.planned.toLocaleString()}
-                                </div>
-                                <div className="text-gray-800 font-bold">
-                                  ¥{grandTotal.actual.toLocaleString()}
-                                </div>
-                                <div className={grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
-                                  {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
-                                </div>
+                                {showPlanned && (
+                                  <div className="text-green-600 font-bold">
+                                    ¥{grandTotal.planned.toLocaleString()}
+                                  </div>
+                                )}
+                                {showActual && (
+                                  <div className="text-gray-800 font-bold">
+                                    ¥{grandTotal.actual.toLocaleString()}
+                                  </div>
+                                )}
+                                {showDifference && (
+                                  <div className={`whitespace-nowrap ${grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}`}>
+                                    {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
+                                  </div>
+                                )}
                               </>
                             );
                           })()}
                         </td>
-                        <td className="px-4 py-2 text-center text-xs bg-orange-100 sticky right-0 z-30">
+                        <td className="px-1 py-1 text-right text-xs bg-green-100" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                          {(() => {
+                            const totalBudget = Object.entries(allocationCrossTable.budget_cross_table).reduce((total: number, [budgetItemName, amounts]: [string, any]) => {
+                              const budgetItem = budgetItems.find(item => (item.display_name || `${item.grant_name || '不明'}-${item.name}`) === budgetItemName);
+                              const budgetInfo = amounts._budget_info || {};
+                              const itemPlanned = Object.values(amounts).reduce((sum: number, monthData: any) => sum + (monthData?.planned || 0), 0);
+                              return total + (budgetItem?.budgeted_amount || budgetInfo.budgeted_amount || itemPlanned || 0);
+                            }, 0);
+                            
+                            return (
+                              <div className="text-black text-xs font-bold">
+                                ¥{totalBudget.toLocaleString()}
+                              </div>
+                            );
+                          })()}
+                        </td>
+                        <td className="px-1 py-1 text-center text-xs bg-orange-100" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
                           <div className="text-gray-500">
                             -
                           </div>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* 期間配分版 予算項目×月 クロス集計表（カテゴリ順） */}
+            <div className="bg-white rounded-lg shadow overflow-hidden mt-6">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                      予算項目×月 クロス集計表（期間配分版・カテゴリ順）
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      助成金の期間に基づいて日割り計算で配分した月ごとの予算項目別予算額（カテゴリ順に並び替え）
+                    </p>
+                  </div>
+                  <div className="flex flex-col space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                      <input 
+                        type="checkbox" 
+                        checked={showPlanned} 
+                        onChange={(e) => setShowPlanned(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-green-100 rounded border"></div>
+                      <span>期間配分予算</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input 
+                        type="checkbox" 
+                        checked={showActual} 
+                        onChange={(e) => setShowActual(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-gray-100 rounded border"></div>
+                      <span>実割当額</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-blue-100 rounded border"></div>
+                      <span>差額（正）</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-red-100 rounded border"></div>
+                      <span>差額（負）</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="overflow-auto max-h-[80vh]" style={{ position: 'relative' }}>
+                <table className="min-w-full relative">
+                  <thead className="bg-gray-50 sticky top-0 z-40">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-15">
+                        予算項目（カテゴリ順）
+                      </th>
+                      {allocationCrossTable.months.map(month => (
+                        <th key={month} className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                          {month}
+                        </th>
+                      ))}
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
+                        合計
+                      </th>
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                        予算
+                      </th>
+                      <th className="px-1 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                        残額(日)
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {Object.keys(allocationCrossTable.budget_cross_table).length === 0 ? (
+                      <tr>
+                        <td colSpan={allocationCrossTable.months.length + 3} className="px-6 py-8 text-center text-gray-500">
+                          期間が設定された助成金がありません
+                        </td>
+                      </tr>
+                    ) : (
+                      (() => {
+                        // 予算項目をカテゴリ順でソート
+                        const budgetItemEntries = Object.entries(allocationCrossTable.budget_cross_table);
+                        const sortedBudgetItems = budgetItemEntries.sort(([budgetItemNameA], [budgetItemNameB]) => {
+                          // 予算項目名から対応するbudgetItemsのデータを取得
+                          const budgetItemA = budgetItems.find(item => (item.display_name || `${item.grant_name || '不明'}-${item.name}`) === budgetItemNameA);
+                          const budgetItemB = budgetItems.find(item => (item.display_name || `${item.grant_name || '不明'}-${item.name}`) === budgetItemNameB);
+                          
+                          const categoryA = budgetItemA?.category || 'その他';
+                          const categoryB = budgetItemB?.category || 'その他';
+                          
+                          // まずカテゴリで並び替え、次に項目名で並び替え
+                          if (categoryA !== categoryB) {
+                            return categoryA.localeCompare(categoryB);
+                          }
+                          return budgetItemNameA.localeCompare(budgetItemNameB);
+                        });
+
+                        return sortedBudgetItems.map(([budgetItemName, amounts]: [string, any], index) => {
+                          const itemTotal = {
+                            planned: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.planned || 0), 0),
+                            actual: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.actual || 0), 0),
+                            difference: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.difference || 0), 0)
+                          };
+                          
+                          // カテゴリ情報を取得
+                          const budgetItem = budgetItems.find(item => (item.display_name || `${item.grant_name || '不明'}-${item.name}`) === budgetItemName);
+                          const category = budgetItem?.category || 'その他';
+                          
+                          return (
+                            <tr key={budgetItemName} className="hover:bg-gray-50">
+                              <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white">
+                                <div>
+                                  <div className="text-xs text-gray-500 mb-1">[{category}]</div>
+                                  <div>{budgetItemName}</div>
+                                </div>
+                              </td>
+                              {allocationCrossTable.months.map(month => {
+                                const monthData = amounts[month];
+                                if (!monthData || (monthData.planned === 0 && monthData.actual === 0)) {
+                                  return (
+                                    <td key={month} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
+                                      -
+                                    </td>
+                                  );
+                                }
+                                
+                                return (
+                                  <td key={month} className="px-4 py-2 text-right text-xs">
+                                    {showPlanned && (
+                                      <div className="text-black font-medium bg-green-100 rounded px-1">
+                                        ¥{monthData.planned.toLocaleString()}
+                                      </div>
+                                    )}
+                                    {showActual && (
+                                      <div className="text-black bg-gray-100 rounded px-1">
+                                        ¥{monthData.actual.toLocaleString()}
+                                      </div>
+                                    )}
+                                    {showDifference && (
+                                      <div className={`text-black rounded px-1 whitespace-nowrap ${monthData.difference >= 0 ? 'bg-blue-100' : 'bg-red-100'}`}>
+                                        {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
+                                      </div>
+                                    )}
+                                  </td>
+                                );
+                              })}
+                              <td className="px-1 py-1 text-right text-xs bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
+                                {showPlanned && (
+                                  <div className="text-black font-medium bg-green-200 rounded px-1">
+                                    ¥{itemTotal.planned.toLocaleString()}
+                                  </div>
+                                )}
+                                {showActual && (
+                                  <div className="text-black bg-gray-200 rounded px-1">
+                                    ¥{itemTotal.actual.toLocaleString()}
+                                  </div>
+                                )}
+                                {showDifference && (
+                                  <div className={`text-black rounded px-1 whitespace-nowrap ${itemTotal.difference >= 0 ? 'bg-blue-200' : 'bg-red-200'}`}>
+                                    {itemTotal.difference >= 0 ? '+' : ''}¥{itemTotal.difference.toLocaleString()}
+                                  </div>
+                                )}
+                              </td>
+                              <td className="px-1 py-1 text-right text-xs bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                                {(() => {
+                                  // 予算項目名から予算項目情報を取得
+                                  const budgetItem = budgetItems.find(item => (item.display_name || `${item.grant_name || '不明'}-${item.name}`) === budgetItemName);
+                                  const itemBudget = budgetItem?.budgeted_amount || amounts._budget_info?.budgeted_amount || itemTotal.planned || 0;
+                                  return (
+                                    <div className="text-black text-xs">
+                                      ¥{itemBudget.toLocaleString()}
+                                    </div>
+                                  );
+                                })()}
+                              </td>
+                              {(() => {
+                                const budgetInfo = amounts._budget_info || {};
+                                const remainingAmount = budgetInfo.remaining_amount || 0;
+                                const remainingDays = budgetInfo.remaining_days;
+
+                                // 残額の色を決定
+                                let remainingColor = 'text-gray-900';
+                                if (remainingAmount <= 0) {
+                                  remainingColor = 'text-gray-400';
+                                } else if (remainingDays !== null) {
+                                  if (remainingDays < 0) remainingColor = 'text-gray-400';
+                                  else if (remainingDays <= 30) remainingColor = 'text-red-600 font-bold';
+                                  else if (remainingDays <= 60) remainingColor = 'text-blue-600 font-bold';
+                                  else remainingColor = 'text-green-600 font-bold';
+                                }
+                                
+                                let daysText = '-';
+                                if (remainingDays !== null && remainingDays !== undefined) {
+                                  if (remainingDays < 0) {
+                                    daysText = '終了済み';
+                                  } else {
+                                    daysText = `${remainingDays}`;
+                                  }
+                                }
+
+                                return (
+                                  <td className="px-1 py-1 text-center text-xs bg-orange-50 whitespace-nowrap" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                                    <span className={remainingColor}>
+                                      ¥{Math.abs(remainingAmount).toLocaleString()}（{daysText}）
+                                    </span>
+                                  </td>
+                                );
+                              })()}
+                            </tr>
+                          );
+                        });
+                      })()
+                    )}
+                    
+                    {/* 合計行 */}
+                    {Object.keys(allocationCrossTable.budget_cross_table).length > 0 && (
+                      <tr className="bg-blue-50 font-bold sticky bottom-0 z-40">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50 z-15">
+                          合計
+                        </td>
+                        {allocationCrossTable.months.map(month => {
+                          const monthTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
+                            const monthData = amounts[month];
+                            if (monthData) {
+                              totals.planned += monthData.planned || 0;
+                              totals.actual += monthData.actual || 0;
+                              totals.difference += monthData.difference || 0;
+                            }
+                            return totals;
+                          }, { planned: 0, actual: 0, difference: 0 });
+                          
+                          return (
+                            <td key={month} className="px-4 py-2 text-right text-xs">
+                              {showPlanned && (
+                                <div className="text-green-600 font-bold">
+                                  ¥{monthTotal.planned.toLocaleString()}
+                                </div>
+                              )}
+                              {showActual && (
+                                <div className="text-gray-800 font-bold">
+                                  ¥{monthTotal.actual.toLocaleString()}
+                                </div>
+                              )}
+                              {showDifference && (
+                                <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                  {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
+                                </div>
+                              )}
+                            </td>
+                          );
+                        })}
+                        <td className="px-1 py-1 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
+                          {(() => {
+                            const grandTotal = Object.values(allocationCrossTable.budget_cross_table).reduce((totals: any, amounts: any) => {
+                              Object.values(amounts).forEach((monthData: any) => {
+                                if (monthData) {
+                                  totals.planned += monthData.planned || 0;
+                                  totals.actual += monthData.actual || 0;
+                                  totals.difference += monthData.difference || 0;
+                                }
+                              });
+                              return totals;
+                            }, { planned: 0, actual: 0, difference: 0 });
+                            
+                            return (
+                              <>
+                                {showPlanned && (
+                                  <div className="text-green-600 font-bold">
+                                    ¥{grandTotal.planned.toLocaleString()}
+                                  </div>
+                                )}
+                                {showActual && (
+                                  <div className="text-gray-800 font-bold">
+                                    ¥{grandTotal.actual.toLocaleString()}
+                                  </div>
+                                )}
+                                {showDifference && (
+                                  <div className={`whitespace-nowrap ${grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}`}>
+                                    {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })()}
+                        </td>
+                        <td className="px-1 py-1 text-right text-xs bg-green-100" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                          {(() => {
+                            const totalBudget = Object.entries(allocationCrossTable.budget_cross_table).reduce((total: number, [budgetItemName, amounts]: [string, any]) => {
+                              const budgetItem = budgetItems.find(item => (item.display_name || `${item.grant_name || '不明'}-${item.name}`) === budgetItemName);
+                              const budgetInfo = amounts._budget_info || {};
+                              const itemPlanned = Object.values(amounts).reduce((sum: number, monthData: any) => sum + (monthData?.planned || 0), 0);
+                              return total + (budgetItem?.budgeted_amount || budgetInfo.budgeted_amount || itemPlanned || 0);
+                            }, 0);
+                            
+                            return (
+                              <div className="text-black text-xs font-bold">
+                                ¥{totalBudget.toLocaleString()}
+                              </div>
+                            );
+                          })()}
+                        </td>
+                        <td className="px-1 py-1 text-center text-xs bg-orange-100" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
                           <div className="text-gray-500">
                             -
                           </div>
@@ -1156,30 +1545,54 @@ const ReportsPage: React.FC = () => {
                   </div>
                   <div className="flex flex-col space-y-1 text-xs">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showPlanned} 
+                        onChange={(e) => setShowPlanned(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-green-100 rounded border"></div>
                       <span>期間配分予算</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-gray-800 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showActual} 
+                        onChange={(e) => setShowActual(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-gray-100 rounded border"></div>
                       <span>実割当額</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-blue-100 rounded border"></div>
                       <span>差額（正）</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-red-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-red-100 rounded border"></div>
                       <span>差額（負）</span>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="overflow-auto max-h-[80vh]">
-                <table className="min-w-full">
-                  <thead className="bg-gray-50 sticky top-0 z-20">
+              <div className="overflow-auto max-h-[80vh]" style={{ position: 'relative' }}>
+                <table className="min-w-full relative">
+                  <thead className="bg-gray-50 sticky top-0 z-40">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-30">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-15">
                         カテゴリ
                       </th>
                       {allocationCrossTable.months.map(month => (
@@ -1187,8 +1600,14 @@ const ReportsPage: React.FC = () => {
                           {month}
                         </th>
                       ))}
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50 sticky right-0 z-30">
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                         合計
+                      </th>
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                        予算
+                      </th>
+                      <th className="px-1 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                        残額(日)
                       </th>
                     </tr>
                   </thead>
@@ -1224,29 +1643,79 @@ const ReportsPage: React.FC = () => {
                               
                               return (
                                 <td key={month} className="px-4 py-2 text-right text-xs">
-                                  <div className="text-green-600 font-medium">
-                                    ¥{monthData.planned.toLocaleString()}
-                                  </div>
-                                  <div className="text-gray-800">
-                                    ¥{monthData.actual.toLocaleString()}
-                                  </div>
-                                  <div className={monthData.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
-                                    {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
-                                  </div>
+                                  {showPlanned && (
+                                    <div className="text-black font-medium bg-green-100 rounded px-1">
+                                      ¥{monthData.planned.toLocaleString()}
+                                    </div>
+                                  )}
+                                  {showActual && (
+                                    <div className="text-black bg-gray-100 rounded px-1">
+                                      ¥{monthData.actual.toLocaleString()}
+                                    </div>
+                                  )}
+                                  {showDifference && (
+                                    <div className={`text-black rounded px-1 whitespace-nowrap ${monthData.difference >= 0 ? 'bg-blue-100' : 'bg-red-100'}`}>
+                                      {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
+                                    </div>
+                                  )}
                                 </td>
                               );
                             })}
-                            <td className="px-6 py-2 text-right text-xs bg-yellow-50 sticky right-0 z-10">
-                              <div className="text-green-600 font-medium">
-                                ¥{categoryTotal.planned.toLocaleString()}
-                              </div>
-                              <div className="text-gray-800">
-                                ¥{categoryTotal.actual.toLocaleString()}
-                              </div>
-                              <div className={categoryTotal.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
-                                {categoryTotal.difference >= 0 ? '+' : ''}¥{categoryTotal.difference.toLocaleString()}
+                            <td className="px-1 py-1 text-right text-xs bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
+                              {showPlanned && (
+                                <div className="text-black font-medium bg-green-100 rounded px-1">
+                                  ¥{categoryTotal.planned.toLocaleString()}
+                                </div>
+                              )}
+                              {showActual && (
+                                <div className="text-black bg-gray-100 rounded px-1">
+                                  ¥{categoryTotal.actual.toLocaleString()}
+                                </div>
+                              )}
+                              {showDifference && (
+                                <div className={`text-black rounded px-1 ${categoryTotal.difference >= 0 ? 'bg-blue-100' : 'bg-red-100'}`}>
+                                  {categoryTotal.difference >= 0 ? '+' : ''}¥{categoryTotal.difference.toLocaleString()}
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-1 py-1 text-right text-xs bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                              <div className="text-black font-medium">
+                                ¥{amounts._category_info?.budgeted_amount?.toLocaleString() || '0'}
                               </div>
                             </td>
+                            {(() => {
+                              const categoryInfo = amounts._category_info || {};
+                              const remainingAmount = categoryInfo.remaining_amount || 0;
+                              const remainingDays = categoryInfo.remaining_days;
+
+                              // 残額の色を決定
+                              let remainingColor = 'text-gray-900';
+                              if (remainingAmount <= 0) {
+                                remainingColor = 'text-gray-400';
+                              } else if (remainingDays !== null) {
+                                if (remainingDays < 0) remainingColor = 'text-gray-400';
+                                else if (remainingDays <= 30) remainingColor = 'text-red-600 font-bold';
+                                else if (remainingDays <= 60) remainingColor = 'text-blue-600 font-bold';
+                                else remainingColor = 'text-green-600 font-bold';
+                              }
+                              
+                              let daysText = '-';
+                              if (remainingDays !== null && remainingDays !== undefined) {
+                                if (remainingDays < 0) {
+                                  daysText = '終了済み';
+                                } else {
+                                  daysText = `${remainingDays}`;
+                                }
+                              }
+
+                              return (
+                                <td className="px-1 py-1 text-center text-xs bg-orange-50 whitespace-nowrap" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                                  <span className={remainingColor}>
+                                    ¥{remainingAmount.toLocaleString()}（{daysText}）
+                                  </span>
+                                </td>
+                              );
+                            })()}
                           </tr>
                         );
                       })
@@ -1254,8 +1723,8 @@ const ReportsPage: React.FC = () => {
                     
                     {/* 合計行 */}
                     {Object.keys(allocationCrossTable.category_cross_table).length > 0 && (
-                      <tr className="bg-blue-50 font-bold sticky bottom-0 z-20">
-                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50 z-30">
+                      <tr className="bg-blue-50 font-bold sticky bottom-0 z-40">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900 sticky left-0 bg-blue-50 z-15">
                           合計
                         </td>
                         {allocationCrossTable.months.map(month => {
@@ -1271,19 +1740,25 @@ const ReportsPage: React.FC = () => {
                           
                           return (
                             <td key={month} className="px-4 py-2 text-right text-xs">
-                              <div className="text-green-600 font-bold">
-                                ¥{monthTotal.planned.toLocaleString()}
-                              </div>
-                              <div className="text-gray-800 font-bold">
-                                ¥{monthTotal.actual.toLocaleString()}
-                              </div>
-                              <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
-                                {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
-                              </div>
+                              {showPlanned && (
+                                <div className="text-green-600 font-bold">
+                                  ¥{monthTotal.planned.toLocaleString()}
+                                </div>
+                              )}
+                              {showActual && (
+                                <div className="text-gray-800 font-bold">
+                                  ¥{monthTotal.actual.toLocaleString()}
+                                </div>
+                              )}
+                              {showDifference && (
+                                <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                  {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
+                                </div>
+                              )}
                             </td>
                           );
                         })}
-                        <td className="px-6 py-2 text-right text-xs bg-yellow-100 sticky right-0 z-30">
+                        <td className="px-1 py-1 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                           {(() => {
                             const grandTotal = Object.values(allocationCrossTable.category_cross_table).reduce((totals: any, amounts: any) => {
                               Object.values(amounts).forEach((monthData: any) => {
@@ -1298,18 +1773,43 @@ const ReportsPage: React.FC = () => {
                             
                             return (
                               <>
-                                <div className="text-green-600 font-bold">
-                                  ¥{grandTotal.planned.toLocaleString()}
-                                </div>
-                                <div className="text-gray-800 font-bold">
-                                  ¥{grandTotal.actual.toLocaleString()}
-                                </div>
-                                <div className={grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
-                                  {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
-                                </div>
+                                {showPlanned && (
+                                  <div className="text-green-600 font-bold">
+                                    ¥{grandTotal.planned.toLocaleString()}
+                                  </div>
+                                )}
+                                {showActual && (
+                                  <div className="text-gray-800 font-bold">
+                                    ¥{grandTotal.actual.toLocaleString()}
+                                  </div>
+                                )}
+                                {showDifference && (
+                                  <div className={`whitespace-nowrap ${grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}`}>
+                                    {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
+                                  </div>
+                                )}
                               </>
                             );
                           })()}
+                        </td>
+                        <td className="px-1 py-1 text-right text-xs bg-green-100" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                          {(() => {
+                            const totalBudget = Object.values(allocationCrossTable.category_cross_table).reduce((total: number, amounts: any) => {
+                              const categoryInfo = amounts._category_info || {};
+                              return total + (categoryInfo.budgeted_amount || 0);
+                            }, 0);
+                            
+                            return (
+                              <div className="text-black text-xs font-bold">
+                                ¥{totalBudget.toLocaleString()}
+                              </div>
+                            );
+                          })()}
+                        </td>
+                        <td className="px-1 py-1 text-center text-xs bg-orange-100" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                          <div className="text-gray-500">
+                            -
+                          </div>
                         </td>
                       </tr>
                     )}
@@ -1332,30 +1832,54 @@ const ReportsPage: React.FC = () => {
                   </div>
                   <div className="flex flex-col space-y-1 text-xs">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showPlanned} 
+                        onChange={(e) => setShowPlanned(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-green-100 rounded border"></div>
                       <span>期間配分予算</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-gray-800 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showActual} 
+                        onChange={(e) => setShowActual(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-gray-100 rounded border"></div>
                       <span>実割当額</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-blue-100 rounded border"></div>
                       <span>差額（正）</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-red-600 rounded"></div>
+                      <input 
+                        type="checkbox" 
+                        checked={showDifference} 
+                        onChange={(e) => setShowDifference(e.target.checked)}
+                        className="w-3 h-3"
+                      />
+                      <div className="w-3 h-3 bg-red-100 rounded border"></div>
                       <span>差額（負）</span>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="overflow-auto max-h-[80vh]">
-                <table className="min-w-full">
-                  <thead className="bg-gray-50 sticky top-0 z-20">
+              <div className="overflow-auto max-h-[80vh]" style={{ position: 'relative' }}>
+                <table className="min-w-full relative">
+                  <thead className="bg-gray-50 sticky top-0 z-40">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-30">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-15">
                         助成金
                       </th>
                       {allocationCrossTable.months.map(month => (
@@ -1363,12 +1887,14 @@ const ReportsPage: React.FC = () => {
                           {month}
                         </th>
                       ))}
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50 sticky right-[100px] z-30">
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                         合計
                       </th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50 sticky right-0 z-30 min-w-[100px]">
-                        <div>残額</div>
-                        <div>日数</div>
+                      <th className="px-1 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                        予算
+                      </th>
+                      <th className="px-1 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-orange-50" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                        残額(日)
                       </th>
                     </tr>
                   </thead>
@@ -1409,28 +1935,52 @@ const ReportsPage: React.FC = () => {
                               
                               return (
                                 <td key={month} className="px-4 py-2 text-right text-xs">
-                                  <div className="text-green-600 font-medium">
-                                    ¥{monthData.planned.toLocaleString()}
-                                  </div>
-                                  <div className="text-gray-800">
-                                    ¥{monthData.actual.toLocaleString()}
-                                  </div>
-                                  <div className={monthData.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
-                                    {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
-                                  </div>
+                                  {showPlanned && (
+                                    <div className="text-black font-medium bg-green-100 rounded px-1">
+                                      ¥{monthData.planned.toLocaleString()}
+                                    </div>
+                                  )}
+                                  {showActual && (
+                                    <div className="text-black bg-gray-100 rounded px-1">
+                                      ¥{monthData.actual.toLocaleString()}
+                                    </div>
+                                  )}
+                                  {showDifference && (
+                                    <div className={`text-black rounded px-1 whitespace-nowrap ${monthData.difference >= 0 ? 'bg-blue-100' : 'bg-red-100'}`}>
+                                      {monthData.difference >= 0 ? '+' : ''}¥{monthData.difference.toLocaleString()}
+                                    </div>
+                                  )}
                                 </td>
                               );
                             })}
-                            <td className="px-6 py-2 text-right text-xs bg-yellow-50 sticky right-[100px] z-10">
-                              <div className="text-green-600 font-medium">
-                                ¥{grantTotal.planned.toLocaleString()}
-                              </div>
-                              <div className="text-gray-800">
-                                ¥{grantTotal.actual.toLocaleString()}
-                              </div>
-                              <div className={grantTotal.difference >= 0 ? 'text-blue-600' : 'text-red-600'}>
-                                {grantTotal.difference >= 0 ? '+' : ''}¥{grantTotal.difference.toLocaleString()}
-                              </div>
+                            <td className="px-1 py-1 text-right text-xs bg-yellow-50" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
+                              {showPlanned && (
+                                <div className="text-black font-medium bg-green-100 rounded px-1">
+                                  ¥{grantTotal.planned.toLocaleString()}
+                                </div>
+                              )}
+                              {showActual && (
+                                <div className="text-black bg-gray-100 rounded px-1">
+                                  ¥{grantTotal.actual.toLocaleString()}
+                                </div>
+                              )}
+                              {showDifference && (
+                                <div className={`text-black rounded px-1 ${grantTotal.difference >= 0 ? 'bg-blue-100' : 'bg-red-100'}`}>
+                                  {grantTotal.difference >= 0 ? '+' : ''}¥{grantTotal.difference.toLocaleString()}
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-1 py-1 text-right text-xs bg-green-50" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                              {(() => {
+                                // 助成金名から助成金情報を取得
+                                const grant = grants.find(g => g.name === grantName);
+                                const grantBudget = grant?.total_amount || amounts._grant_info?.grant_total_amount || grantTotal.planned || 0;
+                                return (
+                                  <div className="text-black text-xs">
+                                    ¥{grantBudget.toLocaleString()}
+                                  </div>
+                                );
+                              })()}
                             </td>
                             {(() => {
                               const grantInfo = amounts._grant_info || {};
@@ -1447,34 +1997,21 @@ const ReportsPage: React.FC = () => {
                                 else if (remainingDays <= 60) remainingColor = 'text-blue-600 font-bold';
                                 else remainingColor = 'text-green-600 font-bold';
                               }
-
-                              // 残り日数の色とメッセージを決定
-                              let daysColor = 'text-gray-900';
+                              
                               let daysText = '-';
-                              if (remainingDays !== null) {
+                              if (remainingDays !== null && remainingDays !== undefined) {
                                 if (remainingDays < 0) {
-                                  daysColor = 'text-gray-400';
                                   daysText = '終了済み';
-                                } else if (remainingDays <= 30) {
-                                  daysColor = 'text-red-600 font-bold';
-                                  daysText = `${remainingDays}日`;
-                                } else if (remainingDays <= 60) {
-                                  daysColor = 'text-blue-600 font-bold';
-                                  daysText = `${remainingDays}日`;
                                 } else {
-                                  daysColor = 'text-green-600 font-bold';
-                                  daysText = `${remainingDays}日`;
+                                  daysText = `${remainingDays}`;
                                 }
                               }
 
                               return (
-                                <td className="px-4 py-2 text-center text-xs bg-orange-50 sticky right-0 z-10">
-                                  <div className={remainingColor}>
-                                    ¥{remainingAmount.toLocaleString()}
-                                  </div>
-                                  <div className={daysColor}>
-                                    {daysText}
-                                  </div>
+                                <td className="px-1 py-1 text-center text-xs bg-orange-50 whitespace-nowrap" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
+                                  <span className={remainingColor}>
+                                    ¥{remainingAmount.toLocaleString()}（{daysText}）
+                                  </span>
                                 </td>
                               );
                             })()}
@@ -1502,19 +2039,25 @@ const ReportsPage: React.FC = () => {
 
                           return (
                             <td key={month} className="px-4 py-3 text-right text-xs">
-                              <div className="text-green-600 font-bold">
-                                ¥{monthTotal.planned.toLocaleString()}
-                              </div>
-                              <div className="text-gray-800 font-bold">
-                                ¥{monthTotal.actual.toLocaleString()}
-                              </div>
-                              <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
-                                {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
-                              </div>
+                              {showPlanned && (
+                                <div className="text-green-600 font-bold">
+                                  ¥{monthTotal.planned.toLocaleString()}
+                                </div>
+                              )}
+                              {showActual && (
+                                <div className="text-gray-800 font-bold">
+                                  ¥{monthTotal.actual.toLocaleString()}
+                                </div>
+                              )}
+                              {showDifference && (
+                                <div className={monthTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
+                                  {monthTotal.difference >= 0 ? '+' : ''}¥{monthTotal.difference.toLocaleString()}
+                                </div>
+                              )}
                             </td>
                           );
                         })}
-                        <td className="px-6 py-3 text-right text-xs bg-yellow-100 sticky right-[100px] z-30">
+                        <td className="px-1 py-2 text-right text-xs bg-yellow-100" style={{ position: 'sticky', right: '240px', zIndex: 25, width: '100px', minWidth: '100px' }}>
                           {(() => {
                             const grandTotal = Object.values(allocationCrossTable.grant_cross_table).reduce((total, amounts) => {
                               Object.values(amounts).forEach(monthData => {
@@ -1529,20 +2072,42 @@ const ReportsPage: React.FC = () => {
 
                             return (
                               <>
-                                <div className="text-green-600 font-bold">
-                                  ¥{grandTotal.planned.toLocaleString()}
-                                </div>
-                                <div className="text-gray-800 font-bold">
-                                  ¥{grandTotal.actual.toLocaleString()}
-                                </div>
-                                <div className={grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}>
-                                  {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
-                                </div>
+                                {showPlanned && (
+                                  <div className="text-green-600 font-bold">
+                                    ¥{grandTotal.planned.toLocaleString()}
+                                  </div>
+                                )}
+                                {showActual && (
+                                  <div className="text-gray-800 font-bold">
+                                    ¥{grandTotal.actual.toLocaleString()}
+                                  </div>
+                                )}
+                                {showDifference && (
+                                  <div className={`whitespace-nowrap ${grandTotal.difference >= 0 ? 'text-blue-600 font-bold' : 'text-red-600 font-bold'}`}>
+                                    {grandTotal.difference >= 0 ? '+' : ''}¥{grandTotal.difference.toLocaleString()}
+                                  </div>
+                                )}
                               </>
                             );
                           })()}
                         </td>
-                        <td className="px-4 py-3 text-center text-xs bg-orange-100 sticky right-0 z-30">
+                        <td className="px-1 py-2 text-right text-xs bg-green-100" style={{ position: 'sticky', right: '140px', zIndex: 30, width: '100px', minWidth: '100px' }}>
+                          {(() => {
+                            const totalBudget = Object.entries(allocationCrossTable.grant_cross_table).reduce((total: number, [grantName, amounts]: [string, any]) => {
+                              const grant = grants.find(g => g.name === grantName);
+                              const grantInfo = amounts._grant_info || {};
+                              const grantPlanned = Object.values(amounts).reduce((sum: number, monthData: any) => sum + (monthData?.planned || 0), 0);
+                              return total + (grant?.total_amount || grantInfo.grant_total_amount || grantPlanned || 0);
+                            }, 0);
+                            
+                            return (
+                              <div className="text-black text-xs font-bold">
+                                ¥{totalBudget.toLocaleString()}
+                              </div>
+                            );
+                          })()}
+                        </td>
+                        <td className="px-1 py-2 text-center text-xs bg-orange-100" style={{ position: 'sticky', right: '0', zIndex: 35, width: '140px', minWidth: '140px' }}>
                           <div className="text-gray-500">
                             -
                           </div>

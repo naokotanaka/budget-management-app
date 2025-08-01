@@ -1400,7 +1400,7 @@ const GrantsPage: React.FC = () => {
         </div>
 
         {/* 予算項目グリッド */}
-        <div style={{ height: '400px', width: '100%' }}>
+        <div style={{ height: '800px', width: '100%' }}>
           <AgGridReact
             ref={budgetGridRef}
             rowData={(() => {
