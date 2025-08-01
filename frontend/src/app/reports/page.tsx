@@ -1026,11 +1026,19 @@ const ReportsPage: React.FC = () => {
                       </tr>
                     ) : (
                       Object.entries(allocationCrossTable.budget_cross_table).map(([budgetItemName, amounts]: [string, any]) => {
-                        const itemTotal = {
-                          planned: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.planned || 0), 0),
-                          actual: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.actual || 0), 0),
-                          difference: Object.values(amounts).reduce((total: number, amount: any) => total + (amount?.difference || 0), 0)
-                        };
+                        const itemTotal = allocationCrossTable.months.reduce((totals: any, month: string) => {
+                          const monthData = amounts[month];
+                          if (monthData) {
+                            // 計画値は常に含める
+                            totals.planned += monthData.planned || 0;
+                            // 実割当額と差額：未来月は除外
+                            if (!isFutureMonth(month)) {
+                              totals.actual += monthData.actual || 0;
+                              totals.difference += monthData.difference || 0;
+                            }
+                          }
+                          return totals;
+                        }, { planned: 0, actual: 0, difference: 0 });
                         
                         return (
                           <tr key={budgetItemName} className="hover:bg-gray-50">
