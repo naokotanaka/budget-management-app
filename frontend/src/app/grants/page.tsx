@@ -136,7 +136,13 @@ const GrantsPage: React.FC = () => {
       cellEditor: 'agDateCellEditor',
       valueFormatter: (params) => {
         if (!params.value) return '';
-        const date = new Date(params.value);
+        // YYYY-MM-DD形式の文字列の場合は、そのまま日本語形式に変換
+        if (typeof params.value === 'string' && params.value.match(/^\d{4}-\d{2}-\d{2}$/)) {
+          const [year, month, day] = params.value.split('-');
+          return `${year}/${month}/${day}`;
+        }
+        // Dateオブジェクトの場合は、タイムゾーンを考慮して変換
+        const date = new Date(params.value + 'T00:00:00');
         return date.toLocaleDateString('ja-JP', {
           year: 'numeric',
           month: '2-digit',
@@ -149,9 +155,12 @@ const GrantsPage: React.FC = () => {
         if (typeof params.newValue === 'string') {
           return params.newValue.trim() === '' ? null : params.newValue;
         }
-        // Date オブジェクトの場合は ISO 文字列に変換
+        // Date オブジェクトの場合は、ローカル時間でYYYY-MM-DD形式に変換
         if (params.newValue instanceof Date) {
-          return params.newValue.toISOString().split('T')[0];
+          const year = params.newValue.getFullYear();
+          const month = String(params.newValue.getMonth() + 1).padStart(2, '0');
+          const day = String(params.newValue.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
         }
         return params.newValue;
       }
@@ -167,7 +176,13 @@ const GrantsPage: React.FC = () => {
       cellEditor: 'agDateCellEditor',
       valueFormatter: (params) => {
         if (!params.value) return '';
-        const date = new Date(params.value);
+        // YYYY-MM-DD形式の文字列の場合は、そのまま日本語形式に変換
+        if (typeof params.value === 'string' && params.value.match(/^\d{4}-\d{2}-\d{2}$/)) {
+          const [year, month, day] = params.value.split('-');
+          return `${year}/${month}/${day}`;
+        }
+        // Dateオブジェクトの場合は、タイムゾーンを考慮して変換
+        const date = new Date(params.value + 'T00:00:00');
         return date.toLocaleDateString('ja-JP', {
           year: 'numeric',
           month: '2-digit',
@@ -180,9 +195,12 @@ const GrantsPage: React.FC = () => {
         if (typeof params.newValue === 'string') {
           return params.newValue.trim() === '' ? null : params.newValue;
         }
-        // Date オブジェクトの場合は ISO 文字列に変換
+        // Date オブジェクトの場合は、ローカル時間でYYYY-MM-DD形式に変換
         if (params.newValue instanceof Date) {
-          return params.newValue.toISOString().split('T')[0];
+          const year = params.newValue.getFullYear();
+          const month = String(params.newValue.getMonth() + 1).padStart(2, '0');
+          const day = String(params.newValue.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
         }
         return params.newValue;
       }
@@ -498,7 +516,7 @@ const GrantsPage: React.FC = () => {
         fullRowData: params.data
       });
 
-      // 日付データをYYYY-MM-DD形式に変換
+      // 日付データをYYYY-MM-DD形式に変換（タイムゾーン問題を解決）
       const formatDateForAPI = (dateValue: any) => {
         if (!dateValue) return null;
         if (typeof dateValue === 'string') {
@@ -509,7 +527,11 @@ const GrantsPage: React.FC = () => {
           return dateValue;
         }
         if (dateValue instanceof Date) {
-          return dateValue.toISOString().split('T')[0];
+          // ローカル時間でYYYY-MM-DD形式に変換（タイムゾーンの影響を受けない）
+          const year = dateValue.getFullYear();
+          const month = String(dateValue.getMonth() + 1).padStart(2, '0');
+          const day = String(dateValue.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
         }
         return null;
       };
