@@ -2488,7 +2488,7 @@ async def export_wam_report_csv(
         writer = csv.writer(output)
         
         # ヘッダー行
-        headers = ['支出年月日', '科目', '支払いの相手方', '摘要', '金額']
+        headers = ['支出年月日', '科目', '支払いの相手方', '摘要', '金額', '管理番号']
         writer.writerow(headers)
         
         # データ行
@@ -2498,7 +2498,8 @@ async def export_wam_report_csv(
                 item.get('科目', ''),
                 item.get('支払いの相手方', ''),
                 item.get('摘要', ''),
-                item.get('金額', 0)
+                item.get('金額', 0),
+                item.get('管理番号', '')
             ]
             writer.writerow(row)
         
