@@ -14,6 +14,7 @@ interface WamData {
   支払いの相手方: string;
   摘要: string;
   金額: number;
+  管理番号?: string;
   _original_transaction_id?: string;
   _original_account?: string;
   _auto_mapped?: boolean;
@@ -459,6 +460,7 @@ const WamReportPage: React.FC = () => {
       sortable: true,
       valueFormatter: (params) => params.value ? `¥${params.value.toLocaleString()}` : ''
     },
+    { field: '管理番号', headerName: '管理番号', width: 120, sortable: true, editable: true },
     { field: '_original_account', headerName: '元勘定科目', width: 150, sortable: true },
     { 
       field: '_auto_mapped', 

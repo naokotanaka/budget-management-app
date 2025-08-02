@@ -128,6 +128,7 @@ class WamService:
                 '支払いの相手方': transaction.get('supplier', ''),
                 '摘要': cls.generate_summary(transaction),
                 '金額': transaction.get('amount', 0),
+                '管理番号': transaction.get('management_number', ''),
                 # 元データも保持（編集用）
                 '_original_transaction_id': transaction.get('id'),
                 '_original_account': transaction.get('account', ''),
@@ -168,7 +169,8 @@ class WamService:
                 'supplier': t.supplier or '',
                 'item': t.item or '',
                 'memo': t.memo or '',
-                'remark': t.remark or ''
+                'remark': t.remark or '',
+                'management_number': t.management_number or ''
             })
         
         # WAM形式に変換（force_remapフラグを渡す）

@@ -11877,3 +11877,27 @@ Killed
  ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
  ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
  ✓ Ready in 386ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 392ms
+
+> frontend@0.1.0 start
+> next start
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'allowedDevOrigins' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 427ms
