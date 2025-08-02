@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { API_CONFIG } from '@/lib/config'
 
 interface FreeeStatus {
   connected: boolean
@@ -46,7 +47,7 @@ export default function FreeePage() {
 
   const fetchStatus = async () => {
     try {
-      const apiUrl = 'https://nagaiku.top/budget/api/freee/status'
+      const apiUrl = `${API_CONFIG.BASE_URL}/api/freee/status`
       const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json()
@@ -63,9 +64,7 @@ export default function FreeePage() {
 
   const handleConnect = async () => {
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://nagaiku.top/budget/api/freee/auth'
-        : 'https://nagaiku.top/budget/api/freee/auth'
+      const apiUrl = `${API_CONFIG.BASE_URL}/api/freee/auth`
       const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json()
@@ -89,9 +88,7 @@ export default function FreeePage() {
     setSyncResult(null)
 
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://nagaiku.top/budget/api/freee/sync'
-        : 'https://nagaiku.top/budget/api/freee/sync'
+      const apiUrl = `${API_CONFIG.BASE_URL}/api/freee/sync`
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -140,9 +137,7 @@ export default function FreeePage() {
     setMessage('')
 
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://nagaiku.top/budget/api/freee/sync'
-        : 'https://nagaiku.top/budget/api/freee/sync'
+      const apiUrl = `${API_CONFIG.BASE_URL}/api/freee/sync`
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
