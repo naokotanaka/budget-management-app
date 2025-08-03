@@ -38,8 +38,8 @@ export default function FreeePage() {
   const [status, setStatus] = useState<FreeeStatus | null>(null)
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('2024-01-01')
+  const [endDate, setEndDate] = useState('2024-12-31')
   const [syncing, setSyncing] = useState(false)
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null)
   const [journalEntries, setJournalEntries] = useState<FreeeJournalEntry[]>([])
@@ -83,12 +83,24 @@ export default function FreeePage() {
       return
     }
 
+    // 日付形式のバリデーション
+    const startDateRegex = /^\d{4}-\d{2}-\d{2}$/
+    const endDateRegex = /^\d{4}-\d{2}-\d{2}$/
+    
+    if (!startDateRegex.test(startDate) || !endDateRegex.test(endDate)) {
+      setMessage('日付はYYYY-MM-DD形式で入力してください')
+      return
+    }
+
     setSyncing(true)
     setMessage('')
     setSyncResult(null)
 
     try {
       const apiUrl = `${API_CONFIG.BASE_URL}/api/freee/sync`
+      console.log('Sending request to:', apiUrl)
+      console.log('Request body:', { start_date: startDate, end_date: endDate, preview: true })
+      
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -101,7 +113,9 @@ export default function FreeePage() {
         }),
       })
 
+      console.log('Response status:', response.status)
       const data = await response.json()
+      console.log('Response data:', data)
       
       if (response.ok) {
         console.log('Sync result data:', data)
@@ -118,10 +132,13 @@ export default function FreeePage() {
           setMessage('権限が更新されました。新しい権限を有効にするため再認証が必要です。')
         }
       } else {
-        setMessage(data.detail || '同期エラーが発生しました')
+        console.error('API Error:', data)
+        const errorMessage = data.detail || `同期エラーが発生しました (Status: ${response.status})`
+        setMessage(errorMessage)
       }
     } catch (error) {
-      setMessage('同期処理中にエラーが発生しました')
+      console.error('Fetch Error:', error)
+      setMessage(`同期処理中にエラーが発生しました: ${error.message || error}`)
     } finally {
       setSyncing(false)
     }

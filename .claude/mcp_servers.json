@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "uv",
+      "args": [
+        "tool", "uvx", "--from", "git+https://github.com/oraios/serena",
+        "serena-mcp-server", "--transport", "sse", "--port", "5000",
+        "--host", "127.0.0.1", "--project", "."
+      ],
+      "env": {
+        "UV_CACHE_DIR": "/home/tanaka/.cache/uv"
+      }
+    }
+  }
+}

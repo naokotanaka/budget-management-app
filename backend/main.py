@@ -60,11 +60,13 @@ def parse_amount(amount_string):
 import os
 
 # 統一環境設定（データベースのみ分離）
+ENVIRONMENT = os.getenv("ENVIRONMENT", "production")
 PORT = int(os.getenv("PORT", "8000"))
 DATABASE_NAME = os.getenv("DATABASE_NAME", "nagaiku_budget")
 FRONTEND_URL = "https://nagaiku.top/budget"
 
 print(f"🚀 統一バックエンド起動:")
+print(f"   ENVIRONMENT: {ENVIRONMENT}")
 print(f"   PORT: {PORT}")
 print(f"   DATABASE: {DATABASE_NAME}")
 print(f"   FRONTEND_URL: {FRONTEND_URL}")
