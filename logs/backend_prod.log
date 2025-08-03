@@ -13650,3 +13650,454 @@ INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
 INFO:     Finished server process [1333357]
+INFO:     Started server process [1469935]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+🚀 統一バックエンド起動:
+   ENVIRONMENT: production
+   PORT: 8000
+   DATABASE: nagaiku_budget
+   FRONTEND_URL: https://nagaiku.top/budget
+🏭 データベース: nagaiku_budget を使用
+🔧 環境設定: ENVIRONMENT=production, PORT=8000
+🔗 データベース接続先: postgresql://nagaiku_user:nagaiku_password2024@localhost:5432/nagaiku_budget
+🏭 本番環境データベース (nagaiku_budget) を使用
+✅ 開発環境データベーステーブル作成完了
+INFO:     160.251.170.97:32996 - "GET /health HTTP/1.1" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/dashboard/stats HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-allocation-cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+📥 予算項目一覧取得リクエスト
+📋 データベースから取得した項目数: 27
+🔍 ID=11項目の詳細: id=11, remarks='None', name='光熱水費'
+INFO:     133.207.47.128:0 - "GET /api/allocations HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/grants HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/budget-items HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-allocation-cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+📥 予算項目一覧取得リクエスト
+📋 データベースから取得した項目数: 27
+INFO:     133.207.47.128:0 - "GET /api/allocations HTTP/1.0" 200 OK
+🔍 ID=11項目の詳細: id=11, remarks='None', name='光熱水費'
+INFO:     133.207.47.128:0 - "GET /api/grants HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/budget-items HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-allocation-cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+📥 予算項目一覧取得リクエスト
+📋 データベースから取得した項目数: 27
+🔍 ID=11項目の詳細: id=11, remarks='None', name='光熱水費'
+INFO:     133.207.47.128:0 - "GET /api/grants HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/budget-items HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/allocations HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/dashboard/stats HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-allocation-cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+📥 予算項目一覧取得リクエスト
+📋 データベースから取得した項目数: 27
+INFO:     133.207.47.128:0 - "GET /api/grants HTTP/1.0" 200 OK
+🔍 ID=11項目の詳細: id=11, remarks='None', name='光熱水費'
+INFO:     133.207.47.128:0 - "GET /api/budget-items HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/allocations HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-summary?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/budget-vs-actual?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/reports/monthly-allocation-cross-table?start_date=2025-04-01&end_date=2026-03-31 HTTP/1.0" 200 OK
+📥 予算項目一覧取得リクエスト
+📋 データベースから取得した項目数: 27
+🔍 ID=11項目の詳細: id=11, remarks='None', name='光熱水費'
+INFO:     133.207.47.128:0 - "GET /api/grants HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/budget-items HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/allocations HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/dashboard/stats HTTP/1.0" 200 OK
+INFO:     149.86.227.127:48072 - "GET / HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/dashboard/stats HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/freee/status HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/freee/auth HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+Token exchange data: {'grant_type': 'authorization_code', 'client_id': '615689265706197', 'client_secret': '16HPIucPWiQsM-wvNOtA-9SE6r6hrhNwBu5vw0ry5KmfAH5e0WL2g_yDTA66IfYGspVvS7wS-bmIcM1qlEthXg', 'code': 'eYXnHlQP_9eMPUZuQx0zMJqiyi9RaX7yEpYdIbPBmaU', 'redirect_uri': 'https://nagaiku.top/budget/freee/callback'}
+Token response status: 200
+Token response content: {"access_token":"jXKIHf0hu6aukl-VmyqfwPBRe5WJmw4G4BRqhYZMH7g","token_type":"bearer","expires_in":21600,"refresh_token":"XnSWkQUCNu-cpnEnQHTStp6fD86TgwuvnySw642r5nU","scope":"accounting:account_items:read accounting:deals:read accounting:items:read accounting:partners:read accounting:receipts:read accounting:reports_journals:read accounting:sections:read accounting:tags:read accounting:wallet_txns:read default_read","created_at":1754212515}
+INFO:     133.207.47.128:0 - "POST /api/freee/callback HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/freee/status HTTP/1.0" 200 OK
+Journals API response status: 202
+Journals API response content: {"journals":{"id":41817507,"messages":["ID:41817507 でリクエストを受け付けました。"],"company_id":1583780,"download_type":"generic_v2","encoding":"sjis","start_date":"2025-07-01","end_date":"2025-08-03","status_url":"https://api.freee.co.jp/api/1/journals/reports/41817507/status","up_to_date":true,"up_to_date_reasons":[]}}...
+仕訳データは非同期処理中です。ステータスURL: https://api.freee.co.jp/api/1/journals/reports/41817507/status
+仕訳ステータス確認試行 1/5、3秒待機中...
+仕訳ステータス確認 1: {'journals': {'id': 41817507, 'status': 'enqueued', 'company_id': 1583780, 'download_type': 'generic_v2', 'encoding': 'sjis', 'start_date': '2025-07-01', 'end_date': '2025-08-03'}}
+予期しないステータス: enqueued, download_url: None
+Deals API response status: 200
+Deals API response content: {"deals":[{"id":2907838870,"company_id":1583780,"issue_date":"2025-08-01","due_date":null,"amount":3000,"due_amount":0,"type":"expense","partner_id":99720170,"partner_code":null,"ref_number":"2508-001","status":"settled","deal_origin_name":"手動","details":[{"id":7904161270,"account_item_id":253177197,"tax_code":189,"item_id":226957903,"section_id":3509274,"tag_ids":[],"amount":3000,"vat":218,"description":"","entry_side":"debit"}],"payments":[{"id":7904161274,"date":"2025-08-01","from_walletable_...
+Account Items API response status: 200
+Account Items API response content: {"account_items":[{"id":734270312,"name":"Amazonビジネス（API）","tax_code":2,"shortcut":null,"shortcut_num":null,"account_category_id":50,"corresponding_income_name":"未収入金","corresponding_expense_name":"未払金","corresponding_income_id":253129708,"corresponding_expense_id":253129750,"group_name":"未払金","group_id":764963136,"default_tax_code":2,"account_category":"他流動負債","categories":["負債及び純資産","負債","流動負債","他流動負債"],"available":true,"walletable_id":5277606,"update_date":"2023-06-03"},{"id":872796712,"name"...
+勘定科目マスタを正常に取得しました
+Items API response status: 200
+Items API response content: {"items":[{"id":226938080,"company_id":1583780,"name":"LINE","shortcut1":"","shortcut2":"","update_date":"2024-06-17","available":true},{"id":216317678,"company_id":1583780,"name":"WAMその他","shortcut1":"WAMSONOTA","shortcut2":"","update_date":"2023-09-15","available":true},{"id":216317408,"company_id":1583780,"name":"WAM保険","shortcut1":"","shortcut2":"","update_date":"2023-09-15","available":true},{"id":216317385,"company_id":1583780,"name":"WAM借料","shortcut1":"WAMSYAKURYOU","shortcut2":"WaMsya",...
+品目マスタを正常に取得しました
+Sections API response status: 200
+Sections API response content: {"sections":[{"id":2547076,"company_id":1583780,"name":"wam","long_name":"","available":false,"shortcut1":"wam","shortcut2":"","update_date":"2025-06-26"},{"id":3063029,"company_id":1583780,"name":"こども家庭庁","long_name":"","available":false,"shortcut1":"kodomo","shortcut2":"100","update_date":"2025-06-26"},{"id":630373,"company_id":1583780,"name":"その他この法人の目的を達成するために必要な事業","long_name":"その他この法人の目的を達成するために必要な事業","available":true,"shortcut1":"sonotajigyou","shortcut2":"そのたじぎょう","update_date":"2019-05-...
+部門マスタを正常に取得しました
+変換された取引データ数: 104
+最初の変換データ: {'id': 'freee_2907838870_1', 'journal_number': 2907838870, 'journal_line_number': 1, 'date': '2025-08-01', 'description': '', 'amount': 3000, 'account': '【事】謝金', 'supplier': '', 'item': '不明', 'memo': '', 'remark': '2508-001', 'department': '支援_調理', 'management_number': '2508-001', 'raw_data': '{"id": 2907838870, "company_id": 1583780, "issue_date": "2025-08-01", "due_date": null, "amount": 3000, "due_amount": 0, "type": "expense", "partner_id": 99720170, "partner_code": null, "ref_number": "2508-001", "status": "settled", "deal_origin_name": "手動", "details": [{"id": 7904161270, "account_item_id": 253177197, "tax_code": 189, "item_id": 226957903, "section_id": 3509274, "tag_ids": [], "amount": 3000, "vat": 218, "description": "", "entry_side": "debit", "account_item_name": "【事】謝金", "item_name": "不明", "section_name": "支援_調理"}], "payments": [{"id": 7904161274, "date": "2025-08-01", "from_walletable_type": "wallet", "from_walletable_id": 1808993, "amount": 3000}], "receipts": [{"id": 348200877, "status": "confirmed", "description": "", "issue_date": "2025-08-01", "created_at": "2025-08-01T15:36:43+09:00", "mime_type": "image/jpeg", "origin": "public_api", "file_src": "https://secure.freee.co.jp/api/p/receipts/revisions/348203051/download", "user": {"id": 1833670, "email": "tanaka@nagaiku.org", "display_name": ""}, "receipt_metadatum": {"partner_name": "森川佳子", "issue_date": "2025-08-01", "amount": 3000}, "qualified_invoice": null, "invoice_registration_number": null, "document_type": null}]}'}
+=== 取引 1 ===
+取引全体: {'id': 2907838870, 'company_id': 1583780, 'issue_date': '2025-08-01', 'due_date': None, 'amount': 3000, 'due_amount': 0, 'type': 'expense', 'partner_id': 99720170, 'partner_code': None, 'ref_number': '2508-001', 'status': 'settled', 'deal_origin_name': '手動', 'details': [{'id': 7904161270, 'account_item_id': 253177197, 'tax_code': 189, 'item_id': 226957903, 'section_id': 3509274, 'tag_ids': [], 'amount': 3000, 'vat': 218, 'description': '', 'entry_side': 'debit', 'account_item_name': '【事】謝金', 'item_name': '不明', 'section_name': '支援_調理'}], 'payments': [{'id': 7904161274, 'date': '2025-08-01', 'from_walletable_type': 'wallet', 'from_walletable_id': 1808993, 'amount': 3000}], 'receipts': [{'id': 348200877, 'status': 'confirmed', 'description': '', 'issue_date': '2025-08-01', 'created_at': '2025-08-01T15:36:43+09:00', 'mime_type': 'image/jpeg', 'origin': 'public_api', 'file_src': 'https://secure.freee.co.jp/api/p/receipts/revisions/348203051/download', 'user': {'id': 1833670, 'email': 'tanaka@nagaiku.org', 'display_name': ''}, 'receipt_metadatum': {'partner_name': '森川佳子', 'issue_date': '2025-08-01', 'amount': 3000}, 'qualified_invoice': None, 'invoice_registration_number': None, 'document_type': None}]}
+deal.description: None
+deal.memo: None
+deal.ref_number: 2508-001
+  明細 1: {'id': 7904161270, 'account_item_id': 253177197, 'tax_code': 189, 'item_id': 226957903, 'section_id': 3509274, 'tag_ids': [], 'amount': 3000, 'vat': 218, 'description': '', 'entry_side': 'debit', 'account_item_name': '【事】謝金', 'item_name': '不明', 'section_name': '支援_調理'}
+  detail.description: 
+  レシート情報: [{'id': 348200877, 'status': 'confirmed', 'description': '', 'issue_date': '2025-08-01', 'created_at': '2025-08-01T15:36:43+09:00', 'mime_type': 'image/jpeg', 'origin': 'public_api', 'file_src': 'https://secure.freee.co.jp/api/p/receipts/revisions/348203051/download', 'user': {'id': 1833670, 'email': 'tanaka@nagaiku.org', 'display_name': ''}, 'receipt_metadatum': {'partner_name': '森川佳子', 'issue_date': '2025-08-01', 'amount': 3000}, 'qualified_invoice': None, 'invoice_registration_number': None, 'document_type': None}]
+  支払い情報: [{'id': 7904161274, 'date': '2025-08-01', 'from_walletable_type': 'wallet', 'from_walletable_id': 1808993, 'amount': 3000}]
+---
+=== 取引 2 ===
+取引全体: {'id': 2907829192, 'company_id': 1583780, 'issue_date': '2025-08-01', 'due_date': None, 'amount': 290, 'due_amount': 0, 'type': 'expense', 'partner_id': 27943540, 'partner_code': None, 'ref_number': '2508-002', 'status': 'settled', 'deal_origin_name': '手動', 'details': [{'id': 7904134501, 'account_item_id': 253177234, 'tax_code': 189, 'item_id': 226961432, 'section_id': 630374, 'tag_ids': [], 'amount': 290, 'vat': 21, 'description': 'ひろば受付表、初めてさん', 'entry_side': 'debit', 'account_item_name': '【管】印刷製本費', 'item_name': '印刷', 'section_name': '管理部門'}], 'payments': [{'id': 7904134504, 'date': '2025-08-01', 'from_walletable_type': 'wallet', 'from_walletable_id': 1808993, 'amount': 290}], 'receipts': [{'id': 348200900, 'status': 'confirmed', 'description': '', 'issue_date': '2025-08-01', 'created_at': '2025-08-01T15:36:45+09:00', 'mime_type': 'image/jpeg', 'origin': 'public_api', 'file_src': 'https://secure.freee.co.jp/api/p/receipts/revisions/348203074/download', 'user': {'id': 1833670, 'email': 'tanaka@nagaiku.org', 'display_name': ''}, 'receipt_metadatum': {'partner_name': '長久手市役所', 'issue_date': '2025-08-01', 'amount': 290}, 'qualified_invoice': None, 'invoice_registration_number': None, 'document_type': None}]}
+deal.description: None
+deal.memo: None
+deal.ref_number: 2508-002
+  明細 1: {'id': 7904134501, 'account_item_id': 253177234, 'tax_code': 189, 'item_id': 226961432, 'section_id': 630374, 'tag_ids': [], 'amount': 290, 'vat': 21, 'description': 'ひろば受付表、初めてさん', 'entry_side': 'debit', 'account_item_name': '【管】印刷製本費', 'item_name': '印刷', 'section_name': '管理部門'}
+  detail.description: ひろば受付表、初めてさん
+  レシート情報: [{'id': 348200900, 'status': 'confirmed', 'description': '', 'issue_date': '2025-08-01', 'created_at': '2025-08-01T15:36:45+09:00', 'mime_type': 'image/jpeg', 'origin': 'public_api', 'file_src': 'https://secure.freee.co.jp/api/p/receipts/revisions/348203074/download', 'user': {'id': 1833670, 'email': 'tanaka@nagaiku.org', 'display_name': ''}, 'receipt_metadatum': {'partner_name': '長久手市役所', 'issue_date': '2025-08-01', 'amount': 290}, 'qualified_invoice': None, 'invoice_registration_number': None, 'document_type': None}]
+  支払い情報: [{'id': 7904134504, 'date': '2025-08-01', 'from_walletable_type': 'wallet', 'from_walletable_id': 1808993, 'amount': 290}]
+---
+=== 取引 3 ===
+取引全体: {'id': 2907810294, 'company_id': 1583780, 'issue_date': '2025-08-01', 'due_date': None, 'amount': 700, 'due_amount': 0, 'type': 'income', 'partner_id': None, 'partner_code': None, 'ref_number': '', 'status': 'settled', 'deal_origin_name': '手動', 'details': [{'id': 7904077934, 'account_item_id': 253177182, 'tax_code': 2, 'item_id': 167043069, 'section_id': 3509279, 'tag_ids': [], 'amount': 700, 'vat': 0, 'description': '', 'entry_side': 'credit', 'account_item_name': '【事】事業収益', 'item_name': 'ひろば利用料', 'section_name': 'ぽんぽん'}], 'payments': [{'id': 7904077937, 'date': '2025-08-01', 'from_walletable_type': 'wallet', 'from_walletable_id': 3635348, 'amount': 700}], 'receipts': []}
+deal.description: None
+deal.memo: None
+deal.ref_number: 
+  明細 1: {'id': 7904077934, 'account_item_id': 253177182, 'tax_code': 2, 'item_id': 167043069, 'section_id': 3509279, 'tag_ids': [], 'amount': 700, 'vat': 0, 'description': '', 'entry_side': 'credit', 'account_item_name': '【事】事業収益', 'item_name': 'ひろば利用料', 'section_name': 'ぽんぽん'}
+  detail.description: 
+  支払い情報: [{'id': 7904077937, 'date': '2025-08-01', 'from_walletable_type': 'wallet', 'from_walletable_id': 3635348, 'amount': 700}]
+---
+仕訳データの内容: {'journals': [], 'async_processing': True, 'status_info': {'journals': {'id': 41817507, 'messages': ['ID:41817507 でリクエストを受け付けました。'], 'company_id': 1583780, 'download_type': 'generic_v2', 'encoding': 'sjis', 'start_date': '2025-07-01', 'end_date': '2025-08-03', 'status_url': 'https://api.freee.co.jp/api/1/journals/reports/41817507/status', 'up_to_date': True, 'up_to_date_reasons': []}}}
+仕訳データのCSV: None
+INFO:     133.207.47.128:0 - "POST /api/freee/sync HTTP/1.0" 200 OK
+Journals API response status: 202
+Journals API response content: {"journals":{"id":41817508,"messages":["ID:41817508 でリクエストを受け付けました。"],"company_id":1583780,"download_type":"generic_v2","encoding":"sjis","start_date":"2025-07-01","end_date":"2025-08-03","status_url":"https://api.freee.co.jp/api/1/journals/reports/41817508/status","up_to_date":true,"up_to_date_reasons":[]}}...
+仕訳データは非同期処理中です。ステータスURL: https://api.freee.co.jp/api/1/journals/reports/41817508/status
+仕訳ステータス確認試行 1/5、3秒待機中...
+仕訳ステータス確認 1: {'journals': {'id': 41817508, 'status': 'working', 'company_id': 1583780, 'download_type': 'generic_v2', 'encoding': 'sjis', 'start_date': '2025-07-01', 'end_date': '2025-08-03'}}
+まだ処理中です。再試行します...
+仕訳ステータス確認試行 2/5、5秒待機中...
+仕訳ステータス確認 2: {'journals': {'id': 41817508, 'status': 'uploaded', 'company_id': 1583780, 'download_type': 'generic_v2', 'encoding': 'sjis', 'start_date': '2025-07-01', 'end_date': '2025-08-03', 'download_url': 'https://api.freee.co.jp/api/1/journals/reports/41817508/download'}}
+仕訳ダウンロード成功: 149333 bytes
+ダウンロード内容サンプル: "No","取引日","管理番号","借方勘定科目","借方決算書表示名","借方勘定科目ショートカット１","借方勘定科目ショートカット２（勘定科目コード）","借方金額","借方税区分","借方税金額","借方内税・外税","借方税率","借方軽減税率有無","借方取引先コード","借方取引先名","借方取引先ショートカット１","借方取引先ショートカット２","借方品目","借方品目ショート
+INFO:     133.207.47.128:0 - "POST /api/freee/sync HTTP/1.0" 200 OK
+📥 予算項目一覧取得リクエスト
+📋 データベースから取得した項目数: 27
+INFO:     133.207.47.128:0 - "GET /api/grants HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/allocations HTTP/1.0" 200 OK
+🔍 ID=11項目の詳細: id=11, remarks='None', name='光熱水費'
+INFO:     133.207.47.128:0 - "GET /api/budget-items HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/transactions HTTP/1.0" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     209.38.82.193:51482 - "GET / HTTP/1.1" 404 Not Found
+INFO:     209.38.82.193:51484 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     133.207.47.128:0 - "GET /api/system-info HTTP/1.0" 200 OK
+INFO:     133.207.47.128:0 - "GET /api/dashboard/stats HTTP/1.0" 200 OK
+INFO:     176.65.148.243:49636 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     149.86.227.127:25522 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     172.105.216.226:51666 - "GET / HTTP/1.0" 404 Not Found
+INFO:     172.105.216.226:51678 - "GET /nice%20ports%2C/Trinity.txt.bak HTTP/1.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     172.105.216.226:51704 - "OPTIONS / HTTP/1.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     172.105.216.226:47928 - "GET /cgi-mod/header_logo.cgi?size=big HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:47946 - "GET http%3A//www.google.com HTTP/1.0" 404 Not Found
+INFO:     172.105.216.226:47916 - "GET /Portal/Portal.mwsl HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     172.105.216.226:47966 - "GET /?=PHPE9568F36-D428-11d2-A769-00AA001ACF42 HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:47934 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48004 - "GET /server-status HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:47982 - "GET /Portal0000.htm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:47992 - "GET /nmaplowercheck1754226492 HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48016 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48030 - "HEAD http%3A//www.google.com HTTP/1.0" 404 Not Found
+INFO:     172.105.216.226:48050 - "GET /__Additional HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48006 - "GET /docs/cplugError.html/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48064 - "GET /HNAP1 HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48046 - "GET /?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000 HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48090 - "GET /login.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48068 - "GET /webui HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48080 - "GET /human.aspx?arg12=infotech HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48086 - "GET /dana-cached/hc/HostCheckerInstaller.osx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48088 - "GET /dana-na/nc/nc_gina_ver.txt HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48100 - "CONNECT www.google.com%3A80 HTTP/1.0" 404 Not Found
+INFO:     172.105.216.226:48092 - "GET /ise/img/rm-logo_small.png HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48112 - "GET /CFIDE/componentutils/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48130 - "GET /geoserver/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48136 - "GET /geoserver/web/wicket/bookmarkable/org.geoserver.web.AboutGeoServerPage HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48154 - "GET /CSS/Miniweb.css HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48158 - "GET /dniapi/userInfos HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48128 - "GET /geoserver/index.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48140 - "GET /webui HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48170 - "GET /b4Tr HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48202 - "GET /Account/Login HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48186 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48172 - "GET /api/v2/about HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48212 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48214 - "GET /cgi-bin/info.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48218 - "GET /xml/info.xml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48234 - "GET /owa/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48236 - "GET /fog/management/index.php?node=client&sub=logininfo HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48242 - "GET /magento_version HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48254 - "GET /api/v1/check-version HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48264 - "GET /apps/zxtm/login.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48268 - "GET /.git/HEAD HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48272 - "GET /owa/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48300 - "GET /user HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48278 - "GET /helpdesk/WebObjects/Helpdesk.woa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48312 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.105.216.226:48336 - "GET /login.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48320 - "GET /language/en-GB/en-GB.xml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48352 - "GET /api/server/version HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48364 - "GET /p/login/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48368 - "GET /dashboard/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48378 - "POST /sdk HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48416 - "GET /portal/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48408 - "GET /api/version HTTP/1.1" 200 OK
+INFO:     172.105.216.226:48432 - "GET /%2BCSCOE%2B/logon.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48438 - "GET /lms/db HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48454 - "GET /info.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48448 - "GET /status HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48466 - "GET /cgi-bin/param.cgi?get_device_conf HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48490 - "GET /ext-js/app/common/zld_product_spec.js HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48476 - "GET /allversions HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48498 - "GET /login/login.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48500 - "GET /indice.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48506 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48518 - "GET /tos/index.php?user/login HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48514 - "GET /r-seenet/index.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48510 - "GET /versions HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48524 - "GET /api/vip/i18n/api/v2/translation/products/vRNIUI/versions/1 HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48536 - "GET /login.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48542 - "GET /main.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48544 - "GET /WebApp/js/UI_String.js HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48560 - "GET /officescan/console/html/localization.js HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48574 - "GET /index.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48580 - "GET /kylin/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48588 - "GET /api/v1.0/environment HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48594 - "GET /config HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48610 - "GET /start.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48622 - "GET /cslu/v1/core/conf HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48644 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48630 - "GET /start.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48660 - "GET /admin/reports/status HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48650 - "GET /admin/reports/updates HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48688 - "GET /inicio.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48672 - "GET /javascript/validation/OEM.js HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48696 - "GET /versa/login HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48702 - "GET /IPCamDesc.xml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48716 - "GET /build.gradle HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48724 - "GET /index.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48726 - "GET /pom.xml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48760 - "GET /c/login HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48742 - "GET /CHANGELOG.txt HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48756 - "GET /administrator/manifests/files/joomla.xml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48776 - "GET /officescan/console/cgi/cgiChkMasterPwd.exe HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48786 - "GET /webportal.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48798 - "GET /menu.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48810 - "GET /css/eonweb.css HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48820 - "GET /workplace/home.action HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48852 - "GET /menu.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48822 - "GET /css/elfinder.min.css HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48836 - "GET /centreon/api/latest/platform/versions HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48876 - "GET /am_bin/amlogin HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48890 - "GET /geoserver/web/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48864 - "GET /cgi-bin/authLogin.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:2871 - "GET /api/v3/meta HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48910 - "GET /indice.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48920 - "GET /pandora_console/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48940 - "GET /app/ui/login.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48962 - "GET /login/?next=/ HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48936 - "GET /i18n/component/JS HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48946 - "GET /api/v1/version HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48968 - "GET /hx/api/about HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48978 - "GET /home.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48972 - "GET /system/version/current HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48984 - "GET /MagicInfo/config.js HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48996 - "GET /plugin/webs_model_cfg.js HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49016 - "GET /json/login_session HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49024 - "GET /menu.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49002 - "GET /cap.js HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49038 - "GET /Main_Login.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49048 - "GET /rs/application-about HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:19093 - "GET /metrics HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49072 - "GET /photo/webapi/query.php?api=SYNO.API.Info&method=query&version=1 HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49060 - "GET /nidp/app/login HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49100 - "GET /cgi-bin/luci HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49084 - "GET /indice.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49108 - "GET /cluster/list.query HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49110 - "GET /main/main.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49126 - "GET /about HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49128 - "GET /index.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49130 - "GET /readme.txt HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49136 - "GET /api/v2/hoverfly/version HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49138 - "GET /admin.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49150 - "GET /index.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49156 - "GET /inicio.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49158 - "GET /admin.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49172 - "GET /admin.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49178 - "GET /indice.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49180 - "GET /start.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49182 - "GET /admin.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49184 - "GET /index.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:49200 - "GET /home.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54648 - "GET /admin.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54650 - "GET /admin.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54664 - "GET /index.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54672 - "GET /start.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54684 - "GET /main.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48284 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:48365 - "GET /index.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54716 - "GET /default.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54718 - "GET /admin.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54722 - "GET /admin.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54738 - "GET /home.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54748 - "GET /localstart.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54756 - "GET /main.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54772 - "GET /indice.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54778 - "GET /admin.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54780 - "GET /localstart.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54794 - "GET /index.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54810 - "GET /start.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54812 - "GET /base.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54822 - "GET /base.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54830 - "GET /menu.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54844 - "GET /main.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54850 - "GET /base.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54858 - "GET /localstart.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54874 - "GET /main.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54886 - "GET /base.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54888 - "GET /localstart.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54894 - "GET /base.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54898 - "GET /default.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54912 - "GET /localstart.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54928 - "GET /default.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54930 - "GET /default.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54940 - "GET /base.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54946 - "GET /inicio.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54954 - "GET /home.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54968 - "GET /base.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54982 - "GET /home.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54984 - "GET /indice.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:54996 - "GET /indice.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55008 - "GET /base.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55012 - "GET /base.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55026 - "GET /main.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55042 - "GET /start.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55050 - "GET /inicio.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55058 - "GET /main.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55064 - "GET /indice.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55074 - "GET /indice.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55090 - "GET /default.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55092 - "GET /main.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55096 - "GET /menu.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55102 - "GET /inicio.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55106 - "GET /start.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55110 - "GET /inicio.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55116 - "GET /inicio.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55126 - "GET /menu.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55134 - "GET /main.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55144 - "GET /base.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55156 - "GET /base.inc HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55158 - "GET /inicio.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55172 - "GET /inicio.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55182 - "GET /inicio.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55198 - "GET /inicio.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55214 - "GET /home.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55224 - "GET /index.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55232 - "GET /index.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55246 - "GET /default.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55258 - "GET /localstart.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55260 - "GET /localstart.pl HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55262 - "GET /localstart.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55268 - "GET /base.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55282 - "GET /localstart.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55296 - "GET /default.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55298 - "GET /menu.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55302 - "GET /localstart.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55314 - "GET /localstart.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55316 - "GET /start.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55318 - "GET /start.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55320 - "GET /home.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:55334 - "GET /admin.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35468 - "GET /menu.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35478 - "GET /default.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35490 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35506 - "GET /start.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35514 - "GET /home.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35528 - "GET /menu.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35536 - "GET /home.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35548 - "GET /start.html HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35554 - "GET /indice.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35560 - "GET /home.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35572 - "GET /main.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35574 - "GET /main.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35580 - "GET default.asp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35588 - "GET /index.cfm HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35598 - "GET /default.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35608 - "GET /admin.cgi HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35624 - "GET /default.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35628 - "GET /default.shtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35630 - "GET /indice.jhtml HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35646 - "GET /menu.jsp HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35658 - "GET /menu.jsa HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35664 - "GET /home.aspx HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35666 - "GET /index.php HTTP/1.1" 404 Not Found
+INFO:     172.105.216.226:35674 - "GET / HTTP/1.1" 404 Not Found
+INFO:     206.168.34.37:37644 - "GET / HTTP/1.1" 404 Not Found
+INFO:     206.168.34.37:37656 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     206.168.34.37:52470 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     206.168.34.37:53888 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     206.168.34.37:57608 - "GET /.well-known/security.txt HTTP/1.1" 404 Not Found
+INFO:     65.49.1.132:49466 - "GET / HTTP/1.1" 404 Not Found
+INFO:     65.49.1.139:39153 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     65.49.1.139:23033 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     65.49.1.139:47225 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     149.50.96.114:12400 - "GET /dispatch.asp HTTP/1.1" 404 Not Found
+INFO:     198.235.24.166:59462 - "GET / HTTP/1.1" 404 Not Found
+INFO:     46.19.141.90:38438 - "CONNECT google.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     3.149.59.26:57744 - "GET / HTTP/1.1" 404 Not Found
+INFO:     3.149.59.26:59246 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.145.108:59410 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.108:38156 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.108:38164 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.145.108:51714 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     167.94.145.108:51730 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.145.108:37424 - "GET /wiki HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     185.247.137.66:50277 - "GET / HTTP/1.1" 404 Not Found
